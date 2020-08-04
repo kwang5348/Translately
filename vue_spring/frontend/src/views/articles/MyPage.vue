@@ -9,7 +9,7 @@
         </div>
 
         <ul class="list-unstyled components">
-            <li class="active">
+            <li>
                 <a href="/tutorial">
                     <i class="fas fa-home"></i>
                     튜토리얼
@@ -27,7 +27,7 @@
                     커뮤니티
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <a href="/mypage">
                     <i class="fas fa-question"></i>
                     마이 페이지

@@ -10,7 +10,7 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
+                <li>
                     <a href="/tutorial">
                     <!-- <a href="/tutorial" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> -->
                         <i class="fas fa-home"></i>
@@ -23,7 +23,7 @@
                         내 프로젝트
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="/articles">
                         <i class="fas fa-image"></i>
                         커뮤니티
