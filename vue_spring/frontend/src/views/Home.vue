@@ -1,5 +1,6 @@
 <template class="js">
   <body>
+    <Navbar1/>
     <div class="home">
       <!-- <router-view @submit-social-login-data="socialLogin" @submit-login-data="login" @submit-signup-data="signup"/> -->
       <!-- <div class="bg">
@@ -7,9 +8,7 @@
       </div> -->
       
         <div class="row">
-            
           <!-- <router-view :uploadData="uploadData" @submit-upload-data="upload"/> -->
-
           <div class="img col-6">
             <div class="content mt-4">
               <h1 class="font-weight-bold">내가 원하는 영상을</h1>
@@ -18,7 +17,7 @@
               <hr style="border-color:transparent">
               <h5>영상을 나에게 필요한 자막으로 변환해보세요</h5>
               <div class="btn btn-warning text-white justify-content-center" style="margin-top: -15px; font-weight: bold; font-size: 20px;">
-              <router-link to="/tutorial">튜토리얼 보러가기</router-link>
+              <router-link to="/contents/tutorial">튜토리얼 보러가기</router-link>
               </div>
             </div>
           </div>
@@ -29,22 +28,25 @@
             <div style="width:600px position: absolute;">
               <upload-files @upload-file="uploadFile" @submit-upload-data="upload"></upload-files>
             </div>
-            <!-- <label class="btn btn-default"><input type="file"></label> -->
           </div>
         </div>    
       </div>
-    
+    <Footer class="fixed-bottom"/>
   </body>
 </template>
 
 <script>
 // @ is an alias to /src
 import UploadFiles from "./../components/UploadFiles"
+import Navbar1 from "@/components/Navbar1.vue"
+import Footer from "@/components/Footer.vue"
 
 export default {
   name: 'Home',
   components: {
-    UploadFiles
+    UploadFiles,
+    Navbar1,
+    Footer
   },
   data() {
     return {
@@ -66,7 +68,6 @@ export default {
 
 <style scoped>
 body {
-/* background-image: url("../img/main-bg-md.jpg"); */
 background-color: #D9E5FF;
 background: url("../img/main-bg.jpg") no-repeat center center fixed;
 -webkit-background-size: cover;
