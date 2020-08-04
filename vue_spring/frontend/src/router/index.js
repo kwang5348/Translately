@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import LoginView from '../views/accounts/LoginView.vue'
 import SignupView from '../views/accounts/SignupView.vue'
+import CompleteView from '../views/accounts/CompleteView.vue'
 import ArticleCreateView from '../views/articles/ArticleCreateView.vue'
 import ArticleListView from '../views/articles/ArticleListView.vue'
 import UserView from '../views/articles/UserView.vue'
@@ -27,6 +28,11 @@ Vue.use(VueRouter)
     path: '/accounts/signup',
     name: 'SignupView',
     component: SignupView
+  },
+  {
+    path: '/accounts/complete',
+    name: 'CompleteView',
+    component: CompleteView
   },
   {
     path: '/articles/create',

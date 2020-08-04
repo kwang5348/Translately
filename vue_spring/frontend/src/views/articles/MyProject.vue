@@ -9,14 +9,14 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
+                <li>
                     <a href="/tutorial">
                     <!-- <a href="/tutorial" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"> -->
                         <i class="fas fa-home"></i>
                         튜토리얼
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="/myproject">
                         <i class="fas fa-briefcase"></i>
                         내 프로젝트
