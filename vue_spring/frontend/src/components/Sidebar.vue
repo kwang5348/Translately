@@ -54,9 +54,9 @@
     </ul>
     <ul class="list-unstyled components mb-2">
       <li>
-        <a href="#">
+        <a href="#" @click="logout">
           <span><i class="fa fa-power-off"></i></span>
-          <span><router-link @click.native="logout" to="/">로그아웃</router-link></span>
+          <span><p>로그아웃</p></span>
         </a>
       </li>
     </ul>
@@ -66,6 +66,11 @@
 <script>
 export default {
   name : 'Sidebar',
+  methods: {
+    logout() {
+      this.$emit('logout')
+    }
+  }
 }
 </script>
 

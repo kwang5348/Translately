@@ -1,7 +1,15 @@
 <template>
   <div id="app">
      <!-- v-if="navbar" -->
-    <div class="container-fluid m-0 p-0"><router-view @upload-file="uploadFile" :isLogin="isLogin" :video="video" :subtitles="subtitles" @submit-login-data="login" @submit-u-d="upload"/></div>
+    <div class="container-fluid m-0 p-0"><router-view 
+      @upload-file="uploadFile" 
+      :isLogin="isLogin" 
+      :video="video" 
+      :subtitles="subtitles" 
+      @submit-login-data="login" 
+      @submit-u-d="upload"
+      @logout="logout" />
+    </div>
     <!-- <router-link @click.native="logout" to="/accounts/logout">Logout</router-link> -->
  
   </div>
@@ -49,7 +57,7 @@ export default {
         this.setCookie("coooooookies")
         this.isLogin = true
         this.navbar = false
-        this.$router.push('/user')
+        this.$router.push('/contents/tutorial')
       })
       .catch(err => {
         console.log(err)
@@ -57,32 +65,36 @@ export default {
       })
     },
     logout() {
-      if (this.$cookies.isKey('auth-token')) {
-        const requestHeader = {
-          headers: {
-            Authorization: `Token ${this.$cookies.get('auth-token')}`
-          }
-        }
-        axios.post(`${SERVER_URL}/rest-auth/logout/`, null, requestHeader)
-        .then(() => {
-          this.$cookies.remove('auth-token')
-          this.isLogin = false
-          this.navbar = true
-          this.$router.push('/')
-        })
-      } else {
+      this.$cookies.remove('auth-token')
+      this.isLogin = false
+      this.navbar = true
+      this.$router.push({name: "Home"})
+      // if (this.$cookies.isKey('auth-token')) {
+      //   const requestHeader = {
+      //     headers: {
+      //       Authorization: `Token ${this.$cookies.get('auth-token')}`
+      //     }
+      //   }
+      //   axios.post(`${SERVER_URL}/rest-auth/logout/`, null, requestHeader)
+      //   .then(() => {
+      //     this.$cookies.remove('auth-token')
+      //     this.isLogin = false
+      //     this.navbar = true
+      //     this.$router.push('/')
+      //   })
+      // } else {
         // const auth2 = gapi.auth2.getAuthInstance();
         // auth2.signOut().then(function () {
         //   console.log('User signed out.');
         // });
-      }
+      // }
     },
     signup(signupData) {
       axios.post(`${SERVER_URL}/rest-auth/signup/`, signupData)
       .then(response => {
         this.setCookie(response.data.key)
         this.isLogin = true
-        this.$router.push('/')
+        this.$router.push('/contents/tutorial')
         })
       .catch(err => {console.log(err)})
     },

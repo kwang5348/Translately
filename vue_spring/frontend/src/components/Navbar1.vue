@@ -24,11 +24,12 @@
         <li class="nav-item active ml-2" style="color: black; font-weight: bold; font-size: 19px;">
           <a class="nav-link"><router-link to="/contents/tutorial">서비스 더보기 ▶</router-link><span class="sr-only">(current)</span></a>
         </li>
-      </ul>  
+      </ul>
+      <ul class="navbar-nav">  
         <li class="nav-item form-inline my-2 my-lg-0">
-          <a v-if="isLogin">
-            <router-link @click.native="logout" to="/accounts/logout">Logout</router-link>
-          </a>
+          <b-link class="nav-link" v-if="isLogin" @click="logout">
+            Logout
+          </b-link>
           <a v-else>
             <a><router-link to="/accounts/login">
               <button type="button" class="btn btn-primary mr-1 font-weight-bold" id="login-button">LOGIN</button>
@@ -41,6 +42,7 @@
             <b-link class="mx-1 font-weight-bolder text-muted" href="#">ENG</b-link>
           </div>
         </li>
+      </ul>
     </div>
   </nav>
   </div>
@@ -52,6 +54,11 @@ export default {
   props: {
     isLogin: {
       type: Boolean
+    }
+  },
+  methods: {
+    logout() {
+      this.$emit('logout')
     }
   }
 }

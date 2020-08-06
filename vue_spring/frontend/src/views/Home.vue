@@ -1,11 +1,8 @@
 <template class="js">
   <body>
-    <Navbar1 :isLogin="isLogin" />
+    <Navbar1 :isLogin="isLogin" @logout="logout" />
     <div class="home">
       <!-- <router-view @submit-social-login-data="socialLogin" @submit-login-data="login" @submit-signup-data="signup"/> -->
-      <!-- <div class="bg">
-        <img src="..\img\main-bg-md2.jpg" alt="메인 배경사진">
-      </div> -->
       
         <div class="row">
           <!-- <router-view :uploadData="uploadData" @submit-upload-data="upload"/> -->
@@ -66,6 +63,9 @@ export default {
       this.ud = uploadData
       this.$emit('submit-u-d', this.ud)
     },
+    logout() {
+      this.$emit('logout')
+    }
   },
 }
 </script>
@@ -111,6 +111,4 @@ height: 680px;
   margin-left: 1200px;
   width: 600px;
 }
-
-
 </style>

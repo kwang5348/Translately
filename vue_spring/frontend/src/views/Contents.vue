@@ -2,7 +2,7 @@
   <div class="container-fluid m-0 p-0" style="height:100vh;">
     <div class="row">
       <div class="col-3">
-        <Sidebar style="height: 100vh;"/>
+        <Sidebar style="height: 100vh;" @logout="logout"/>
       </div>
       <div class="col-9">
         <Navbar2/>
@@ -25,6 +25,11 @@ export default {
     Sidebar,
     Navbar2,
     Footer,
+  },
+  methods: {
+    logout() {
+      this.$emit('logout')
+      }
   }
 
 }
