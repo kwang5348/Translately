@@ -20,11 +20,21 @@ public class UserDaoImpl implements UserDao {
 		return userlogin;
 	}	
 
-    public SqlSession getSqlSession() {
-		return sqlSession;
+	@Override
+	public UserData findUserByEmailAndPassword(UserData request) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setSqlSession(SqlSession sqlSession) {
-		this.sqlSession = sqlSession;
+	@Override
+	public UserData join(UserData request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean findUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

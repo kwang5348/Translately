@@ -9,5 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UserService {
 
 	public List<UserData> input_user_from_service(String uid, String password);
-	// public List<UserData> input_user_from_service(id);
+	public UserData findUserByEmailAndPassword(UserData request);
+	public UserData join(UserData request);
+	public boolean findUserByEmail(String email);
 }

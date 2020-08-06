@@ -45,4 +45,19 @@ public class UserServiceImpl implements UserService {
 		return userDao.input_user_from_dao();
 	}
 
+	@Override
+	public UserData findUserByEmailAndPassword(UserData request) {
+		return userDao.findUserByEmailAndPassword(request);
+	}
+
+	@Override
+	public UserData join(UserData request) {
+		return userDao.join(request);
+	}
+
+	@Override
+	public boolean findUserByEmail(String email) {
+		return findUserByEmail(email);
+	}
+
 }
