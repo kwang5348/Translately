@@ -1,16 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Contents from '../views/Contents.vue'
+// accounts
 import LoginView from '../views/accounts/LoginView.vue'
 import SignupView from '../views/accounts/SignupView.vue'
 import CompleteView from '../views/accounts/CompleteView.vue'
-import ArticleCreateView from '../views/articles/ArticleCreateView.vue'
-import ArticleListView from '../views/articles/ArticleListView.vue'
-import UserView from '../views/articles/UserView.vue'
-import TutorialView from '../views/articles/TutorialView.vue'
-import MyProject from '../views/articles/MyProject.vue'
-import MyPage from '../views/articles/MyPage.vue'
-import CreateCaption from '../views/articles/CreateCaption.vue'
+
+// contents
+import ArticleCreateView from '../views/contents/ArticleCreateView.vue'
+import Community from '../views/contents/Community.vue'
+import CreateCaption from '../views/contents/CreateCaption.vue'
+import MyPage from '../views/contents/MyPage.vue'
+import MyProject from '../views/contents/MyProject.vue'
+import TutorialView from '../views/contents/TutorialView.vue'
+import UserView from '../views/contents/UserView.vue'
 Vue.use(VueRouter)
 
   const routes = [
@@ -19,6 +23,31 @@ Vue.use(VueRouter)
     name: 'Home',
     component: Home
   },
+  {
+    path: '/contents',
+    name: 'Contents',
+    component: Contents,
+    children: [{
+      path: 'tutorial',
+      name: 'TutorialView',
+      component: TutorialView
+    },
+    {
+      path: 'community',
+      name: 'Community',
+      component: Community
+    },
+    {
+      path: 'myproject',
+      name: 'MyProject',
+      component: MyProject
+    },
+    {
+      path: 'mypage',
+      name: 'MyPage',
+      component: MyPage
+    },
+  ]},
   {
     path: '/accounts/login',
     name: 'LoginView',
@@ -35,7 +64,7 @@ Vue.use(VueRouter)
     component: CompleteView
   },
   {
-    path: '/articles/create',
+    path: '/contents/create',
     name: 'ArticleCreateView',
     component: ArticleCreateView,
     beforeEnter(from, to, next) {
@@ -46,30 +75,11 @@ Vue.use(VueRouter)
       }
     }
   },
-  {
-    path: '/articles',
-    name: 'ArticleListView',
-    component: ArticleListView
-  },
+  
   {
     path: '/user',
     name: 'UserView',
     component: UserView
-  },
-  {
-    path: '/tutorial',
-    name: 'TutorialView',
-    component: TutorialView
-  },
-  {
-    path: '/myproject',
-    name: 'MyProject',
-    component: MyProject
-  },
-  {
-    path: '/mypage',
-    name: 'MyPage',
-    component: MyPage
   },
   {
     path: '/createcaption',
