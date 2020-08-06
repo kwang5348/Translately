@@ -7,11 +7,23 @@ public class UserData {
     private String name;
     private String password;
     private int remaintime;
-    private LocalDateTime createDate;
+    private LocalDateTime createdate;
     private String token;
+
+    public String toString(){
+        return "email : " + email + "\nname : " + name + "\npassword : " + password + "\nremaintime : " + remaintime + "\ncreatedate : " + createdate + "\ntoken : " + token;
+    }
 
     public String getEmail() {
         return this.email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public int getRemaintime() {
@@ -22,12 +34,8 @@ public class UserData {
         this.remaintime = remaintime;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
+    public LocalDateTime getCreatedate() {
+        return createdate;
     }
 
     public void setEmail(String email) {

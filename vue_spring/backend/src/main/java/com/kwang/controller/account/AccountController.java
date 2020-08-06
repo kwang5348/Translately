@@ -70,7 +70,8 @@ public class AccountController {
             System.out.println("로그인 성공");
             result.status = true;
             result.data = "success";
-            result.object = user;
+			result.object = user;
+			System.out.println(user.toString());
             System.out.println(user.getEmail() + " 로그인에 성공하였습니다.");
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -100,11 +101,19 @@ public class AccountController {
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			return response;
 		} else {
-			UserData user = userService.join(request);
-			result.status = false;
-			result.data = "회원가입에 성공하였습니다.";
-			result.object = user;
-			response = new ResponseEntity<>(result, HttpStatus.OK);
+			request.setToken("temp Token@@FDASIJFEWIAFAS");
+			int successCnt = userService.join(request);
+			if(successCnt != 0){
+				result.status = true;
+				result.data = "회원가입에 성공하였습니다.";
+				result.object = successCnt;
+				response = new ResponseEntity<>(result, HttpStatus.OK);
+			} else {
+				result.status = false;
+				result.data = "회원가입에 실패하였습니다.";
+				result.object = successCnt;
+				response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			}
 		}
 
         return response;

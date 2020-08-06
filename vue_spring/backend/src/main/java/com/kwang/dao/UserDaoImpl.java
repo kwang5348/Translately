@@ -22,19 +22,31 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public UserData findUserByEmailAndPassword(UserData request) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("login dato start");
+		System.out.println(request.toString());
+		UserData result = sqlSession.selectOne("userinfo.login", request);
+		System.out.println(request.toString());
+		System.out.println("login dao end");
+		return result;
 	}
 
 	@Override
-	public UserData join(UserData request) {
-		// TODO Auto-generated method stub
-		return null;
+	public int join(UserData request) {
+		int successCount = sqlSession.insert("userinfo.join", request);
+		return successCount;
 	}
 
 	@Override
 	public boolean findUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		UserData result = sqlSession.selectOne("userinfo.detail", email);
+		if(result == null){
+			System.out.println("해당 email 유저를 찾지 못했습니다.");
+			System.out.println(result);
+			return false;
+		} else {
+			System.out.println("해당 email 유저를 찾았습니다.");
+			System.out.println(result.toString());
+			return true;
+		}
 	}
 }

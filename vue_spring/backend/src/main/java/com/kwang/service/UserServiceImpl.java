@@ -51,13 +51,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserData join(UserData request) {
+	public int join(UserData request) {
 		return userDao.join(request);
 	}
 
 	@Override
 	public boolean findUserByEmail(String email) {
-		return findUserByEmail(email);
+		return userDao.findUserByEmail(email);
 	}
 
 }

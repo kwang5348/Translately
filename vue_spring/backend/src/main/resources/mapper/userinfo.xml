@@ -4,35 +4,31 @@
 
 <mapper namespace="userinfo">
 
-	<insert id="join" parameterType="com.ssafy.dto.MemberInfo">
-		insert into ssafydb.memberinfo (id, pw, mname, address, phone)
-		values (#{id}, #{pw}, #{mname}, #{address}, #{phone})
-	</insert>
-	
-	<update id="modify" parameterType="com.ssafy.dto.MemberInfo">
-		update ssafydb.memberinfo
-		set pw = #{pw}, mname = #{mname}, address = #{address}, phone = #{phone}
-		where id = #{id}
-	</update>
-	
-	<select id="login" parameterType="com.ssafy.dto.MemberInfo" resultType="com.ssafy.dto.MemberInfo">
-		SELECT * FROM ssafydb.memberinfo
-		WHERE id = #{id}
-		AND pw = #{pw}
+	<select id="login" parameterType="com.kwang.dto.UserData" resultType="com.kwang.dto.UserData">
+		SELECT * FROM ssafydb.userinfo
+		WHERE email = #{email}
+		AND password = #{password}
 	</select>
 
-	<select id="detail" parameterType="string" resultType="com.ssafy.dto.MemberInfo">
-		SELECT * FROM ssafydb.memberinfo
-		WHERE id = #{id}
+	<insert id="join" parameterType="com.kwang.dto.UserData">
+		insert into ssafydb.userinfo (email, name, password, token)
+		values (#{email}, #{name}, #{password}, #{token})
+	</insert>
+	
+	<update id="modify" parameterType="com.kwang.dto.UserData">
+		update ssafydb.userinfo
+		set password = #{password}
+        set name = #{name}
+		where email = #{email}
+	</update>
+	
+	<select id="detail" parameterType="string" resultType="com.kwang.dto.UserData">
+		SELECT * FROM ssafydb.userinfo
+		WHERE email = #{email}
 	</select>
 	
-	<select id="list" resultType="com.ssafy.dto.MemberInfo">
-		select * from ssafydb.memberinfo
-		
-	</select>
-	
-	<delete id="delete" parameterType="com.ssafy.dto.MemberInfo">
-		DELETE from ssafydb.memberInfo
-		WHERE id =#{id}
+	<delete id="delete" parameterType="com.kwang.dto.UserData">
+		DELETE from ssafydb.userinfo
+		WHERE email =#{email}
 	</delete>
 </mapper>
