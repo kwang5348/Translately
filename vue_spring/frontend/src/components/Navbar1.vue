@@ -49,6 +49,11 @@
 <script>
 export default {
   name: 'Navbar1',
+  props: {
+    isLogin: {
+      type: Boolean
+    }
+  }
 }
 </script>
 

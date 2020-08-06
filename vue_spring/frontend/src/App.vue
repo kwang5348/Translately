@@ -1,7 +1,7 @@
 <template>
   <div id="app">
      <!-- v-if="navbar" -->
-    <div class="container-fluid m-0 p-0"><router-view @upload-file="uploadFile" :video="video" :subtitles="subtitles" @submit-u-d="upload"/></div>
+    <div class="container-fluid m-0 p-0"><router-view @upload-file="uploadFile" :isLogin="isLogin" :video="video" :subtitles="subtitles" @submit-login-data="login" @submit-u-d="upload"/></div>
     <!-- <router-link @click.native="logout" to="/accounts/logout">Logout</router-link> -->
  
   </div>
@@ -42,15 +42,19 @@ export default {
       this.$router.push('/user')
     },
     login(loginData) {
-      axios.post(`${SERVER_URL}/rest-auth/login/`, loginData)
+      axios.get(`${SERVER_URL}/api/login/?uid=${loginData.uid}&password=${loginData.password}`)
       // .then(res => {console.log(res)})
       .then(response => {
-        this.setCookie(response.data.key)
+        console.log(response)
+        this.setCookie("coooooookies")
         this.isLogin = true
         this.navbar = false
+        this.$router.push('/user')
       })
-      .catch(err => console.log(err))
-      this.$router.push('/user')
+      .catch(err => {
+        console.log(err)
+        alert('Error!')
+      })
     },
     logout() {
       if (this.$cookies.isKey('auth-token')) {

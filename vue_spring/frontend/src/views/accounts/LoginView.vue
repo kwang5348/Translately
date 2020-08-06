@@ -15,10 +15,10 @@
         <img src='../../../src/img/logo-head.png' class="mt-4" alt="로고" height="40"/>
         <h3><b>Member Login</b></h3>
         <br>
-        <form style="width: 400px;" class="mx-auto">
+        <div style="width: 400px;" class="mx-auto">
           <div class="form-group text-left">
             <label for="Input1">아이디</label><br>
-            <input v-model="loginData.username" type="text" class="form-control" id="Input1" aria-describedby="emailHelp">
+            <input v-model="loginData.uid" type="text" class="form-control" id="Input1" aria-describedby="emailHelp">
             <small class="form-text text-muted">아이디를 작성해주세요</small>
           </div>
           <div class="form-group text-left">
@@ -39,7 +39,7 @@
             <p class="signintext mt-1" style="font-size: 13px">&#128505; 회원가입으로 다양하고 특별한 혜택을 즐겨보세요.</p>
             <b-col><b-button size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
           </div>
-        </form>
+        </div>
       </b-card>
     </div>
   </div>
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       loginData: {
-        username: null,
+        uid: null,
         password: null
       },
       clientId: '382938302924-8nrvj4ljcins34ne37d1fqg5q5rp85ro.apps.googleusercontent.com',

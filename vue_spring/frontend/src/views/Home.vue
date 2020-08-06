@@ -1,6 +1,6 @@
 <template class="js">
   <body>
-    <Navbar1/>
+    <Navbar1 :isLogin="isLogin" />
     <div class="home">
       <!-- <router-view @submit-social-login-data="socialLogin" @submit-login-data="login" @submit-signup-data="signup"/> -->
       <!-- <div class="bg">
@@ -51,6 +51,11 @@ export default {
   data() {
     return {
       ud: {}
+    }
+  },
+  props: {
+    isLogin: {
+      type: Boolean
     }
   },
   methods: {
