@@ -1484,7 +1484,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _nod
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({\n  baseURL: \"http://localhost:8399\",\n  headers: {\n    \"Content-type\": \"application/json\"\n  }\n}));//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvaHR0cC1jb21tb24uanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaHR0cC1jb21tb24uanM/YzQyNyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgYXhpb3MgZnJvbSBcImF4aW9zXCI7XHJcblxyXG5leHBvcnQgZGVmYXVsdCBheGlvcy5jcmVhdGUoe1xyXG4gIGJhc2VVUkw6IFwiaHR0cDovL2xvY2FsaG9zdDo4Mzk5XCIsXHJcbiAgaGVhZGVyczoge1xyXG4gICAgXCJDb250ZW50LXR5cGVcIjogXCJhcHBsaWNhdGlvbi9qc29uXCJcclxuICB9XHJcbn0pOyJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBRkEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/http-common.js\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({\n  baseURL: \"http://i3a511.p.ssafy.io:8399\",\n  headers: {\n    \"Content-type\": \"application/json\"\n  }\n}));//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvaHR0cC1jb21tb24uanMuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvaHR0cC1jb21tb24uanM/YzQyNyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgYXhpb3MgZnJvbSBcImF4aW9zXCI7XHJcblxyXG5leHBvcnQgZGVmYXVsdCBheGlvcy5jcmVhdGUoe1xyXG4gIGJhc2VVUkw6IFwiaHR0cDovL2xvY2FsaG9zdDo4Mzk5XCIsXHJcbiAgaGVhZGVyczoge1xyXG4gICAgXCJDb250ZW50LXR5cGVcIjogXCJhcHBsaWNhdGlvbi9qc29uXCJcclxuICB9XHJcbn0pOyJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQURBO0FBRkEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./src/http-common.js\n");
 
 /***/ }),
 
@@ -2023,13 +2023,13 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _nod
 
 /***/ 1:
 /*!*******************************************************************************************************************************!*\
-  !*** multi (webpack)/hot/dev-server.js (webpack)-dev-server/client?http://localhost:8080&sockPath=/sockjs-node ./src/main.js ***!
+  !*** multi (webpack)/hot/dev-server.js (webpack)-dev-server/client?http://i3a511.p.ssafy.io:8399&sockPath=/sockjs-node ./src/main.js ***!
   \*******************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\Users\multicampus\Desktop\SSAFY 2학기\subpjt2\s03p12a511\vue_spring\frontend\node_modules\webpack\hot\dev-server.js */"./node_modules/webpack/hot/dev-server.js");
-__webpack_require__(/*! C:\Users\multicampus\Desktop\SSAFY 2학기\subpjt2\s03p12a511\vue_spring\frontend\node_modules\webpack-dev-server\client\index.js?http://localhost:8080&sockPath=/sockjs-node */"./node_modules/webpack-dev-server/client/index.js?http://localhost:8080&sockPath=/sockjs-node");
+__webpack_require__(/*! C:\Users\multicampus\Desktop\SSAFY 2학기\subpjt2\s03p12a511\vue_spring\frontend\node_modules\webpack-dev-server\client\index.js?http://i3a511.p.ssafy.io:8399&sockPath=/sockjs-node */"./node_modules/webpack-dev-server/client/index.js?http://i3a511.p.ssafy.io:8399&sockPath=/sockjs-node");
 module.exports = __webpack_require__(/*! ./src/main.js */"./src/main.js");
 
 
