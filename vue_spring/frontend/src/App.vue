@@ -8,6 +8,7 @@
       :subtitles="subtitles" 
       @submit-login-data="login" 
       @submit-u-d="upload"
+      @submit-signup-data="signup"
       @logout="logout" />
     </div>
     <!-- <router-link @click.native="logout" to="/accounts/logout">Logout</router-link> -->
@@ -90,9 +91,15 @@ export default {
       // }
     },
     signup(signupData) {
-      axios.post(`${SERVER_URL}/rest-auth/signup/`, signupData)
+      const data = {
+        email: signupData.email,
+        password: signupData.password,
+        name: signupData.name,
+      }
+      axios.post(`${SERVER_URL}/rest-auth/signup/`, data)
       .then(response => {
-        this.setCookie(response.data.key)
+        console.log(response)
+        this.setCookie('cooookieees')
         this.isLogin = true
         this.$router.push('/contents/tutorial')
         })
