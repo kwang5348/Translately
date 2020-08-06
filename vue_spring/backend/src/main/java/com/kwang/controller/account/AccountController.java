@@ -10,7 +10,6 @@ import javax.validation.Valid;
 
 import com.kwang.dao.UserDao;
 import com.kwang.dto.BasicResponse;
-import com.kwang.dto.InputData;
 import com.kwang.dto.UserData;
 import com.kwang.service.UserService;
 
@@ -69,14 +68,14 @@ public class AccountController {
         if (user != null) {
             System.out.println("로그인 성공");
             result.status = true;
-            result.data = "success";
+            result.data = "login success";
 			result.object = user;
 			System.out.println(user.toString());
             System.out.println(user.getEmail() + " 로그인에 성공하였습니다.");
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
 			result.status = false;
-			result.data = "fail";
+			result.data = "login fail";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			System.out.println("로그인에 실패하였습니다.");
@@ -119,27 +118,59 @@ public class AccountController {
         return response;
 	}
 
-	// @RequestMapping(value = "/deleteuser/{id}", method = RequestMethod.GET)
-	// public String delete(@PathVariable String id, HttpSession session) {
-	// 	System.out.println("id:" + id);
-	// 	int successCnt = service.deleteMember(id);
-	// 	MemberInfo dto = (MemberInfo)session.getAttribute("userinfo");
-	// 	System.out.println(dto.getUser_id());
-	// 	if(!dto.getUser_id().equals("admin")) {
-	// 		session.invalidate();
-	// 	}
-	// 	return "redirect:/";
-	// }
+	@GetMapping("/api/account/delete")
+	@ApiOperation(value = "회원탈퇴")
+	public Object signOut(@RequestParam(required = true) final String email){
+		System.out.println("email:" + email);
+		int successCnt = userService.deleteUserByEmail(email);
 
-	// @RequestMapping(value = "/modify", method = RequestMethod.POST)
-	// public String modify(@ModelAttribute MemberInfo dto, HttpSession session) {//@ModelAttribute 생략 가능 : 파라미터 여러개를 한 번에 VO로 받기
-	// 	int successCnt = service.modify(dto);
-	// 	if(successCnt > 0) {
-	// 		MemberInfo result = service.getMember(dto.getUser_id());
-	// 		session.setAttribute("userinfo", result);
-	// 	}
-	// 	return "redirect:/";//jsp 호출
-	// }
+		ResponseEntity response = null;
+		final BasicResponse result = new BasicResponse();
+		if(email.equals("admin@translately.com")){
+			result.status = false;
+			result.data = "admin 계정은 삭제 불가능합니다.";
+			result.object = email;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+			return response;
+		}
+
+		if(successCnt != 0){
+			result.status = true;
+			result.data = "회원탈퇴에 성공하였습니다.";
+			result.object = email;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+		} else {
+			result.status = false;
+			result.data = "회원탈퇴에 실패하였습니다.";
+			result.object = email;
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		}
+		return response;	
+	}
+
+	@PostMapping("/api/account/modify")
+	@ApiOperation(value = "회원정보 수정")
+	public Object modify(@Valid @RequestBody UserData request) {
+
+        ResponseEntity response = null;
+		final BasicResponse result = new BasicResponse();
+		
+		int successCnt = userService.modifyUser(request);
+		if(successCnt != 0){
+			result.status = true;
+			result.data = "회원정보 수정에 성공하였습니다.";
+			result.object = successCnt;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+		} else {
+			result.status = false;
+			result.data = "회원정보 수정에 실패하였습니다.";
+			result.object = successCnt;
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		}
+		
+
+        return response;
+	}
 
 
 }

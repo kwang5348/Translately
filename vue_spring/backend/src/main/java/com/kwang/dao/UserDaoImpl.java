@@ -49,4 +49,19 @@ public class UserDaoImpl implements UserDao {
 			return true;
 		}
 	}
+
+	@Override
+	public int deleteUserByEmail(String request) {
+		int successCount = sqlSession.delete("userinfo.delete", request);
+		return successCount;
+	}
+
+	@Override
+	public int modifyUser(UserData request) {
+		int successCount = sqlSession.update("userinfo.modify", request);
+		return successCount;
+
+	}
+
+
 }

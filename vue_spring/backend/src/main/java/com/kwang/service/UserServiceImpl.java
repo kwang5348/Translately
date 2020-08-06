@@ -60,4 +60,15 @@ public class UserServiceImpl implements UserService {
 		return userDao.findUserByEmail(email);
 	}
 
+	@Override
+	public int deleteUserByEmail(String request) {
+		
+		return userDao.deleteUserByEmail(request);
+	}
+
+	@Override
+	public int modifyUser(UserData request) {
+		return userDao.modifyUser(request);
+	}
+
 }

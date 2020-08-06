@@ -18,7 +18,7 @@
 	<update id="modify" parameterType="com.kwang.dto.UserData">
 		update ssafydb.userinfo
 		set password = #{password}
-        set name = #{name}
+        , name = #{name}
 		where email = #{email}
 	</update>
 	
@@ -27,7 +27,7 @@
 		WHERE email = #{email}
 	</select>
 	
-	<delete id="delete" parameterType="com.kwang.dto.UserData">
+	<delete id="delete" parameterType="String">
 		DELETE from ssafydb.userinfo
 		WHERE email =#{email}
 	</delete>

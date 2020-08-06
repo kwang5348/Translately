@@ -46,7 +46,8 @@ import com.kwang.service.VideoTranslateService;
 import com.kwang.stt.InfiniteStreamRecognize;
 import com.kwang.stt.Recognize;
 
-@CrossOrigin(origins = { "http://localhost:3000" })
+@CrossOrigin(origins = { "http://localhost:3000",
+					"http://i3a511.p.ssafy.io/" })
 @RestController
 public class VideoController {
 

@@ -12,4 +12,6 @@ public interface UserService {
 	public UserData findUserByEmailAndPassword(UserData request);
 	public int join(UserData request);
 	public boolean findUserByEmail(String email);
+	public int deleteUserByEmail(String request);
+	public int modifyUser(UserData request);
 }
