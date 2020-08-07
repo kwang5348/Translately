@@ -99,7 +99,6 @@ export default {
       console.log("start")
       this.progress = 0;
       this.uploadData.name = this.selectedFiles.item(0).name
-      this.$emit('submit-upload-data', this.uploadData)
       this.currentFile = this.selectedFiles.item(0);
       this.$emit('upload-file', this.currentFile)
       UploadService.upload(this.currentFile, event => {
@@ -107,6 +106,7 @@ export default {
       })
         .then(response => {
           this.message = response.data.message;
+          this.$emit('submit-upload-data', this.uploadData)
           // return UploadService.getFiles();
         })
         // .then(files => {
