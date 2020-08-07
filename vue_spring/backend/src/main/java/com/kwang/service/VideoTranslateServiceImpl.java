@@ -49,9 +49,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	@Override
 	public String convertToAudio(String filepath) throws Exception {
 		final Runtime run = Runtime.getRuntime();
-		// 뒤에서 .mp4 스트링을 제거하는 코드인데 입력되는 file형식이 많아지면 수정해야함
 		if (filepath.indexOf(".mp4") == -1) {
-			return "input File is not supported";
+			return null;
 		}
 
 		String resultFile = filepath.replace(".mp4", ".wav");
@@ -73,7 +72,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	@Override
 	public List<Transcript> translateLocalFile(final String filepath) throws Exception {
 		final Recognize rec = new Recognize();
-
+		System.out.println("video service videotran filepath  : " + filepath);
 		List<SpeechRecognitionResult> results = rec.syncRecognizeWords(filepath);
 		List<Transcript> tranList = new ArrayList<Transcript>();
 		for (SpeechRecognitionResult result : results) {
@@ -175,7 +174,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public List<Transcript> parseTranslateResult(List<Transcript> tranList) throws IOException {
+	public String parseTranslateResult(List<Transcript> tranList) throws IOException {
 		List<Transcript> subTranList = new ArrayList<Transcript>();
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
@@ -247,7 +246,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			}
 		}
 
-		return subTranList;
+		return setSrt.toString();
 	}
 
 	@Override

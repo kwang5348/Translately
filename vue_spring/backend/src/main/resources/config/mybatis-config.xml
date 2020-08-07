@@ -5,6 +5,7 @@
 	<mappers>
         <mapper resource="mapper/user.xml" />
 		<mapper resource="mapper/userinfo.xml" />
+		<mapper resource="mapper/transcript.xml" />
 	</mappers>
 
 </configuration>

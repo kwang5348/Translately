@@ -14,6 +14,6 @@ public interface VideoTranslateService {
 	public String convertToSrt_(double time);
 	public String convertToVTT_(double time);
 	public boolean converToSrtFile_(String contents, String filename) throws IOException;
-	public List<Transcript> parseTranslateResult(List<Transcript> tranList) throws IOException;
+	public String parseTranslateResult(List<Transcript> tranList) throws IOException;
 	public List<Transcript> papagoTranslate(List<Transcript> tranList) throws Exception;
 }

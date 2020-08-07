@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="transcript">
+   <select id="showtranslist" parameterType = "Integer" resultType="com.kwang.dto.Transcript">
+      SELECT * from subtitleque
+	  where subid = #{subid}
+   </select>
+
+   	<insert id="subtitlefileinfo" parameterType="com.kwang.dto.SubtitleFileInfo">
+		insert into ssafydb.subtitle (video_name, thumbnail, subtitle_file, youtube_url)
+		values (#{video_name}, #{thumbnail}, #{subtitle_file}, #{youtube_url})
+	</insert>
+
+	<insert id="savetranscript" parameterType="com.kwang.dto.Transcript">
+		insert into ssafydb.subtitleque (subid, startsub, targetsub, starttime, endtime)
+		values (#{subid}, #{startsub}, #{targetsub}, #{starttime}, #{endtime})
+	</insert>
+</mapper>

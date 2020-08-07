@@ -139,6 +139,7 @@ public class Recognize {
 	 */
 	public static List<SpeechRecognitionResult> syncRecognizeWords(String fileName) throws Exception {
 		try (SpeechClient speech = SpeechClient.create()) {
+			System.out.println("stt sync Recognize filepath  : " + fileName);
 			Path path = Paths.get(fileName);
 			byte[] data = Files.readAllBytes(path);
 			ByteString audioBytes = ByteString.copyFrom(data);

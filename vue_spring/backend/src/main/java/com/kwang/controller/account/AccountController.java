@@ -30,8 +30,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@CrossOrigin(origins = { "http://localhost:3000",
-						"http://i3a511.p.ssafy.io/" })
+@CrossOrigin
+//(origins = { "http://localhost:3000",
+//						"http://i3a511.p.ssafy.io" })
 @RestController
 @Controller
 public class AccountController {

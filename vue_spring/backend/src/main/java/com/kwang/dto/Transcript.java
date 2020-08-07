@@ -4,7 +4,7 @@ package com.kwang.dto;
 public class Transcript {
     String eng;
     String kor;
-    double startTime;
+    double starttime;
     double endTime;
 
     public String getEng() {
@@ -24,11 +24,11 @@ public class Transcript {
     }
 
     public double getStartTime() {
-        return this.startTime;
+        return this.starttime;
     }
 
     public void setStartTime(double startTime) {
-        this.startTime = startTime;
+        this.starttime = startTime;
     }
 
     public double getEndTime() {
@@ -44,7 +44,7 @@ public class Transcript {
     public Transcript (String eng, String kor, double startTime, double endTime){
         this.eng = eng;
         this.kor = kor;
-        this.startTime = startTime;
+        this.starttime = startTime;
         this.endTime = endTime;
     }
 
