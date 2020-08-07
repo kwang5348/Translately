@@ -59,14 +59,14 @@ export default {
       // .then(res => {console.log(res)})
       .then(response => {
         console.log(response)
-        // this.setCookie("coooooookies")
-        // this.isLogin = true
-        // this.navbar = false
-        // this.$router.push('/contents/tutorial')
+        this.setCookie("coooooookies")
+        this.isLogin = true
+        this.navbar = false
+        this.$router.push('/contents/tutorial')
       })
       .catch(err => {
         console.log(err)
-        alert('Error!')
+        alert('이메일과 비밀번호를 확인해 주세요!')
       })
     },
     logout() {
