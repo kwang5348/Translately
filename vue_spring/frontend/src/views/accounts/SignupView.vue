@@ -50,11 +50,11 @@ export default {
   name: 'SignupView',
   methods: {
     signup() {
-      const idtext = /^[A-Za-z0-9+]{8,}$/;
-      if (idtext.test(this.signupData.id) == false) {
-        alert("아이디를 8자 이상 작성해주세요.")
-        return
-      }
+      // const idtext = /^[A-Za-z0-9+]{8,}$/;
+      // if (idtext.test(this.signupData.email) == false) {
+      //   alert("아이디를 8자 이상 작성해주세요.")
+      //   return
+      // }
       if(this.signupData.password1 !== this.signupData.password2) {
         alert("비밀번호가 일치하지 않습니다.")
         return
