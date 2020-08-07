@@ -38,7 +38,7 @@
               <p>제1조 (목적) 이 약관은 Translately를 이용함에 있어 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
             </b-modal>
           </div>
-          <button @click="signup" type="submit" class="mt-2 btn btn-primary btn-lg btn-block" id="signupbtn"><b>가입하기</b></button>
+          <button @click="signup" class="mt-2 btn btn-primary btn-lg btn-block" id="signupbtn"><b>가입하기</b></button>
         </div>
       </b-card>
     </div>
