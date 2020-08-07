@@ -96,7 +96,7 @@ export default {
         password: signupData.password,
         name: signupData.name,
       }
-      axios.post(`${SERVER_URL}/rest-auth/signup/`, data)
+      axios.post(`${SERVER_URL}/api/account/join/`, data)
       .then(response => {
         console.log(response)
         this.setCookie('cooookieees')
