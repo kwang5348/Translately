@@ -57,7 +57,7 @@
         <div class="container-fluid mt-5">
             <div class="row justify-content-around">
                 <div class="col-6">
-                    <p class="font-weight-bolder" style="font-size: 30px;">영상 썸네일</p>
+                    <p class="font-weight-bolder" style="font-size: 30px;">영상 미리보기</p>
                 </div>
                 <div class="col-6">
                     <p class="font-weight-bolder" style="font-size: 30px;">자막 편집 창</p>
@@ -74,7 +74,7 @@
                     <!-- <img src="../../img/img-subedit.png" alt="자막 편집 이미지" class="subedit" height="600"> -->
                 </div>
             </div>
-            <div class="row" style="height:600px;">
+            <div class="row" style="height:400px;">
                 <div class="col-6" style="border:1px solid transparent;">
                     <!-- <p>영상</p> -->
                     <video-player-vue :video=video ></video-player-vue>

@@ -1,9 +1,9 @@
 <template>
   <div>
     <tr>
-      <td>{{ start }}</td>
-      <td>{{ subtitle.kor }}</td>
+      <td>{{ start }} ~</td>
       <td>{{ end }}</td>
+      <td>{{ subtitle.kor }}</td>
     </tr>
   </div>
 </template>
