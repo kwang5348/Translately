@@ -9,13 +9,16 @@
    </select>
 
    	<insert id="subtitlefileinfo" parameterType="com.kwang.dto.SubtitleFileInfo">
-		insert into ssafydb.subtitle (video_name, thumbnail, subtitle_file, youtube_url)
-		values (#{video_name}, #{thumbnail}, #{subtitle_file}, #{youtube_url})
+		insert into ssafydb.subtitle (userid, video_name, thumbnail, subtitle_file, youtube_url)
+		values (#{userid}, #{video_name}, #{thumbnail}, #{subtitle_file}, #{youtube_url})
+		<selectKey resultType="int" keyProperty="subid" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
-	<insert id="savetranscript" parameterType="com.kwang.dto.Transcript">
-		SELECT @last := LAST_INSERT_ID();
+
+	<insert id="savetranscriptone" parameterType="com.kwang.dto.Transcript">
 		insert into ssafydb.subtitleque (subid, startsub, targetsub, starttime, endtime)
-		values (@last, #{startsub}, #{targetsub}, #{starttime}, #{endtime})
+		values (#{subid}, #{startsub}, #{targetsub}, #{starttime}, #{endtime})
 	</insert>
 </mapper>

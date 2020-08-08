@@ -29,14 +29,21 @@ public class translateDaoImpl implements translateDao {
 		} else {
 			System.out.println("transLateDao : 파일정보 저장에 성공하였습니다.");
 		}
-		return successCount;
+		System.out.println(fileinfo.getSubid());
+		return fileinfo.getSubid();
 	}
 
 	@Override
-	public int saveTranscript(List<Transcript> translist) {
-		int successCount = sqlSession.insert("transcript.savetranscript", translist);
-		System.out.println("transLateDao : 총 " + successCount + " 의 번역 큐가 입력되었습니다.");
-		return successCount;
+	public int saveTranscript(List<Transcript> translist, int subid) {
+		int result = 0;
+		for (Transcript transcript : translist) {
+			System.out.println(transcript.toString());
+			transcript.setSubid(subid);
+			int successCount = sqlSession.insert("transcript.savetranscriptone", transcript);
+			result += successCount;
+		}
+		System.out.println("transLateDao : 총 " + result + " 의 번역 큐가 입력되었습니다.");
+		return result;
 	}
 
 

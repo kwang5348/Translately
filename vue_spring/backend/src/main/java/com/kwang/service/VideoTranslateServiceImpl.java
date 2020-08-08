@@ -51,6 +51,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	@Autowired
 	private translateDao transDao;
 	
+	static int subid;
 	@Override
 	public String convertToAudio(String fileName) throws Exception {
 		final Runtime run = Runtime.getRuntime();
@@ -73,8 +74,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		}
 
 		// 파일을 저장하는 dao 호출
-		SubtitleFileInfo fileInfo = new SubtitleFileInfo("wow excellent fantastic", "default.jpg", fileName.replace(".mp4", ""), null);
-		transDao.saveFileInfo(fileInfo);
+		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, "wow excellent fantastic", "default.jpg", fileName.replace(".mp4", ""), null);
+		subid = transDao.saveFileInfo(fileInfo);
 
 		return resultFile;
 
@@ -193,6 +194,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		for (Transcript transcript : tranList) {
 			System.out.println("====================================");
 			int tranLength = transcript.getKor().length();
+			int startLength = transcript.getEng().length();
+
 			double startTime = transcript.getStartTime();
 			double endTime = transcript.getEndTime();
 			double currentTime = transcript.getStartTime();
@@ -203,20 +206,41 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			// System.out.println("종료 시간" + endTime);
 			// System.out.println("현재 시간" + currentTime);
 			// System.out.println("구문 시간" + tranTime);
+
+			// 여기서 index (4) 가 구문 나누는 기준
 			int phraseNum = (int)(tranTime / 4);
 			if(phraseNum == 0) phraseNum = 1;
 			int phraseMaxLength = tranLength / phraseNum;
 			int phraseLength = 0;
 			StringBuffer parsedTran = new StringBuffer();
-			
+			int parsedCount = 0;
+			StringBuffer tempBuffer = new StringBuffer();
 			for(int i = 0; i < tranLength; i++){
 				currentTime += increaseTime;
 				phraseLength++;
 				parsedTran.append(transcript.getKor().charAt(i));
+
 				if(phraseLength >= phraseMaxLength && transcript.getKor().charAt(i) == ' '){
 					double phraseStartTime = startTime;
 					double phraseEndTime = currentTime;
-					subTranList.add(new Transcript(transcript.getEng(), parsedTran.toString(), phraseStartTime, phraseEndTime));
+					int startLan = parsedCount*startLength/4;
+					int endLan = (parsedCount+1)*startLength/4;
+					if(endLan > startLength) endLan = startLength;
+
+					String startPhrase = tempBuffer.toString() + transcript.getEng().substring(startLan, endLan);
+					System.out.println("변경 전 startPhrase : " + startPhrase);
+					tempBuffer = new StringBuffer();
+					for(int j = startPhrase.length() -1; j >= 0; j--){
+						if(startPhrase.charAt(j) == ' '){
+							tempBuffer.append(startPhrase.substring(j, startPhrase.length()));
+							System.out.println("tempBuffer : " + tempBuffer.toString());
+							startPhrase = startPhrase.substring(0, j);
+							System.out.println("변경 후 startPharse : " + startPhrase);
+							break;
+						}
+					}
+					parsedCount++;
+					subTranList.add(new Transcript(startPhrase, parsedTran.toString(), phraseStartTime, phraseEndTime));
 					System.out.println(parsedTran.toString());
 					{
 						// srt 양식 맞추는 과정
@@ -238,7 +262,10 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				}
 			}
 			if(parsedTran.toString().length()>0){
-				subTranList.add(new Transcript(transcript.getEng(), parsedTran.toString(), startTime, endTime));
+				int startLan = parsedCount*startLength/4;
+				int endLan = (parsedCount+1)*startLength/4;
+				if(endLan > startLength) endLan = startLength;
+				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getEng().substring(startLan, endLan), parsedTran.toString(), startTime, endTime));
 				System.out.println(parsedTran.toString());
 				{
 					// srt 양식 맞추는 과정
@@ -256,7 +283,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				}
 			}
 		}
-		transDao.saveTranscript(subTranList);
+		transDao.saveTranscript(subTranList, subid);
 		return setSrt.toString();
 	}
 

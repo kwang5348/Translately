@@ -1,26 +1,40 @@
 package com.kwang.dto;
 
-
 public class Transcript {
-    String eng;
-    String kor;
-    double starttime;
-    double endTime;
+    private int subid;
+    private String startsub;
+    private String targetsub;
+    private double starttime;
+    private double endtime;
+
+    @Override
+    public String toString() {
+        return "{" + " startsub='" + startsub + "'" + ", targetsub='" + targetsub + "'" + ", starttime='" + starttime
+                + "'" + ", endtime='" + endtime + "'" + "}";
+    }
+
+    public int getSubid() {
+        return subid;
+    }
+
+    public void setSubid(int subid) {
+        this.subid = subid;
+    }
 
     public String getEng() {
-        return this.eng;
+        return this.startsub;
     }
 
     public void setEng(String eng) {
-        this.eng = eng;
+        this.startsub = eng;
     }
 
     public String getKor() {
-        return this.kor;
+        return this.targetsub;
     }
 
     public void setKor(String kor) {
-        this.kor = kor;
+        this.targetsub = kor;
     }
 
     public double getStartTime() {
@@ -32,20 +46,20 @@ public class Transcript {
     }
 
     public double getEndTime() {
-        return this.endTime;
+        return this.endtime;
     }
 
     public void setEndTime(double endTime) {
-        this.endTime = endTime;
+        this.endtime = endTime;
     }
 
     
 
     public Transcript (String eng, String kor, double startTime, double endTime){
-        this.eng = eng;
-        this.kor = kor;
+        this.startsub = eng;
+        this.targetsub = kor;
         this.starttime = startTime;
-        this.endTime = endTime;
+        this.endtime = endTime;
     }
 
 }

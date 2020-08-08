@@ -10,7 +10,7 @@ public interface translateDao {
 
 	public List<Transcript> findTranscript(String filename);
 	public int saveFileInfo(SubtitleFileInfo fileinfo);
-	public int saveTranscript(List<Transcript> translist);
+	public int saveTranscript(List<Transcript> translist, int subid);
 	
 }
 
