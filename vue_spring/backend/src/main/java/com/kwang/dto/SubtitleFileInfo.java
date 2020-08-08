@@ -6,6 +6,13 @@ public class SubtitleFileInfo {
     private String subtitle_file;
     private String youtube_url;
 
+    public SubtitleFileInfo(String video_name, String thumbnail, String subtitle_file, String youtube_url) {
+        this.video_name = video_name;
+        this.thumbnail = thumbnail;
+        this.subtitle_file = subtitle_file;
+        this.youtube_url = youtube_url;
+    }
+
     public String getThumbnail() {
         return this.thumbnail;
     }

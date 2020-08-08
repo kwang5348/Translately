@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.apache.catalina.startup.HomesUserDatabase;
 import org.apache.ibatis.transaction.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,8 @@ import com.google.cloud.speech.v1.StreamingRecognizeResponse;
 import com.google.cloud.speech.v1.WordInfo;
 import com.google.protobuf.ByteString;
 import com.kwang.bucket.UploadObject;
+import com.kwang.dao.translateDao;
+import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 import com.kwang.papago.APIExamTranslate;
 import com.kwang.stt.Recognize;
@@ -45,17 +48,20 @@ import io.grpc.internal.ClientStream;
 @Service
 public class VideoTranslateServiceImpl implements VideoTranslateService {
 
-
+	@Autowired
+	private translateDao transDao;
+	
 	@Override
-	public String convertToAudio(String filepath) throws Exception {
+	public String convertToAudio(String fileName) throws Exception {
 		final Runtime run = Runtime.getRuntime();
-		if (filepath.indexOf(".mp4") == -1) {
+		String filePath = "/home/ubuntu/resources/wav/";
+		if (fileName.indexOf(".mp4") == -1) {
 			return null;
 		}
 
-		String resultFile = filepath.replace(".mp4", ".wav");
+		String resultFile = filePath + fileName.replace(".mp4", ".wav");
 
-		final String command = "ffmpeg -i " + filepath + " -t 55 -ar 16000 -ac 1 " + resultFile;
+		final String command = "ffmpeg -i " + filePath + fileName + " -t 20 -ar 16000 -ac 1 " + resultFile;
 		System.out.println("command : " + command);
 		try {
 			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
@@ -65,6 +71,11 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("error : " + e.getMessage());
 			e.printStackTrace();
 		}
+
+		// 파일을 저장하는 dao 호출
+		SubtitleFileInfo fileInfo = new SubtitleFileInfo("wow excellent fantastic", "default.jpg", fileName.replace(".mp4", ""), null);
+		transDao.saveFileInfo(fileInfo);
+
 		return resultFile;
 
 	}
@@ -245,7 +256,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				}
 			}
 		}
-
+		transDao.saveTranscript(subTranList);
 		return setSrt.toString();
 	}
 

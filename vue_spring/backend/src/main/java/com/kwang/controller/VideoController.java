@@ -39,8 +39,10 @@ import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.google.common.collect.Lists;
+import com.kwang.dao.translateDao;
 import com.kwang.dto.BasicResponse;
 import com.kwang.dto.RecInfo;
+import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 import com.kwang.papago.APIExamTranslate;
 import com.kwang.service.VideoTranslateService;
@@ -55,6 +57,7 @@ public class VideoController {
 
 	@Autowired
 	VideoTranslateService service;
+	translateDao transDao;
 
 	static boolean semaFlag = false;
 
@@ -64,13 +67,13 @@ public class VideoController {
 		
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-
+		
 		if(semaFlag){
 			result.status = false;
 			result.data = "다른분의 번역이 진행중입니다. 잠시만 기다려주세요";
 			result.object = null;
 			System.out.println("다른분의 번역이 진행중입니다. 잠시만 기다려주세요");
-			return new ResponseEntity<>(semaFlag, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 
 		semaFlag = true;
@@ -81,7 +84,7 @@ public class VideoController {
 		try {
 			System.out.println("translateStart");
 			System.out.println("변환 전 파일 경로 " + filePath + localFileName);
-			localFileName = service.convertToAudio(filePath + localFileName);
+			localFileName = service.convertToAudio(localFileName);
 			System.out.println("변환 후 파일 경로 " + localFileName);
 
 			int waitCount = 0;
