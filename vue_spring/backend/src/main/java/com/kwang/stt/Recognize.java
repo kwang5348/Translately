@@ -63,7 +63,7 @@ public class Recognize {
 			if (path.startsWith("gs://")) {
 				asyncRecognizeWords(path);
 			} else {
-				syncRecognizeWords(path);
+				//syncRecognizeWords(path);
 			}
 		} else if (command.equals("asyncrecognize")) {
 			if (path.startsWith("gs://")) {
@@ -137,8 +137,21 @@ public class Recognize {
 	 *
 	 * @param fileName the path to a PCM audio file to transcribe get offsets on.
 	 */
-	public static List<SpeechRecognitionResult> syncRecognizeWords(String fileName) throws Exception {
+	public static List<SpeechRecognitionResult> syncRecognizeWords(String fileName, String start) throws Exception {
 		try (SpeechClient speech = SpeechClient.create()) {
+			String startLanguage = null;
+			if(start.equals("en")) {
+				startLanguage = "en-US";
+			} else if(start.equals("ja")) {
+				startLanguage = "ja-JP";
+			} else if (start.equals("ko")){
+				startLanguage = "ko-KR";
+			} else if (start.equals("ru")){
+				startLanguage = "ru-RU";
+			} else if (start.equals("ar")){
+				startLanguage = "ar-DZ";
+			}
+
 			System.out.println("stt sync Recognize filepath  : " + fileName);
 			Path path = Paths.get(fileName);
 			byte[] data = Files.readAllBytes(path);
@@ -146,7 +159,7 @@ public class Recognize {
 
 			// Configure request with local raw PCM audio
 			RecognitionConfig config = RecognitionConfig.newBuilder().setEncoding(AudioEncoding.LINEAR16)
-					.setLanguageCode("en-US").setSampleRateHertz(16000).setEnableWordTimeOffsets(true).setEnableAutomaticPunctuation(true).build();
+					.setLanguageCode(startLanguage).setSampleRateHertz(16000).setEnableWordTimeOffsets(true).setEnableAutomaticPunctuation(true).build();
 			RecognitionAudio audio = RecognitionAudio.newBuilder().setContent(audioBytes).build();
 
 			// Use blocking call to get audio transcript

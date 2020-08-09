@@ -82,10 +82,10 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public List<Transcript> translateLocalFile(final String filepath) throws Exception {
+	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception {
 		final Recognize rec = new Recognize();
 		System.out.println("video service videotran filepath  : " + filepath);
-		List<SpeechRecognitionResult> results = rec.syncRecognizeWords(filepath);
+		List<SpeechRecognitionResult> results = rec.syncRecognizeWords(filepath, start);
 		List<Transcript> tranList = new ArrayList<Transcript>();
 		for (SpeechRecognitionResult result : results) {
 
@@ -288,7 +288,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public List<Transcript> papagoTranslate(List<Transcript> tranList) throws Exception {
+	public List<Transcript> papagoTranslate(List<Transcript> tranList, String startLanguage, String targetLanguage) throws Exception {
 		List<Transcript> papagoTranList = new ArrayList<Transcript>();
 		APIExamTranslate papago = new APIExamTranslate();
 
@@ -296,7 +296,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("translate start");
 			for (Transcript transcript : tranList) {
 				System.out.println(transcript.getEng());
-				transcript.setKor(papago.EngToKoR(transcript.getEng(), "en-US"));
+				transcript.setKor(papago.EngToKoR(transcript.getEng(), startLanguage, targetLanguage));
 				System.out.println(transcript.getKor());
 			}
 	

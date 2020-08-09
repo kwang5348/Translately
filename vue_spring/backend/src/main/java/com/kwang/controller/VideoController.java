@@ -102,7 +102,7 @@ public class VideoController {
 					return response;
 				}
 			}
-			tranList = service.translateLocalFile(localFileName);
+			tranList = service.translateLocalFile(localFileName, start, target);
 			System.out.println("translateEnd");
 		} catch (Exception e) {
 			result.status = false;
@@ -116,7 +116,7 @@ public class VideoController {
 		}
 		try {
 			System.out.println("papago translate start");
-			tranList = service.papagoTranslate(tranList);
+			tranList = service.papagoTranslate(tranList, start, target);
 			System.out.println("papago translate end");
 		} catch (Exception e) {
 			result.status = false;
