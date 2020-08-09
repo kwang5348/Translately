@@ -17,8 +17,15 @@ public class translateDaoImpl implements translateDao {
 	private SqlSession sqlSession;
 
 	@Override
+	public List<SubtitleFileInfo> findFilesByKeyword(String keyword) {
+		System.out.println("dao 진입 성공");
+		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.showfilesbykeyword", keyword);
+		return result;
+	}
+
+	@Override
 	public List<Transcript> findTranscript(String filename) {
-		return sqlSession.selectList("transcript.showtranslist");
+		return sqlSession.selectList("transcript.showtranslist", filename);
 	}
 
 	@Override
@@ -44,6 +51,14 @@ public class translateDaoImpl implements translateDao {
 		}
 		System.out.println("transLateDao : 총 " + result + " 의 번역 큐가 입력되었습니다.");
 		return result;
+	}
+
+	@Override
+	public List<SubtitleFileInfo> findAll() {
+		System.out.println("dao 진입 성공");
+		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.selectAll");
+		return result;
+
 	}
 
 

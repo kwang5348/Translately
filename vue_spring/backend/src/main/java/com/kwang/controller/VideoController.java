@@ -84,7 +84,7 @@ public class VideoController {
 		try {
 			System.out.println("translateStart");
 			System.out.println("변환 전 파일 경로 " + filePath + localFileName);
-			localFileName = service.convertToAudio(localFileName);
+			localFileName = service.convertToAudio(localFileName, start, target);
 			System.out.println("변환 후 파일 경로 " + localFileName);
 
 			int waitCount = 0;

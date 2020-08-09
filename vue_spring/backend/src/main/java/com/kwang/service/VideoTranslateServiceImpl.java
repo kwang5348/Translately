@@ -53,7 +53,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	
 	static int subid;
 	@Override
-	public String convertToAudio(String fileName) throws Exception {
+	public String convertToAudio(String fileName, String start, String target) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 		String filePath = "/home/ubuntu/resources/wav/";
 		if (fileName.indexOf(".mp4") == -1) {
@@ -74,7 +74,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		}
 
 		// 파일을 저장하는 dao 호출
-		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, "wow excellent fantastic", "default.jpg", fileName.replace(".mp4", ""), null);
+		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, "한글도 검색이 가능할까? kwang", "default.jpg", fileName.replace(".mp4", ""), null, start, target);
 		subid = transDao.saveFileInfo(fileInfo);
 
 		return resultFile;

@@ -9,7 +9,7 @@ import org.apache.ibatis.transaction.Transaction;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoTranslateService {
-	public String convertToAudio(String filepath) throws Exception;
+	public String convertToAudio(String filepath, String start, String target) throws Exception;
 	public List<Transcript> translateLocalFile(final String filepath) throws Exception;
 	public String convertToSrt_(double time);
 	public String convertToVTT_(double time);
