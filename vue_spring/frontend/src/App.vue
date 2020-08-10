@@ -123,7 +123,7 @@ export default {
         })
       .catch(response => {
         console.log(response)
-        this.subtitles = [{"eng":"ERROR ","kor":"에러","startTime":0 ,"endTime":0}]
+        this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
         this.$router.push('/createcaption')
       })
     },
