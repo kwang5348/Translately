@@ -122,7 +122,7 @@ public class VideoController {
 		try {
 			srtSuccess = true;
 			System.out.println("parse Start");
-			parsedResult = service.parseTranslateResult(tranList);
+			parsedResult = service.parseTranslateResult(tranList, localFileName);
 			System.out.println("parse End");
 		} catch (Exception e) {
 			result.status = false;

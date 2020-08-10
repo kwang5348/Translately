@@ -10,12 +10,13 @@ import org.apache.ibatis.transaction.Transaction;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoTranslateService {
+	public String catchThumbnail(String fileName, double start) throws Exception;
 	public String convertToAudio(String filepath, String start, String target) throws Exception;
 	public String downLoadYoutube(String fileLink, String epicLink) throws Exception;
 	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception;
 	public String convertToSrt_(double time);
 	public String convertToVTT_(double time);
 	public boolean converToSrtFile_(String contents, String filename) throws IOException;
-	public ParseResultSet parseTranslateResult(List<Transcript> tranList) throws IOException;
+	public ParseResultSet parseTranslateResult(List<Transcript> tranList, String fileName) throws IOException;
 	public List<Transcript> papagoTranslate(List<Transcript> tranList, String startLanguage, String targetLanguage) throws Exception;
 }

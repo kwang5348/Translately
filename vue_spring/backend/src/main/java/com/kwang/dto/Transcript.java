@@ -6,15 +6,26 @@ public class Transcript {
     private String targetsub;
     private double starttime;
     private double endtime;
+    private String que_thumbnail;
 
-    @Override
-    public String toString() {
-        return "{" + " startsub='" + startsub + "'" + ", targetsub='" + targetsub + "'" + ", starttime='" + starttime
-                + "'" + ", endtime='" + endtime + "'" + "}";
+    public Transcript(String startsub, String targetsub, double starttime, double endtime, String que_thumbnail) {
+        this.startsub = startsub;
+        this.targetsub = targetsub;
+        this.starttime = starttime;
+        this.endtime = endtime;
+        this.que_thumbnail = que_thumbnail;
     }
 
     public int getSubid() {
         return subid;
+    }
+
+    public String getQue_thumbnail() {
+        return que_thumbnail;
+    }
+
+    public void setQue_thumbnail(String que_thumbnail) {
+        this.que_thumbnail = que_thumbnail;
     }
 
     public void setSubid(int subid) {
@@ -52,14 +63,4 @@ public class Transcript {
     public void setEndTime(double endTime) {
         this.endtime = endTime;
     }
-
-    
-
-    public Transcript (String eng, String kor, double startTime, double endTime){
-        this.startsub = eng;
-        this.targetsub = kor;
-        this.starttime = startTime;
-        this.endtime = endTime;
-    }
-
 }
