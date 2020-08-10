@@ -38,6 +38,7 @@ import com.google.cloud.speech.v1.WordInfo;
 import com.google.protobuf.ByteString;
 import com.kwang.bucket.UploadObject;
 import com.kwang.dao.translateDao;
+import com.kwang.dto.ParseResultSet;
 import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 import com.kwang.papago.APIExamTranslate;
@@ -62,7 +63,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 
 		String resultFile = filePath + fileName.replace(".mp4", ".wav");
 
-		final String command = "ffmpeg -i " + filePath + fileName + " -t 20 -ar 16000 -ac 1 " + resultFile;
+		final String command = "ffmpeg -i " + filePath + fileName + " -t 55 -ar 16000 -ac 1 " + resultFile;
 		System.out.println("command : " + command);
 		try {
 			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
@@ -78,6 +79,26 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		subid = transDao.saveFileInfo(fileInfo);
 
 		return resultFile;
+
+	}
+
+	@Override
+	public String downLoadYoutube(String fileLink, String localFileName) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+		String filePath = "/home/ubuntu/resources/wav/";
+		
+		final String command = "python3 download.py " + fileLink + " " + localFileName + ".mp4";
+		System.out.println("command : " + command);
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			run.exec(command);
+
+		} catch (final Exception e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return fileLink;
 
 	}
 
@@ -186,7 +207,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public String parseTranslateResult(List<Transcript> tranList) throws IOException {
+	public ParseResultSet parseTranslateResult(List<Transcript> tranList) throws IOException {
 		List<Transcript> subTranList = new ArrayList<Transcript>();
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
@@ -208,7 +229,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			// System.out.println("구문 시간" + tranTime);
 
 			// 여기서 index (4) 가 구문 나누는 기준
-			int phraseNum = (int)(tranTime / 4);
+			int phraseNum = (int)(tranTime / 6);
 			if(phraseNum == 0) phraseNum = 1;
 			int phraseMaxLength = tranLength / phraseNum;
 			int phraseLength = 0;
@@ -223,8 +244,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				if(phraseLength >= phraseMaxLength && transcript.getKor().charAt(i) == ' '){
 					double phraseStartTime = startTime;
 					double phraseEndTime = currentTime;
-					int startLan = parsedCount*startLength/4;
-					int endLan = (parsedCount+1)*startLength/4;
+					int startLan = parsedCount*startLength/phraseNum;
+					int endLan = (parsedCount+1)*startLength/phraseNum;
 					if(endLan > startLength) endLan = startLength;
 
 					String startPhrase = tempBuffer.toString() + transcript.getEng().substring(startLan, endLan);
@@ -262,8 +283,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				}
 			}
 			if(parsedTran.toString().length()>0){
-				int startLan = parsedCount*startLength/4;
-				int endLan = (parsedCount+1)*startLength/4;
+				int startLan = parsedCount*startLength/phraseNum;
+				int endLan = (parsedCount+1)*startLength/phraseNum;
 				if(endLan > startLength) endLan = startLength;
 				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getEng().substring(startLan, endLan), parsedTran.toString(), startTime, endTime));
 				System.out.println(parsedTran.toString());
@@ -284,7 +305,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			}
 		}
 		transDao.saveTranscript(subTranList, subid);
-		return setSrt.toString();
+		
+		return new ParseResultSet(setSrt.toString(), subTranList);
 	}
 
 	@Override
