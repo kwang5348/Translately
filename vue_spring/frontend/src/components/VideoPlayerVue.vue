@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-    <video id="video" controls width="600px" preload="metadata">
+    <video id="video" controls width="500px" preload="metadata">
       <source :src="objectUrl" type="video/mp4">
     </video>
   </div>

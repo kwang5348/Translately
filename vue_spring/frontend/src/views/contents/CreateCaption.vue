@@ -55,12 +55,12 @@
   </nav>
         <!-- Page Content  -->
         <div class="container-fluid mt-5">
-            <div class="row justify-content-around">
-                <div class="col-6">
-                    <p class="font-weight-bolder" style="font-size: 30px;">영상 미리보기</p>
+            <div class="row justify-content-around" style="font-size: 25px; color: black;">
+                <div class="col-5">
+                    <p class="font-weight-bolder" style="font-size: 25px; color: black;">영상 미리보기</p>
                 </div>
-                <div class="col-6">
-                    <p class="font-weight-bolder" style="font-size: 30px;">자막 편집 창</p>
+                <div class="col-7">
+                    <p class="font-weight-bolder" style="font-size: 25px; color: black;">자막 편집 창</p>
                     <table class="table">
                       <thead>
                         <!-- <tr>
@@ -71,16 +71,30 @@
                         
                       </tbody>
                     </table>
-                    <!-- <img src="../../img/img-subedit.png" alt="자막 편집 이미지" class="subedit" height="600"> -->
                 </div>
             </div>
-            <div class="row" style="height:400px;">
-                <div class="col-6" style="border:1px solid transparent;">
+            <div class="row">
+                <div class="col-5" style="border:1px solid transparent;">
                     <!-- <p>영상</p> -->
                     <video-player-vue :video=video ></video-player-vue>
                 </div>
-                <div class="col-6" style="border:1px solid transparent;">
+                <div class="col-7" style="border:1px solid transparent;">
                     <!-- <p>자막</p> -->
+                    <b-alert show dismissible fade variant="warning" style="margin-top:2px; padding-left: 10px; padding-bottom: 0px;">
+                      <div class="row">
+                      <div class="col-1">
+                        <img src="..\..\img\img-thumbnail.png" alt="썸네일" style="height: 50px;">
+                      </div>
+                      <div class="col-9" style="padding: 0px;">
+                        <p style="color: gray; font-size: 13px; margin:0px">번역된 자막이 표시됩니다.</p>
+                        <p style="color: black; font-weight: bold; margin:0px; font-size: 13px;">이 곳에서 자막을 수정할 수 있습니다.</p>
+                      </div>
+                      <div class="col-2" style="padding: 0px;">
+                        <p style="font-size: 13px; margin-bottom: 0px;">시작 ~</p>
+                        <p style="font-size: 13px; margin-bottom: 0px;">종료</p>
+                      </div>
+                    </div>
+                    </b-alert>
                     <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle"/>  
                 </div>
             </div>
