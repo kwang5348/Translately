@@ -88,21 +88,8 @@ public class VideoController {
 			localFileName = service.convertToAudio(localFileName, start, target);
 			System.out.println("변환 후 파일 경로 " + localFileName);
 
-			int waitCount = 0;
-			File f = new File(localFileName);
-			while (!f.exists()) {
-				System.out.println("ffmpeg 작업 종료를 기다리는 중입니다......");
-				Thread.sleep(1000);
-				if (waitCount++ > 10) {
-					result.status = false;
-					result.data = "ffmpeg convert failed";
-					result.object = null;
-					System.out.println("ffmpeg convert failed");
-					response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-					semaFlag = false;
-					return response;
-				}
-			}
+			System.out.println("ffmpeg 작업 종료");
+			
 			tranList = service.translateLocalFile(localFileName, start, target);
 			System.out.println("translateEnd");
 		} catch (Exception e) {
@@ -190,26 +177,12 @@ public class VideoController {
 		try {
 			System.out.println("youtube 다운로드가 시작됩니다.");
 			
-			String localFileName = fileLink.replace("https://", "");
-			localFileName = localFileName.replace("www.youtube.com/", "");
-			localFileName = localFileName.replace("watch?v=", "");
-			System.out.println(localFileName);
-			service.downLoadYoutube(fileLink, localFileName);
-			File f = new File(filePath + localFileName + ".mp4");
-			int waitCount = 0;
-			while (!f.exists()) {
-				System.out.println("youtube 다운로드 종료를 기다리는 중입니다...... " + waitCount);
-				Thread.sleep(1000);
-				if (waitCount++ > 100) {
-					result.status = false;
-					result.data = "youtube download failed";
-					result.object = null;
-					System.out.println("youtube download failed");
-					response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-					semaFlag = false;
-					return response;
-				}
-			}
+			String epicLink = fileLink.replace("https://", "");
+			epicLink = epicLink.replace("www.youtube.com/", "");
+			epicLink = epicLink.replace("watch?v=", "");
+			System.out.println(epicLink);
+			service.downLoadYoutube(fileLink, epicLink);
+
 			System.out.println("youtube 다운로드가 종료되었습니다.");
 		} catch (Exception e) {
 			result.status = false;

@@ -6,12 +6,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.catalina.startup.HomesUserDatabase;
 import org.apache.ibatis.transaction.Transaction;
@@ -57,25 +60,54 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	public String convertToAudio(String fileName, String start, String target) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 		String filePath = "/home/ubuntu/resources/wav/";
+		
 		if (fileName.indexOf(".mp4") == -1) {
 			return null;
 		}
-
+		long time = System.currentTimeMillis();
 		String resultFile = filePath + fileName.replace(".mp4", ".wav");
 
-		final String command = "ffmpeg -i " + filePath + fileName + " -t 55 -ar 16000 -ac 1 " + resultFile;
+		final String command = "ffmpeg -y -i " + filePath + fileName + " -t 20 -ar 16000 -ac 1 " + resultFile;
 		System.out.println("command : " + command);
+		Process proc = null;
 		try {
 			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
-			run.exec(command);
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
 
-		} catch (final Exception e) {
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(3, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
 			System.out.println("error : " + e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
 		// 파일을 저장하는 dao 호출
-		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, "한글도 검색이 가능할까? kwang", "default.jpg", fileName.replace(".mp4", ""), null, start, target);
+		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, fileName, "default.jpg", fileName.replace(".mp4", ""), null, start, target);
 		subid = transDao.saveFileInfo(fileInfo);
 
 		return resultFile;
@@ -83,19 +115,49 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public String downLoadYoutube(String fileLink, String localFileName) throws Exception {
+	public String downLoadYoutube(String fileLink, String epicLink) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 		String filePath = "/home/ubuntu/resources/wav/";
-		
-		final String command = "python3 download.py " + fileLink + " " + localFileName + ".mp4";
+
+		long time = System.currentTimeMillis();
+
+		final String command = "python3.7 download.py " + fileLink + " " + epicLink;
 		System.out.println("command : " + command);
+		Process proc = null;
 		try {
 			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
-			run.exec(command);
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
 
-		} catch (final Exception e) {
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(60, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
 			System.out.println("error : " + e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
 		return fileLink;
