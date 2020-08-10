@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.apache.catalina.startup.HomesUserDatabase;
 import org.apache.ibatis.transaction.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,9 @@ import com.google.cloud.speech.v1.StreamingRecognizeResponse;
 import com.google.cloud.speech.v1.WordInfo;
 import com.google.protobuf.ByteString;
 import com.kwang.bucket.UploadObject;
+import com.kwang.dao.translateDao;
+import com.kwang.dto.ParseResultSet;
+import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 import com.kwang.papago.APIExamTranslate;
 import com.kwang.stt.Recognize;
@@ -45,18 +49,21 @@ import io.grpc.internal.ClientStream;
 @Service
 public class VideoTranslateServiceImpl implements VideoTranslateService {
 
-
+	@Autowired
+	private translateDao transDao;
+	
+	static int subid;
 	@Override
-	public String convertToAudio(String filepath) throws Exception {
+	public String convertToAudio(String fileName, String start, String target) throws Exception {
 		final Runtime run = Runtime.getRuntime();
-		// 뒤에서 .mp4 스트링을 제거하는 코드인데 입력되는 file형식이 많아지면 수정해야함
-		if (filepath.indexOf(".mp4") == -1) {
-			return "input File is not supported";
+		String filePath = "/home/ubuntu/resources/wav/";
+		if (fileName.indexOf(".mp4") == -1) {
+			return null;
 		}
 
-		String resultFile = filepath.replace(".mp4", ".wav");
+		String resultFile = filePath + fileName.replace(".mp4", ".wav");
 
-		final String command = "ffmpeg -i " + filepath + " -t 55 -ar 16000 -ac 1 " + resultFile;
+		final String command = "ffmpeg -i " + filePath + fileName + " -t 55 -ar 16000 -ac 1 " + resultFile;
 		System.out.println("command : " + command);
 		try {
 			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
@@ -66,15 +73,40 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("error : " + e.getMessage());
 			e.printStackTrace();
 		}
+
+		// 파일을 저장하는 dao 호출
+		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, "한글도 검색이 가능할까? kwang", "default.jpg", fileName.replace(".mp4", ""), null, start, target);
+		subid = transDao.saveFileInfo(fileInfo);
+
 		return resultFile;
 
 	}
 
 	@Override
-	public List<Transcript> translateLocalFile(final String filepath) throws Exception {
-		final Recognize rec = new Recognize();
+	public String downLoadYoutube(String fileLink, String localFileName) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+		String filePath = "/home/ubuntu/resources/wav/";
+		
+		final String command = "python3 download.py " + fileLink + " " + localFileName + ".mp4";
+		System.out.println("command : " + command);
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			run.exec(command);
 
-		List<SpeechRecognitionResult> results = rec.syncRecognizeWords(filepath);
+		} catch (final Exception e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return fileLink;
+
+	}
+
+	@Override
+	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception {
+		final Recognize rec = new Recognize();
+		System.out.println("video service videotran filepath  : " + filepath);
+		List<SpeechRecognitionResult> results = rec.syncRecognizeWords(filepath, start);
 		List<Transcript> tranList = new ArrayList<Transcript>();
 		for (SpeechRecognitionResult result : results) {
 
@@ -175,7 +207,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public List<Transcript> parseTranslateResult(List<Transcript> tranList) throws IOException {
+	public ParseResultSet parseTranslateResult(List<Transcript> tranList) throws IOException {
 		List<Transcript> subTranList = new ArrayList<Transcript>();
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
@@ -183,6 +215,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		for (Transcript transcript : tranList) {
 			System.out.println("====================================");
 			int tranLength = transcript.getKor().length();
+			int startLength = transcript.getEng().length();
+
 			double startTime = transcript.getStartTime();
 			double endTime = transcript.getEndTime();
 			double currentTime = transcript.getStartTime();
@@ -193,20 +227,41 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			// System.out.println("종료 시간" + endTime);
 			// System.out.println("현재 시간" + currentTime);
 			// System.out.println("구문 시간" + tranTime);
-			int phraseNum = (int)(tranTime / 4);
+
+			// 여기서 index (4) 가 구문 나누는 기준
+			int phraseNum = (int)(tranTime / 6);
 			if(phraseNum == 0) phraseNum = 1;
 			int phraseMaxLength = tranLength / phraseNum;
 			int phraseLength = 0;
 			StringBuffer parsedTran = new StringBuffer();
-			
+			int parsedCount = 0;
+			StringBuffer tempBuffer = new StringBuffer();
 			for(int i = 0; i < tranLength; i++){
 				currentTime += increaseTime;
 				phraseLength++;
 				parsedTran.append(transcript.getKor().charAt(i));
+
 				if(phraseLength >= phraseMaxLength && transcript.getKor().charAt(i) == ' '){
 					double phraseStartTime = startTime;
 					double phraseEndTime = currentTime;
-					subTranList.add(new Transcript(transcript.getEng(), parsedTran.toString(), phraseStartTime, phraseEndTime));
+					int startLan = parsedCount*startLength/phraseNum;
+					int endLan = (parsedCount+1)*startLength/phraseNum;
+					if(endLan > startLength) endLan = startLength;
+
+					String startPhrase = tempBuffer.toString() + transcript.getEng().substring(startLan, endLan);
+					System.out.println("변경 전 startPhrase : " + startPhrase);
+					tempBuffer = new StringBuffer();
+					for(int j = startPhrase.length() -1; j >= 0; j--){
+						if(startPhrase.charAt(j) == ' '){
+							tempBuffer.append(startPhrase.substring(j, startPhrase.length()));
+							System.out.println("tempBuffer : " + tempBuffer.toString());
+							startPhrase = startPhrase.substring(0, j);
+							System.out.println("변경 후 startPharse : " + startPhrase);
+							break;
+						}
+					}
+					parsedCount++;
+					subTranList.add(new Transcript(startPhrase, parsedTran.toString(), phraseStartTime, phraseEndTime));
 					System.out.println(parsedTran.toString());
 					{
 						// srt 양식 맞추는 과정
@@ -228,7 +283,10 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				}
 			}
 			if(parsedTran.toString().length()>0){
-				subTranList.add(new Transcript(transcript.getEng(), parsedTran.toString(), startTime, endTime));
+				int startLan = parsedCount*startLength/phraseNum;
+				int endLan = (parsedCount+1)*startLength/phraseNum;
+				if(endLan > startLength) endLan = startLength;
+				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getEng().substring(startLan, endLan), parsedTran.toString(), startTime, endTime));
 				System.out.println(parsedTran.toString());
 				{
 					// srt 양식 맞추는 과정
@@ -246,12 +304,13 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				}
 			}
 		}
-
-		return subTranList;
+		transDao.saveTranscript(subTranList, subid);
+		
+		return new ParseResultSet(setSrt.toString(), subTranList);
 	}
 
 	@Override
-	public List<Transcript> papagoTranslate(List<Transcript> tranList) throws Exception {
+	public List<Transcript> papagoTranslate(List<Transcript> tranList, String startLanguage, String targetLanguage) throws Exception {
 		List<Transcript> papagoTranList = new ArrayList<Transcript>();
 		APIExamTranslate papago = new APIExamTranslate();
 
@@ -259,7 +318,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("translate start");
 			for (Transcript transcript : tranList) {
 				System.out.println(transcript.getEng());
-				transcript.setKor(papago.EngToKoR(transcript.getEng(), "en-US"));
+				transcript.setKor(papago.EngToKoR(transcript.getEng(), startLanguage, targetLanguage));
 				System.out.println(transcript.getKor());
 			}
 	

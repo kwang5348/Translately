@@ -7,6 +7,10 @@ import com.kwang.dto.UserData;
 public interface UserDao {
 
 	public List<UserData> input_user_from_dao();
-
+	public UserData findUserByEmailAndPassword(UserData request);
+	public int join(UserData request);
+	public boolean findUserByEmail(String email);
+	public int deleteUserByEmail(String request);
+	public int modifyUser(UserData request);
 }
 

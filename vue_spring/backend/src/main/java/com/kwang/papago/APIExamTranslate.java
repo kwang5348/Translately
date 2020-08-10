@@ -22,12 +22,12 @@ public class APIExamTranslate {
 		}
 		return result;
 	}
-    public static String EngToKoR (String input, String inputLang) {
+    public static String EngToKoR (String inputString, String startLanguage, String targetLanguage) {
         String clientId = "C71eHoYHNr0DQdVsGN5r";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "wmpUx6Jj4D";//애플리케이션 클라이언트 시크릿값";
-        String sourceLang = checkPapagoLang(inputLang);
+
         try {
-            String text = URLEncoder.encode(input, "UTF-8");
+            String text = URLEncoder.encode(inputString, "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -35,7 +35,7 @@ public class APIExamTranslate {
             con.setRequestProperty("X-Naver-Client-Id", clientId);
             con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
             // post request
-            String postParams = "source="+ sourceLang + "&target=ko&text=" + text;
+            String postParams = "source="+ startLanguage + "&target=" + targetLanguage + "&text=" + text;
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.writeBytes(postParams);
