@@ -12,13 +12,14 @@
         style="max-width: 500px;"
         class="mt-5 mx-auto"
       >
-        <h1>Member Login</h1>
+        <img src='../../../src/img/logo-head.png' class="mt-4" alt="로고" height="40"/>
+        <h3><b>Member Login</b></h3>
         <br>
-        <form style="width: 400px;" class="mx-auto">
+        <div style="width: 400px;" class="mx-auto">
           <div class="form-group text-left">
-            <label for="Input1">아이디</label><br>
-            <input v-model="loginData.username" type="text" class="form-control" id="Input1" aria-describedby="emailHelp">
-            <small class="form-text text-muted">아이디를 작성해주세요</small>
+            <label for="Input1">이메일</label><br>
+            <input v-model="loginData.uid" type="text" class="form-control" id="Input1" aria-describedby="emailHelp">
+            <small class="form-text text-muted">이메일을 작성해주세요</small>
           </div>
           <div class="form-group text-left">
             <label for="Password1">비밀번호</label>
@@ -26,35 +27,19 @@
             <small class="form-text text-muted">비밀번호를 작성해주세요</small>
           </div>
           <div class="d-flex justify-content-right">
-            <button type="submit" class="btn btn-lg btn-block btn-primary" id="login" @click="login">로그인</button>
+            <button type="submit" class="btn btn-lg btn-block btn-primary" id="login" @click="login"><b>로그인</b></button>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <h4 class="mt-2"><b>SNS로 로그인</b></h4>
+            <button v-google-signin-button="clientId" class="google-signin-button"></button>
           </div>
           <hr>
-          <div class="exptext d-flex justify-content-between">
-            <h4>SNS로 로그인</h4>
-            <button v-google-signin-button="clientId" class="google-signin-button">Continue with Google</button>
+          <!-- <div class="d-flex justify-content-between"> -->
+          <div class="d-flex justify-content-between">
+            <p class="signintext mt-1" style="font-size: 13px">&#128505; 회원가입으로 다양하고 특별한 혜택을 즐겨보세요.</p>
+            <b-col><b-button size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
           </div>
-        </form>
-        <!-- <h5> 회원가입을 하시면 더 다양하고 특별한 혜택을 즐기실 수 있어요.</h5> -->
-        <hr>
-        <a><router-link to="/accounts/signup">회원가입</router-link></a> 하러 가기
-        <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
-        <!-- <div class="loginView">
-          <h1>로그인</h1>
-          <form style="width: 720px;" class="mx-auto">
-            <div class="form-group text-left">
-              <label for="Input1">아이디</label><br>
-              <input v-model="loginData.username" type="text" class="form-control" id="Input1" aria-describedby="emailHelp">
-              <small class="form-text text-muted">아이디를 작성해주세요</small>
-            </div>
-            <div class="form-group text-left">
-              <label for="Password1">비밀번호</label>
-              <input v-model="loginData.password" type="password" class="form-control" id="Password1">
-              <small class="form-text text-muted">비밀번호를 작성해주세요</small>
-            </div>
-            <div class="d-flex justify-content-right">
-              <button type="submit" class="btn btn-primary" @click="login">확인</button>
-            </div>
-          </form> -->
+        </div>
       </b-card>
     </div>
   </div>
@@ -76,7 +61,7 @@ export default {
   data() {
     return {
       loginData: {
-        username: null,
+        uid: null,
         password: null
       },
       clientId: '382938302924-8nrvj4ljcins34ne37d1fqg5q5rp85ro.apps.googleusercontent.com',
@@ -105,14 +90,19 @@ export default {
 } */
 
 .google-signin-button {
-  color: white;
-  background-color: rgba(66, 133, 244)
+  background: url( "../../img/btn_google_signin.png") no-repeat;
+  background-size: 100%;
+  /* background-color: rgba(66, 133, 244) */
   ;
+  width: 190px;
   height: 50px;
-  font-size: 16px;
-  border-radius: 2px;
-  padding: 5px 10px 5px 10px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+  outline: 0;
+  border: 0;
+  border-color: white;
+}
+
+.signintext {
+  margin: 0;
 }
 
 #login {
@@ -121,7 +111,7 @@ export default {
   border-style: none;
   border-radius: 0;
   font-size: 1rem;
-  padding: 5px;
+  padding: 6px;
 }
 
 </style>
