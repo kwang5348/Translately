@@ -1,6 +1,8 @@
 <template>
+<div class="wrapper">
 	<!-- Sidebar  -->
-  <nav id="sidebar" class="fixed-top inline-block">
+  <nav id="sidebar">
+    <!-- class="fixed-top inline-block" -->
     <div class="sidebar-header">
       <button type="button" id="sidebarCollapse" class="btn">
         <i class="fa fa-bars fa-inverse"></i>
@@ -46,7 +48,7 @@
 
     <ul class="list-unstyled CTAs mt-5 mt-5">
       <li>
-        <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download Tutorial PDF</a>
+        <a href="https://github.com/eppy7819/projects/files/5048206/Translately.Tutorial.pdf" class="download">Download Tutorial PDF</a>
       </li>
       <li>
         <a href="/" class="article">Back To HOME</a>
@@ -61,6 +63,7 @@
       </li>
     </ul>
   </nav>
+</div>
 </template>
 
 <script>

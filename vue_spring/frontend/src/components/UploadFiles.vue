@@ -28,10 +28,10 @@
       <b-modal id="bv-modal-example" hide-footer>
         <!-- 헤더 -->
         <template v-slot:modal-title>언어 선택</template>
-        <p>음성 인식할 언어와 자막 언어를 설정해주세요.</p>
+        <p>해당 영상의 언어와 자막으로 번역하고자 하는 언어를 설정해주세요.</p>
         <div class="d-flex justify-content-around">
-          <p><b-button variant="outline-dark" v-b-popover="'영상의 음성 언어를 선택해주세요'" title="음성 언어">음성</b-button></p>
-          <p><b-button variant="outline-dark" v-b-popover="'변환하고 싶은 자막 언어를 선택해주세요'" title="자막 언어">자막</b-button></p>
+          <p><b-button variant="dark" v-b-popover="'해당 영상의 언어를 선택해주세요'" title="음성 언어">음성</b-button></p>
+          <p><b-button variant="dark" v-b-popover="'자막으로 번역하고자 하는 언어를 선택해주세요'" title="자막 언어">자막</b-button></p>
         </div>
         <!-- 언어 선택 -->
         <div class="d-flex justify-content-around">
