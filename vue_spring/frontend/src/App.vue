@@ -1,6 +1,7 @@
 <template>
   <div id="app">
      <!-- v-if="navbar" -->
+    <Main />
     <div class="container-fluid m-0 p-0"><router-view 
       @upload-file="uploadFile" 
       :isLogin="isLogin" 
@@ -19,11 +20,15 @@
 
 <script>
 import axios from 'axios';
+import Main from "@/components/Main.vue"
 
 const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
 
 export default {
   name: 'app',
+  components: {
+    Main
+  },
   data() {
     return {
       isLogin: false,

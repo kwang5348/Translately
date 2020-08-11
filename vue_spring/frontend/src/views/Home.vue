@@ -1,11 +1,9 @@
-<template class="js">
+<template>
   <body>
-    <Navbar1 :isLogin="isLogin" @logout="logout" />
+    <!-- <Navbar1 :isLogin="isLogin" @logout="logout" /> -->
     <div class="home">
       <!-- <router-view @submit-social-login-data="socialLogin" @submit-login-data="login" @submit-signup-data="signup"/> -->
-      
         <div class="row">
-          <!-- <router-view :uploadData="uploadData" @submit-upload-data="upload"/> -->
           <div class="img col-6">
             <div class="content mt-4">
               <h1 class="font-weight-bold">내가 원하는 영상을</h1>
@@ -28,22 +26,22 @@
           </div>
         </div>    
       </div>
-    <Footer class="fixed-bottom"/>
+    <!-- <Footer class="fixed-bottom"/> -->
   </body>
 </template>
 
 <script>
 // @ is an alias to /src
 import UploadFiles from "./../components/UploadFiles"
-import Navbar1 from "@/components/Navbar1.vue"
-import Footer from "@/components/Footer.vue"
+// import Navbar1 from "@/components/Navbar1.vue"
+// import Footer from "@/components/Footer.vue"
 
 export default {
   name: 'Home',
   components: {
     UploadFiles,
-    Navbar1,
-    Footer
+    // Navbar1,
+    // Footer
   },
   data() {
     return {
