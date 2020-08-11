@@ -11,8 +11,7 @@
       @submit-signup-data="signup"
       @logout="logout" />
     </div>
-    <!-- <router-link @click.native="logout" to="/accounts/logout">Logout</router-link> -->
- 
+
   </div>
 
 

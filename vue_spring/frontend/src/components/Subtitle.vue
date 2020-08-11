@@ -3,7 +3,7 @@
   
       <div class="row sub-box">
         <div class="col-1">
-          <img src="..\img\img-thumbnail.png" alt="썸네일" style="height: 50px; margin-left: 10px;">
+          <!-- <img src="..\img\img-thumbnail.png" alt="썸네일" style="height: 50px; margin-left: 10px;"> -->
         </div>
         <div class="col-9" style="padding: 0px;">
           <p style="color: grey; font-size: 13px; margin:0px">{{ subtitle.eng }}</p>
