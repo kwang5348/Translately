@@ -30,7 +30,7 @@
 
 
 	<insert id="savetranscriptone" parameterType="com.kwang.dto.Transcript">
-		insert into ssafydb.subtitleque (subid, startsub, targetsub, starttime, endtime)
-		values (#{subid}, #{startsub}, #{targetsub}, #{starttime}, #{endtime})
+		insert into ssafydb.subtitleque (subid, startsub, targetsub, starttime, endtime, que_thumbnail)
+		values (#{subid}, #{startsub}, #{targetsub}, #{starttime}, #{endtime}, #{que_thumbnail})
 	</insert>
 </mapper>
