@@ -23,7 +23,7 @@
               <img src="..\img\upload-box.png" alt="업로드 박스" class="upload-box">
             </div>
             <div style="width:600px position: absolute;">
-              <upload-files @upload-file="uploadFile" @submit-upload-data="upload"></upload-files>
+              <upload-files @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files>
             </div>
           </div>
         </div>    
@@ -59,9 +59,8 @@ export default {
     uploadFile(video) {
       this.$emit('upload-file', video)
     },
-    upload(uploadData) {
-      this.ud = uploadData
-      this.$emit('submit-u-d', this.ud)
+    uploadOption(uploadData) {
+      this.$emit('submit-upload-option', uploadData)
     },
     logout() {
       this.$emit('logout')

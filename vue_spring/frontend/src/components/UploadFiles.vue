@@ -107,7 +107,7 @@ export default {
       })
         .then(response => {
           this.message = response.data.message;
-          this.$emit('submit-upload-data', this.uploadData)
+          this.$emit('submit-upload-option', this.uploadData)
           // return UploadService.getFiles();
         })
         // .then(files => {

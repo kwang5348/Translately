@@ -7,7 +7,7 @@
       :video="video" 
       :subtitles="subtitles" 
       @submit-login-data="login" 
-      @submit-u-d="upload"
+      @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
       @logout="logout" />
     </div>
@@ -112,7 +112,7 @@ export default {
     uploadFile(video) {
       this.video = video
     },
-    upload(uploadData) {
+    uploadOption(uploadData) {
       this.ud = uploadData
       console.log(uploadData)
       axios.get(`${SERVER_URL}/api/translate?start=${uploadData.start}&target=${uploadData.target}&fileName=${uploadData.name}`)
