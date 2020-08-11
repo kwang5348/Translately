@@ -37,16 +37,16 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean findUserByEmail(String email) {
+	public UserData findUserByEmail(String email) {
 		UserData result = sqlSession.selectOne("userinfo.detail", email);
 		if(result == null){
 			System.out.println("해당 email 유저를 찾지 못했습니다.");
 			System.out.println(result);
-			return false;
+			return null;
 		} else {
 			System.out.println("해당 email 유저를 찾았습니다.");
 			System.out.println(result.toString());
-			return true;
+			return result;
 		}
 	}
 

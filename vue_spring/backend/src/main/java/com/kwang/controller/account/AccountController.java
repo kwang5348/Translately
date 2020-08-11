@@ -92,11 +92,11 @@ public class AccountController {
 	@PostMapping("/api/account/join")
 	@ApiOperation(value = "회원가입")
 	public Object signup(@Valid @RequestBody UserData request) {
-		boolean isExist = userService.findUserByEmail(request.getEmail());
+		UserData user = userService.findUserByEmail(request.getEmail());
 
         ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-		if(isExist){
+		if(user != null){
 			result.status = false;
 			result.data = "이미 가입되어 있는 이메일입니다.";
 			result.object = null;
@@ -150,7 +150,7 @@ public class AccountController {
 		}
 		return response;	
 	}
-
+	
 	@PostMapping("/api/account/modify")
 	@ApiOperation(value = "회원정보 수정")
 	public Object modify(@Valid @RequestBody UserData request) {
@@ -176,6 +176,30 @@ public class AccountController {
 	}
 
 
+	@GetMapping("/api/account/findByEmail")
+	@ApiOperation(value = "회원정보 조회")
+	public Object findByEmail(@RequestParam(required = true) final String email){
+		System.out.println("email:" + email);
+		UserData user = userService.findUserByEmail(email);
+
+		ResponseEntity response = null;
+		final BasicResponse result = new BasicResponse();
+
+		if(user != null){
+			result.status = true;
+			result.data = "회원정보 조회에 성공하였습니다.";
+			result.object = user;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+		} else {
+			result.status = false;
+			result.data = "회원정보 조회에 실패 하였습니다.";
+			result.object = null;
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		}
+		return response;	
+	}
+
+	
 }
 
 
