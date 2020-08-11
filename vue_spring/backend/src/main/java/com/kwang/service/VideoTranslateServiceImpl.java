@@ -330,6 +330,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		List<Transcript> subTranList = new ArrayList<Transcript>();
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
+		setSrt.append("WEB VTT\n\n");
 		System.out.println(tranList.size());
 		for (Transcript transcript : tranList) {
 			System.out.println("====================================");

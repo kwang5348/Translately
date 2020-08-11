@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +36,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.grpc.Server;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import com.google.api.gax.paging.Page;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -56,11 +64,15 @@ import com.kwang.stt.Recognize;
 @RestController
 public class VideoController {
 
+	private static final String EXTENSION = ".vtt";
+    private static final String SERVER_LOCATION = "/home/ubuntu/resources";
+
+	static boolean semaFlag = false;
+
 	@Autowired
 	VideoTranslateService service;
 	translateDao transDao;
 
-	static boolean semaFlag = false;
 
 	@GetMapping(value = "/api/translate")
 	public Object translately(@RequestParam(required = true) final String start,
@@ -247,6 +259,27 @@ public class VideoController {
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 		return response;
 	}
+
+    @GetMapping(value = "/api/vtt/download")
+    public ResponseEntity<Resource> download(@RequestParam(required = true) final String fileLink) throws IOException {
+        File file = new File(SERVER_LOCATION + "/vtt/" + fileLink + EXTENSION);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=subtitle.vtt");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
+    }
+
 }
 
 
