@@ -7,8 +7,7 @@
       <track label="english1" kind="subtitles" srclang="ko" :src=downloadUrl>
       <track label="english2" kind="subtitles" srclang="en" :src=downloadUrl>
     </video>
-    <a :href="downloadUrl"> 자막 다운로드 </a>
-    <a :href=downloadUrl> 자막 다운로드 </a>
+    <b-button variant="primary"><a :href="downloadUrl"> 자막 다운로드 </a></b-button>
   </div>
 </template>
 
@@ -32,7 +31,7 @@ export default {
     },
     downloadUrl() {
       const name = this.video.name.replace(".mp4", "")
-      const url = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + name 
+      const url = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + name
       return url
     }
   }
