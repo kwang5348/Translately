@@ -32,6 +32,7 @@ export default {
       navbar : true,
       subtitles: undefined,
       video: undefined,
+      uploadData: null,
     }
   },
   created() {
@@ -112,8 +113,11 @@ export default {
     uploadFile(video) {
       this.video = video
     },
-    uploadOption(uploadOption) {
-      axios.get(`${SERVER_URL}/api/translate?start=${uploadOption.start}&target=${uploadOption.target}&fileName=${uploadOption.name}`)
+    uploadOption(ud) {
+      this.uploadData = ud
+      console.log("올라온 데이터")
+      console.log(this.uploadData)      
+      axios.get(`${SERVER_URL}/api/translate?start=${this.uploadData.start}&target=${this.uploadData.target}&fileName=${this.uploadData.name}`)
       .then(response => {
         console.log(response)
         this.subtitles = response.data.object
