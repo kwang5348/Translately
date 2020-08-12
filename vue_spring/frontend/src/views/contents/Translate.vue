@@ -9,7 +9,7 @@
       <upload-files @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files>
 
     </div>
-    <h1 style="margin-top: 800px; margin-left: -700px">유튜브 영상 링크로 번역</h1>
+    <h1>유튜브 영상 링크로 번역</h1>
   </div>
 </template>
 
@@ -40,14 +40,14 @@ import UploadFiles from "../../components/UploadFiles"
 <style scoped>
 
 .upload-box {
-  margin-top: 100px;
+  /* margin-top: 100px;
   margin-right: 500px;
-  width:750px 
+  width:750px  */
 }
 
 .upload-content {
-  margin-top: 500px;
-  margin-left: -1100px;
+  /* margin-top: 500px;
+  margin-left: -1100px; */
 }
 
 </style>

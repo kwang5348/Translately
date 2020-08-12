@@ -37,6 +37,7 @@
           <b-button block squared variant="primary" class="mt-3" @click="upload" style="font-weight: bold;">변환 시작</b-button>
           <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button> -->
         </div>
+        
         <hr>
         <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
         <div v-if="currentFile" class="progress">
