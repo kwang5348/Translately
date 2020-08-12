@@ -6,7 +6,7 @@
       <img src="..\..\img\upload-box.png" alt="업로드 박스" class="upload-box">
     </div>
     <div class="upload-content" style="position: absolute;">
-      <upload-files @upload-file="uploadFile" @submit-upload-data="upload"></upload-files>
+      <upload-files @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files>
     </div>
     <h1 style="margin-top: 800px; margin-left: -700px">유튜브 영상 링크로 번역</h1>
   </div>
@@ -23,16 +23,14 @@ import UploadFiles from "../../components/UploadFiles"
     },
     data() {
       return {
-        ud: {}
       }
     },
     methods: {
       uploadFile(video) {
         this.$emit('upload-file', video)
       },
-      upload(uploadData) {
-        this.ud = uploadData
-        this.$emit('submit-u-d', this.ud)
+      uploadOption(uploadOption) {
+        this.$emit('submit-upload-option', uploadOption)
       },
     },
   }

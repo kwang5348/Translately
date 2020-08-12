@@ -7,7 +7,7 @@
       :video="video" 
       :subtitles="subtitles" 
       @submit-login-data="login" 
-      @submit-u-d="upload"
+      @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
       @logout="logout" />
     </div>
@@ -30,7 +30,6 @@ export default {
     return {
       isLogin: false,
       navbar : true,
-      ud: {},
       subtitles: undefined,
       video: undefined,
     }
@@ -113,10 +112,8 @@ export default {
     uploadFile(video) {
       this.video = video
     },
-    upload(uploadData) {
-      this.ud = uploadData
-      console.log(uploadData)
-      axios.get(`${SERVER_URL}/api/translate?start=${uploadData.start}&target=${uploadData.target}&fileName=${uploadData.name}`)
+    uploadOption(uploadOption) {
+      axios.get(`${SERVER_URL}/api/translate?start=${uploadOption.start}&target=${uploadOption.target}&fileName=${uploadOption.name}`)
       .then(response => {
         console.log(response)
         this.subtitles = response.data.object

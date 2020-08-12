@@ -50,9 +50,8 @@ export default {
     uploadFile(video) {
       this.$emit('upload-file', video)
     },
-    upload(uploadData) {
-      this.ud = uploadData
-      this.$emit('submit-u-d', this.ud)
+    uploadOption(uploadOption) {
+      this.$emit('submit-upload-option', uploadOption)
     },
     logout() {
       this.$emit('logout')
@@ -86,5 +85,4 @@ export default {
   margin-top: 300px;
   margin-left: 700px;
 }
-
 </style>
