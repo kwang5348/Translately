@@ -11,8 +11,7 @@
       @submit-signup-data="signup"
       @logout="logout" />
     </div>
-    <!-- <router-link @click.native="logout" to="/accounts/logout">Logout</router-link> -->
- 
+
   </div>
 
 
@@ -25,6 +24,8 @@ const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
 
 export default {
   name: 'app',
+  components: {
+  },
   data() {
     return {
       isLogin: false,

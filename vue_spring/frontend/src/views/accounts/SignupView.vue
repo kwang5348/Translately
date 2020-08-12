@@ -32,10 +32,13 @@
               <input v-model="signupData.isTerm" type="checkbox" id="term"/>
               <span> 약관에 동의합니다</span>
             </label>
-            <b-button squared variant="primary" size="sm" v-b-modal.my-modal class="go-term"><b>약관 보기</b></b-button>
-            <b-modal id="my-modal">
-              <p><b>Translately 회원가입 약관</b></p>
-              <p>제1조 (목적) 이 약관은 Translately를 이용함에 있어 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+            <b-button squared variant="primary" size="sm" v-b-modal.modal-scrollable class="go-term"><b>약관 보기</b></b-button>
+            <b-modal id="modal-scrollable" scrollable>
+              <p class="my-2">
+              <b>Translately 회원가입 약관</b><br>
+              제1조 (목적) 이 약관은 Translately를 이용함에 있어 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
+              
+              </p>
             </b-modal>
           </div>
           <button @click="signup" class="mt-2 btn btn-primary btn-lg btn-block" id="signupbtn"><b>가입하기</b></button>

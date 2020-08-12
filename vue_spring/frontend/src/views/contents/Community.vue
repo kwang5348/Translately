@@ -4,7 +4,7 @@
   <!-- <div class="article-list-view"> -->
   <!-- Page Content  -->
   <div class="img mb-5" style="margin-top: 70px; margin-left: 300px">
-    <img src='../../../src/img/prepare.png' alt="준비중 로고" height="300"/>
+    <!-- <img src='../../../src/img/prepare.png' alt="준비중 로고" height="300"/> -->
     <h4>다른 사람들이 만든 자막을 볼 수 있습니다.</h4>
     <form class="form-inline d-flex justify-content-center">
       <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">

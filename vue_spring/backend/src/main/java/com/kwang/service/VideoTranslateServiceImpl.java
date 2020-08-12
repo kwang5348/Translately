@@ -6,12 +6,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.catalina.startup.HomesUserDatabase;
 import org.apache.ibatis.transaction.Transaction;
@@ -53,29 +56,115 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	private translateDao transDao;
 	
 	static int subid;
+
+	@Override
+	public String catchThumbnail(String fileName, double start) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+		String filePath = "/home/ubuntu/resources/wav/";
+		
+		if (fileName.indexOf(".mp4") == -1) {
+			return null;
+		}
+		long time = System.currentTimeMillis();
+		String resultFile = filePath + fileName.replace(".mp4", ".wav");
+
+		final String command = "ffmpeg -y -i " + filePath + fileName + " -t 20 -ar 16000 -ac 1 " + resultFile;
+		System.out.println("command : " + command);
+		Process proc = null;
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
+
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(3, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
+		}
+
+		// 파일을 저장하는 dao 호출
+
+		return resultFile;
+
+	}
+
 	@Override
 	public String convertToAudio(String fileName, String start, String target) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 		String filePath = "/home/ubuntu/resources/wav/";
+		
 		if (fileName.indexOf(".mp4") == -1) {
 			return null;
 		}
-
+		long time = System.currentTimeMillis();
 		String resultFile = filePath + fileName.replace(".mp4", ".wav");
 
-		final String command = "ffmpeg -i " + filePath + fileName + " -t 55 -ar 16000 -ac 1 " + resultFile;
+		final String command = "ffmpeg -y -i " + filePath + fileName + " -t 20 -ar 16000 -ac 1 " + resultFile;
 		System.out.println("command : " + command);
+		Process proc = null;
 		try {
 			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
-			run.exec(command);
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
 
-		} catch (final Exception e) {
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(3, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
 			System.out.println("error : " + e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
 		// 파일을 저장하는 dao 호출
-		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, "한글도 검색이 가능할까? kwang", "default.jpg", fileName.replace(".mp4", ""), null, start, target);
+		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, fileName, "default.jpg", fileName.replace(".mp4", ""), null, start, target);
 		subid = transDao.saveFileInfo(fileInfo);
 
 		return resultFile;
@@ -83,19 +172,49 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public String downLoadYoutube(String fileLink, String localFileName) throws Exception {
+	public String downLoadYoutube(String fileLink, String epicLink) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 		String filePath = "/home/ubuntu/resources/wav/";
-		
-		final String command = "python3 download.py " + fileLink + " " + localFileName + ".mp4";
+
+		long time = System.currentTimeMillis();
+
+		final String command = "python3.7 download.py " + fileLink + " " + epicLink;
 		System.out.println("command : " + command);
+		Process proc = null;
 		try {
 			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
-			run.exec(command);
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
 
-		} catch (final Exception e) {
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(60, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
 			System.out.println("error : " + e.getMessage());
 			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
 		return fileLink;
@@ -127,7 +246,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				String targetWord = wordInfo.getWord();
 				int wordLength = targetWord.length();
 				if (targetWord.charAt(wordLength - 1) == '.' || wordIndex == alternative.getWordsList().size() - 1) {
-					Transcript tempScript = new Transcript("", "", 0, 0);
+					Transcript tempScript = new Transcript("", "", 0, 0, "default.jpg");
 					endFlag = true;
 					parseTarget.append(targetWord); 
 					parseTarget.append(" ");
@@ -207,10 +326,11 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public ParseResultSet parseTranslateResult(List<Transcript> tranList) throws IOException {
+	public ParseResultSet parseTranslateResult(List<Transcript> tranList, String fileName) throws IOException {
 		List<Transcript> subTranList = new ArrayList<Transcript>();
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
+		setSrt.append("WEB VTT\n\n");
 		System.out.println(tranList.size());
 		for (Transcript transcript : tranList) {
 			System.out.println("====================================");
@@ -261,7 +381,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 						}
 					}
 					parsedCount++;
-					subTranList.add(new Transcript(startPhrase, parsedTran.toString(), phraseStartTime, phraseEndTime));
+					subTranList.add(new Transcript(startPhrase, parsedTran.toString(), phraseStartTime, phraseEndTime, "default.jpg"));
 					System.out.println(parsedTran.toString());
 					{
 						// srt 양식 맞추는 과정
@@ -286,7 +406,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				int startLan = parsedCount*startLength/phraseNum;
 				int endLan = (parsedCount+1)*startLength/phraseNum;
 				if(endLan > startLength) endLan = startLength;
-				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getEng().substring(startLan, endLan), parsedTran.toString(), startTime, endTime));
+				
+				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getEng().substring(startLan, endLan), parsedTran.toString(), startTime, endTime, "default.jpg"));
 				System.out.println(parsedTran.toString());
 				{
 					// srt 양식 맞추는 과정
@@ -304,6 +425,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				}
 			}
 		}
+
+
 		transDao.saveTranscript(subTranList, subid);
 		
 		return new ParseResultSet(setSrt.toString(), subTranList);
