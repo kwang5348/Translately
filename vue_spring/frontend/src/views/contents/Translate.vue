@@ -1,0 +1,54 @@
+<template>
+  <div class="wrapper">
+    <h1>자막을 생성하고 싶은 영상을 업로드 하세요.</h1> 
+    <!-- <h5>‘파일 선택‘ 버튼을 누르거나 마우스로 파일을 이곳에 끌어서 놓으세요.</h5> -->
+    <div class="container" style="position: absolute;">
+      <img src="..\..\img\upload-box.png" alt="업로드 박스" class="upload-box">
+    </div>
+    <div class="upload-content" style="position: absolute;">
+      <upload-files @upload-file="uploadFile" @submit-upload-data="upload"></upload-files>
+    </div>
+    <h1 style="margin-top: 800px; margin-left: -700px">유튜브 영상 링크로 번역</h1>
+  </div>
+</template>
+
+<script>
+import UploadFiles from "../../components/UploadFiles"
+
+
+  export default {
+    name: 'Translate',
+    components: {
+    UploadFiles,
+    },
+    data() {
+      return {
+        ud: {}
+      }
+    },
+    methods: {
+      uploadFile(video) {
+        this.$emit('upload-file', video)
+      },
+      upload(uploadData) {
+        this.ud = uploadData
+        this.$emit('submit-u-d', this.ud)
+      },
+    },
+  }
+</script>
+
+<style scoped>
+
+.upload-box {
+  margin-top: 100px;
+  margin-right: 500px;
+  width:750px 
+}
+
+.upload-content {
+  margin-top: 500px;
+  margin-left: -1100px;
+}
+
+</style>

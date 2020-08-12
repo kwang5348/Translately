@@ -2,28 +2,30 @@
   <div> 
   <!-- Image and text  이미지에 글자 -->
   <nav class="navbar navbar-expand-lg navbar-white bg-white" id="whole-navbar">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand ml-5" href="/">
       <img src='../img/logo-letter2.png' alt="서비스 로고" width="180"/>
     </a>
-    <ul class="navbar-nav" style="margin: 0px">
+    <ul class="navbar-nav mx-auto" style="margin: 0px">
       <li class="nav-item active ml-2" style="color: black; font-size: 19px;">
         <a class="nav-link"><router-link to="/contents/tutorial">서비스 튜토리얼</router-link><span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item ml-2" style="color: black; font-size: 19px;">
-        <a class="nav-link"><router-link to="/contents/tutorial">자막 변환</router-link><span class="sr-only"></span></a>
+        <a class="nav-link"><router-link to="/contents/translate">자막 변환</router-link><span class="sr-only"></span></a>
       </li>
       <li class="nav-item ml-2" style="color: black; font-size: 19px;">
-        <a class="nav-link"><router-link to="/contents/tutorial">다운로드</router-link><span class="sr-only"></span></a>
+        <a class="nav-link" v-b-modal.modal-1 ><router-link to="#">다운로드</router-link><span class="sr-only"></span></a>
       </li>
+      <b-modal id="modal-1">
+        <p class="my-3">준비중입니다.</p>
+      </b-modal>
       <li class="nav-item ml-2" style="color: black; font-size: 19px;">
-        <a class="nav-link"><router-link to="/contents/tutorial">FAQ</router-link><span class="sr-only"></span></a>
+        <a class="nav-link" v-b-modal.modal-1><router-link to="#">FAQ</router-link><span class="sr-only"></span></a>
       </li>
     </ul>
     <ul class="navbar-nav">  
-      <li class="nav-item form-inline my-2 my-lg-0" style="font-size: 19px;">
+      <li class="nav-item form-inline mr-5" style="font-size: 19px;">
         <b-link class="nav-link" v-if="isLogin" @click="logout">
-          Logout
-        </b-link>
+          Logout</b-link>
         <a v-else>
           <a><router-link to="/accounts/login">
             로그인 </router-link></a>

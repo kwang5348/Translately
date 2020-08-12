@@ -9,19 +9,19 @@ import CompleteView from '../views/accounts/CompleteView.vue'
 
 // contents
 import ArticleCreateView from '../views/contents/ArticleCreateView.vue'
-import Community from '../views/contents/Community.vue'
-import CreateCaption from '../views/contents/CreateCaption.vue'
-import MyPage from '../views/contents/MyPage.vue'
-import MyProject from '../views/contents/MyProject.vue'
 import TutorialView from '../views/contents/TutorialView.vue'
-import UserView from '../views/contents/UserView.vue'
+import MyProject from '../views/contents/MyProject.vue'
+import Community from '../views/contents/Community.vue'
+import MyPage from '../views/contents/MyPage.vue'
+import CreateCaption from '../views/contents/CreateCaption.vue'
+import Translate from '../views/contents/Translate.vue'
 Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/contents',
@@ -46,6 +46,11 @@ Vue.use(VueRouter)
       path: 'mypage',
       name: 'MyPage',
       component: MyPage
+    },
+    {
+    path: 'translate',
+    name: 'Translate',
+    component: Translate
     },
   ]},
   {
@@ -74,12 +79,6 @@ Vue.use(VueRouter)
         next('/accounts/login')
       }
     }
-  },
-  
-  {
-    path: '/user',
-    name: 'UserView',
-    component: UserView
   },
   {
     path: '/createcaption',

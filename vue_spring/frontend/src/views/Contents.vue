@@ -8,7 +8,6 @@
         <Navbar2/>
         <router-view/>
       </div>
-      <Footer/>
     </div>
   </div>
 </template>
@@ -16,15 +15,12 @@
 <script>
 import Navbar2 from "@/components/Navbar2.vue"
 import Sidebar from "@/components/Sidebar.vue"
-import Footer from "@/components/Footer.vue"
-
 
 export default {
   name : 'Contents',
   components : {
     Sidebar,
     Navbar2,
-    Footer,
   },
   methods: {
     logout() {
