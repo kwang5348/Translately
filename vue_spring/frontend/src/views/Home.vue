@@ -3,10 +3,11 @@
     <Navbar1 :isLogin="isLogin" @logout="logout" />
     <div class="home">
       <!-- <router-view @submit-social-login-data="socialLogin" @submit-login-data="login" @submit-signup-data="signup"/> -->
-          <img src='../img/main.png' alt="메인 임시" style="width: 100%"/>
-          <div class="btn btn-primary text-white justify-content-center" style="margin-top: -400px; margin-left: 840px; font-weight: bold; font-size: 30px;">
-            <router-link to="/contents/translate">자막 변환 시작하기</router-link>
-          </div>
+        <img src='../img/main.png' alt="메인 임시" style="width: 100%"/>
+        <b-button variant="primary" class="start-button" href="/contents/translate" 
+          style="font-weight: bold; font-size: 25px;">
+            자막 변환 시작하기
+          </b-button>
           <img src='../img/main-2.png' alt="메인 임시" style="width: 100%"/>
           <img src='../img/main-3.png' alt="메인 임시" style="width: 100%"/>
           <!-- <router-view @submit-social-login-data="socialLogin" @submit-login-data="login" @submit-signup-data="signup"/> -->
@@ -78,5 +79,11 @@ export default {
 .img {
   margin-top: 300px;
   margin-left: 700px;
+}
+
+.start-button{
+  display : block;
+  margin : -100px auto 50px auto;
+  width: 250px;
 }
 </style>
