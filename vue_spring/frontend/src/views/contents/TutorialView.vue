@@ -7,7 +7,7 @@
             <img src='../../../src/img/head-tutorial.png' alt="튜토리얼 타이틀" height="80"/>
         </div>
         <div class="img mb-5" style="margin-top: 210px; margin-left: -580px">
-            <img src='../../../src/img/prepare.png' alt="준비중 로고" height="320"/>
+            <!-- <img src='../../../src/img/prepare.png' alt="준비중 로고" height="320"/> -->
         </div>
         <!-- <?
         현재 언어 : {$site_lan}<br>

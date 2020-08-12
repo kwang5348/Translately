@@ -7,6 +7,7 @@
     </div>
     <div class="upload-content" style="position: absolute;">
       <upload-files @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files>
+
     </div>
     <h1 style="margin-top: 800px; margin-left: -700px">유튜브 영상 링크로 번역</h1>
   </div>
