@@ -72,8 +72,8 @@
               <!-- <p>자막</p> -->
               <b-alert show dismissible fade variant="warning" style="margin-top:2px; padding-left: 20px; padding-bottom: 0px;">
                 <div class="row">
-                  <div class="col-1"><img src="..\..\img\img-thumbnail.png" alt="썸네일" style="height: 50px;"></div>
-                  <div class="col-9" style="padding: 0px; padding-left: 20px">
+                  <!-- <div class="col-1"><img src="..\..\img\img-thumbnail.png" alt="썸네일" style="height: 50px;"></div> -->
+                  <div class="col-10" style="padding: 0px; padding-left: 20px">
                     <p style="color: gray; font-size: 13px; margin:0px">원래 음성의 자막이 표시됩니다.</p>
                     <p style="color: black; font-weight: bold; margin:0px; font-size: 13px;">이 곳에서 자막을 수정할 수 있습니다.</p>
                   </div>

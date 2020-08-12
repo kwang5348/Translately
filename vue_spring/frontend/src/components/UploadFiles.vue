@@ -18,8 +18,10 @@
         <template v-slot:modal-title>언어 선택</template>
         <p style="font-size: 15px;">해당 영상의 언어와 자막으로 번역하고자 하는 언어를 설정해주세요.</p>
         <div class="d-flex justify-content-around">
-          <p><b-button variant="dark" v-b-popover="'해당 영상의 언어를 선택해주세요'" title="음성 언어">음성</b-button></p>
-          <p><b-button variant="dark" v-b-popover="'자막으로 번역하고자 하는 언어를 선택해주세요'" title="자막 언어">자막</b-button></p>
+          <p><b-button variant="light" size="lg" squared v-b-popover.hover.top="'해당 영상의 언어를 선택해주세요'" title="음성 언어" style="font-weight: bold;">
+            음성</b-button></p>
+          <p><b-button variant="light" size="lg" squared v-b-popover.hover.top="'자막으로 번역하고자 하는 언어를 선택해주세요'" title="자막 언어" style="font-weight: bold;">
+            자막</b-button></p>
         </div>
         <!-- 언어 선택 -->
         <div class="d-flex justify-content-around">
@@ -32,8 +34,8 @@
         </div>
         <div class="d-flex justify-content-around">
           <!-- 링크 연결된 upload 버튼 -->
-          <b-button squared variant="primary" class="mt-3" @click="upload">변환 시작</b-button>
-          <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button>
+          <b-button block squared variant="primary" class="mt-3" @click="upload" style="font-weight: bold;">변환 시작</b-button>
+          <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button> -->
         </div>
         <hr>
         <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
@@ -137,7 +139,6 @@ export default {
   margin-left: 1460px;
 }
 
-
 .selectbtn {
   position: absolute;
   margin-top: -150px;
@@ -149,6 +150,10 @@ export default {
   margin-top: -80px;
   margin-left: 1475px;
   
+}
+
+b-button {
+  font-weight: bold;
 }
 
 .file_input_textbox{float:left}
