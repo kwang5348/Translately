@@ -47,13 +47,6 @@ export default {
     }
   },
   methods: {
-    // uploadFile(video) {
-    //   this.$emit('upload-file', video)
-    // },
-    // upload(uploadData) {
-    //   this.ud = uploadData
-    //   this.$emit('submit-u-d', this.ud)
-    // },
     logout() {
       this.$emit('logout')
     }
@@ -86,5 +79,4 @@ export default {
   margin-top: 300px;
   margin-left: 700px;
 }
-
 </style>

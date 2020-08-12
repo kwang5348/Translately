@@ -34,7 +34,7 @@
         </div>
         <div class="d-flex justify-content-around">
           <!-- 링크 연결된 upload 버튼 -->
-          <b-button block squared variant="primary" class="mt-3" @click="upload" style="font-weight: bold;">변환 시작</b-button>
+          <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bold;">변환 시작</b-button>
           <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button> -->
         </div>
         <hr>
@@ -76,7 +76,7 @@ export default {
       fileInfos: [],
 
       // 모달 관련
-      uploadData: {
+      uploadOption: {
         name: null,
         start: null,
         target: null,
@@ -98,7 +98,7 @@ export default {
       console.log("exex")
       this.selectedFiles = this.$refs.file.files
     },
-    upload() {
+    uploadOption() {
       console.log("start")
       this.progress = 0;
       this.uploadData.name = this.selectedFiles.item(0).name
@@ -109,7 +109,7 @@ export default {
       })
         .then(response => {
           this.message = response.data.message;
-          this.$emit('submit-upload-data', this.uploadData)
+          this.$emit('submit-upload-option', this.uploadOption)
           // return UploadService.getFiles();
         })
         // .then(files => {
