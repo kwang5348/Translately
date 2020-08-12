@@ -3,7 +3,7 @@
   <!-- Sidebar  -->
   <!-- <div class="article-list-view"> -->
   <!-- Page Content  -->
-  <div class="img mb-5" style="margin-top: 70px; margin-left: 300px">
+  <div class="img mb-5" style="margin-top: 70px;">
     <!-- <img src='../../../src/img/prepare.png' alt="준비중 로고" height="300"/> -->
     <h4>다른 사람들이 만든 자막을 볼 수 있습니다.</h4>
     <form class="form-inline d-flex justify-content-center">
