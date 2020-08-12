@@ -76,7 +76,7 @@ export default {
       fileInfos: [],
 
       // 모달 관련
-      uploadOption: {
+      uploadData: {
         name: null,
         start: null,
         target: null,
