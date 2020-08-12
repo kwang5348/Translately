@@ -29,7 +29,6 @@ export default {
     return {
       isLogin: false,
       navbar : true,
-      ud: {},
       subtitles: undefined,
       video: undefined,
     }
@@ -112,10 +111,8 @@ export default {
     uploadFile(video) {
       this.video = video
     },
-    uploadOption(uploadData) {
-      this.ud = uploadData
-      console.log(uploadData)
-      axios.get(`${SERVER_URL}/api/translate?start=${uploadData.start}&target=${uploadData.target}&fileName=${uploadData.name}`)
+    uploadOption(uploadOption) {
+      axios.get(`${SERVER_URL}/api/translate?start=${uploadOption.start}&target=${uploadOption.target}&fileName=${uploadOption.name}`)
       .then(response => {
         console.log(response)
         this.subtitles = response.data.object

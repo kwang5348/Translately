@@ -59,8 +59,8 @@ export default {
     uploadFile(video) {
       this.$emit('upload-file', video)
     },
-    uploadOption(uploadData) {
-      this.$emit('submit-upload-option', uploadData)
+    uploadOption(uploadOption) {
+      this.$emit('submit-upload-option', uploadOption)
     },
     logout() {
       this.$emit('logout')
