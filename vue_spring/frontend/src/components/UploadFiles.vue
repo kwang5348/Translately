@@ -34,7 +34,7 @@
         </div>
         <div class="d-flex justify-content-around">
           <!-- 링크 연결된 upload 버튼 -->
-          <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bold;">변환 시작</b-button>
+          <b-button block squared variant="primary" class="mt-3" @click="upload" style="font-weight: bold;">변환 시작</b-button>
           <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button> -->
         </div>
         <hr>
@@ -53,10 +53,6 @@
         </div>
       </b-modal>
 
-
-          <!-- <p><b-button v-b-popover="'Popover inside a modal!'" title="Popover">음성</b-button></p>
-          <p><b-button v-b-popover="'Popover inside a modal!'" title="Popover">자막</b-button></p>
-        </div> -->
     </div>
 
   </div>
@@ -76,7 +72,7 @@ export default {
       fileInfos: [],
 
       // 모달 관련
-      uploadOption: {
+      uploadData: {
         name: null,
         start: null,
         target: null,
