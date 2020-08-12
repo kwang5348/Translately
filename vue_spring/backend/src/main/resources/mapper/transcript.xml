@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="transcript">
+
+   <select id="showfilesbykeyword" parameterType = "String" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+	  WHERE video_name like CONCAT('%', #{keyword}, '%')
+
+   </select>
+
+   <select id="selectAll" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+   </select>
+
+   <select id="showTransList" parameterType = "Integer" resultType="com.kwang.dto.Transcript">
+      SELECT * from subtitleque
+	  where subid = #{subid}
+   </select>
+
+
+   	<insert id="subtitlefileinfo" parameterType="com.kwang.dto.SubtitleFileInfo">
+		insert into ssafydb.subtitle (userid, video_name, thumbnail, subtitle_file, youtube_url, start_sub_code, target_sub_code)
+		values (#{userid}, #{video_name}, #{thumbnail}, #{subtitle_file}, #{youtube_url}, #{start_sub_code}, #{target_sub_code})
+		<selectKey resultType="int" keyProperty="subid" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+
+	<insert id="savetranscriptone" parameterType="com.kwang.dto.Transcript">
+		insert into ssafydb.subtitleque (subid, startsub, targetsub, starttime, endtime, que_thumbnail)
+		values (#{subid}, #{startsub}, #{targetsub}, #{starttime}, #{endtime}, #{que_thumbnail})
+	</insert>
+</mapper>

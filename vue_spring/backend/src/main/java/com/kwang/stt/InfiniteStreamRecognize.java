@@ -152,7 +152,7 @@ public class InfiniteStreamRecognize {
 								alternative.getTranscript(), alternative.getConfidence());
 
 						beforesubtitle = alternative.getTranscript();
-						aftersubtitle = transLator.EngToKoR(beforesubtitle, languageCode);
+						//aftersubtitle = transLator.EngToKoR(beforesubtitle, languageCode);
 						isFinalEndTime = resultEndTimeInMS;
 						lastTranscriptWasFinal = true;
 					} else {

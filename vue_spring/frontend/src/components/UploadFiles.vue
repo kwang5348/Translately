@@ -1,17 +1,5 @@
 <template>
   <div>
-    <div v-if="currentFile" class="progress">
-      <div
-        class="progress-bar progress-bar-info progress-bar-striped"
-        role="progressbar"
-        :aria-valuenow="progress"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        :style="{ width: progress + '%' }"
-      >
-        {{ progress }}%
-      </div>
-    </div>
     <img class="img-video" src='../img/icon-video.png' alt="비디오 로고" height="100"/>
     <label class="selectbtn btn btn-default">
       <!-- <input type="file"  /> -->
@@ -28,10 +16,10 @@
       <b-modal id="bv-modal-example" hide-footer>
         <!-- 헤더 -->
         <template v-slot:modal-title>언어 선택</template>
-        <p>음성 인식할 언어와 자막 언어를 설정해주세요.</p>
+        <p style="font-size: 15px;">해당 영상의 언어와 자막으로 번역하고자 하는 언어를 설정해주세요.</p>
         <div class="d-flex justify-content-around">
-          <p><b-button variant="outline-dark" v-b-popover="'영상의 음성 언어를 선택해주세요'" title="음성 언어">음성</b-button></p>
-          <p><b-button variant="outline-dark" v-b-popover="'변환하고 싶은 자막 언어를 선택해주세요'" title="자막 언어">자막</b-button></p>
+          <p><b-button variant="dark" v-b-popover="'해당 영상의 언어를 선택해주세요'" title="음성 언어">음성</b-button></p>
+          <p><b-button variant="dark" v-b-popover="'자막으로 번역하고자 하는 언어를 선택해주세요'" title="자막 언어">자막</b-button></p>
         </div>
         <!-- 언어 선택 -->
         <div class="d-flex justify-content-around">
@@ -42,11 +30,24 @@
           <div class="mt-3">음성 언어: <strong>{{ uploadData.start }}</strong></div>
           <div class="mt-3">자막 언어: <strong>{{ uploadData.target }}</strong></div>
         </div>
-        <hr>
         <div class="d-flex justify-content-around">
           <!-- 링크 연결된 upload 버튼 -->
           <b-button squared variant="primary" class="mt-3" @click="upload">변환 시작</b-button>
           <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button>
+        </div>
+        <hr>
+        <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
+        <div v-if="currentFile" class="progress">
+          <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            :aria-valuenow="progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            :style="{ width: progress + '%' }"
+          >
+            {{ progress }}%
+          </div>
         </div>
       </b-modal>
 
@@ -99,7 +100,6 @@ export default {
       console.log("start")
       this.progress = 0;
       this.uploadData.name = this.selectedFiles.item(0).name
-      this.$emit('submit-upload-data', this.uploadData)
       this.currentFile = this.selectedFiles.item(0);
       this.$emit('upload-file', this.currentFile)
       UploadService.upload(this.currentFile, event => {
@@ -107,6 +107,7 @@ export default {
       })
         .then(response => {
           this.message = response.data.message;
+          this.$emit('submit-upload-data', this.uploadData)
           // return UploadService.getFiles();
         })
         // .then(files => {
