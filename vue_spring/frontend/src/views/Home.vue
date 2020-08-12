@@ -47,13 +47,13 @@ export default {
     }
   },
   methods: {
-    uploadFile(video) {
-      this.$emit('upload-file', video)
-    },
-    upload(uploadData) {
-      this.ud = uploadData
-      this.$emit('submit-u-d', this.ud)
-    },
+    // uploadFile(video) {
+    //   this.$emit('upload-file', video)
+    // },
+    // upload(uploadData) {
+    //   this.ud = uploadData
+    //   this.$emit('submit-u-d', this.ud)
+    // },
     logout() {
       this.$emit('logout')
     }
