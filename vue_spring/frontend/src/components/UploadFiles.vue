@@ -113,10 +113,9 @@ export default {
         this.progress = Math.round((100 * event.loaded) / event.total);
       })
         .then(response => {
-          console.log("잘 오니??")
-          console.log(response)
           this.message = response.data.message;
           this.$emit('submit-upload-option', this.uploadData)
+          this.$router.push('/createcaption')
           // return UploadService.getFiles();
         })
         // .then(files => {
