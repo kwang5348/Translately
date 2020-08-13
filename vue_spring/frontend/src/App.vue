@@ -5,7 +5,8 @@
       @upload-file="uploadFile" 
       :isLogin="isLogin" 
       :video="video" 
-      :subtitles="subtitles" 
+      :subtitles="subtitles"
+      :translateBusy="translateBusy" 
       @submit-login-data="login" 
       @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
@@ -33,6 +34,7 @@ export default {
       subtitles: undefined,
       video: undefined,
       uploadData: null,
+      translateBusy: true,
     }
   },
   created() {
@@ -115,12 +117,12 @@ export default {
     },
     uploadOption(ud) {
       this.uploadData = ud
-      console.log("올라온 데이터")
       console.log(this.uploadData)      
       axios.get(`${SERVER_URL}/api/translate?start=${this.uploadData.start}&target=${this.uploadData.target}&fileName=${this.uploadData.name}`)
       .then(response => {
         console.log(response)
         this.subtitles = response.data.object
+        this.translateBusy = false
         this.$router.push('/createcaption')
         })
       .catch(response => {
