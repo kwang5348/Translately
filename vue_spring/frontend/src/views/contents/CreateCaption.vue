@@ -61,6 +61,19 @@
                     <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle"/>  
                   </div>
                 </div>
+              </b-alert>
+              <div :class="[isVisible ? 'bg-info' : 'bg-light', 'border', 'p-2', 'text-center']" style="height: 550px; overflow-y: scroll;">
+                <b-overlay
+                  :show="translateBusy"
+                  rounded
+                  opacity="0.6"
+                  spinner-small
+                  spinner-variant="primary"
+                  class="d-inline-block"
+                  @hidden="onHidden"
+                >
+                  <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle" />
+                </b-overlay>
               </div>
             </div>
           </div>
@@ -89,16 +102,44 @@
       VideoPlayerVue,
       Navbar2,
     },
+    data() {
+      return {
+        timeout: null
+      }
+    },
+    beforeDestroy() {
+      this.clearTimeout()
+    },
     props: {
       subtitles: {
         type: Array,
       },
       video: { 
+      },
+      translateBusy: {
+        type: Boolean
       }
     },
     methods: {
       getUser() {
         axios.get(SERVER_URL + '/createcaption')
+      },
+      clearTimeout() {
+        if (this.timeout) {
+          clearTimeout(this.timeout)
+          this.timeout = null
+        }
+      },
+      setTimeout(callback) {
+        this.clearTimeout()
+        this.timeout = setTimeout(() => {
+          this.clearTimeout()
+          callback()
+        }, 5000)
+      },
+      onHidden() {
+        // Return focus to the button once hidden
+        this.$refs.button.focus()
       },
     },
   }
