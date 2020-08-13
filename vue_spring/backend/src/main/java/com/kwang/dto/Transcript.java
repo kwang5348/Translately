@@ -9,11 +9,27 @@ public class Transcript {
     private String que_thumbnail;
 
     public Transcript(String startsub, String targetsub, double starttime, double endtime, String que_thumbnail) {
-        this.startsub = startsub;
-        this.targetsub = targetsub;
+        this.setStartsub(startsub);
+        this.setTargetsub(targetsub);
         this.starttime = starttime;
         this.endtime = endtime;
         this.que_thumbnail = que_thumbnail;
+    }
+
+    public String getStartsub() {
+        return startsub;
+    }
+
+    public void setStartsub(String startsub) {
+        this.startsub = startsub;
+    }
+
+    public String getTargetsub() {
+        return targetsub;
+    }
+
+    public void setTargetsub(String targetsub) {
+        this.targetsub = targetsub;
     }
 
     public int getSubid() {
@@ -30,22 +46,6 @@ public class Transcript {
 
     public void setSubid(int subid) {
         this.subid = subid;
-    }
-
-    public String getEng() {
-        return this.startsub;
-    }
-
-    public void setEng(String eng) {
-        this.startsub = eng;
-    }
-
-    public String getKor() {
-        return this.targetsub;
-    }
-
-    public void setKor(String kor) {
-        this.targetsub = kor;
     }
 
     public double getStartTime() {

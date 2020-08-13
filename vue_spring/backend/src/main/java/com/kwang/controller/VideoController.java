@@ -53,6 +53,7 @@ import com.kwang.dto.ParseResultSet;
 import com.kwang.dto.RecInfo;
 import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
+import com.kwang.jwt.service.JwtService;
 import com.kwang.papago.APIExamTranslate;
 import com.kwang.service.VideoTranslateService;
 import com.kwang.stt.InfiniteStreamRecognize;
@@ -71,13 +72,19 @@ public class VideoController {
 
 	@Autowired
 	VideoTranslateService service;
+	
+	@Autowired
 	translateDao transDao;
 
+	@Autowired
+	JwtService jwtService;
 
 	@GetMapping(value = "/api/translate")
-	public Object translately(@RequestParam(required = true) final String start,
+	public Object translately(HttpServletRequest req, @RequestParam(required = true) final String start,
 			@RequestParam(required = true) final String target, @RequestParam(required = true) final String fileName) {
 
+			System.out.println("이거 나오니?? " + jwtService.get(req.getHeader("jwt-auth-token")).get("UserData"));
+		jwtService.get(req.getHeader("jwt-auth-token")).get("UserData.userid");
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
 

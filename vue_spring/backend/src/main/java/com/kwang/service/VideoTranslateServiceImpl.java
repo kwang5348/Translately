@@ -108,7 +108,6 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
-		파일을 저장하는 dao 호출
 		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, fileName, "default.jpg", fileName.replace(".mp4", ""), null, start, target);
 		subid = transDao.saveFileInfo(fileInfo);
 
@@ -195,7 +194,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 					endFlag = true;
 					parseTarget.append(targetWord); 
 					parseTarget.append(" ");
-					tempScript.setEng(parseTarget.toString());
+					tempScript.setStartsub(parseTarget.toString());
 					System.out.println(parseTarget.toString());
 					parseTarget = new StringBuffer();
 					targetEndTime = wordInfo.getEndTime().getSeconds()
@@ -279,8 +278,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		System.out.println(tranList.size());
 		for (Transcript transcript : tranList) {
 			System.out.println("====================================");
-			int tranLength = transcript.getKor().length();
-			int startLength = transcript.getEng().length();
+			int tranLength = transcript.getTargetsub().length();
+			int startLength = transcript.getStartsub().length();
 
 			double startTime = transcript.getStartTime();
 			double endTime = transcript.getEndTime();
@@ -304,16 +303,16 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			for(int i = 0; i < tranLength; i++){
 				currentTime += increaseTime;
 				phraseLength++;
-				parsedTran.append(transcript.getKor().charAt(i));
+				parsedTran.append(transcript.getTargetsub().charAt(i));
 
-				if(phraseLength >= phraseMaxLength && transcript.getKor().charAt(i) == ' '){
+				if(phraseLength >= phraseMaxLength && transcript.getTargetsub().charAt(i) == ' '){
 					double phraseStartTime = startTime;
 					double phraseEndTime = currentTime;
 					int startLan = parsedCount*startLength/phraseNum;
 					int endLan = (parsedCount+1)*startLength/phraseNum;
 					if(endLan > startLength) endLan = startLength;
 
-					String startPhrase = tempBuffer.toString() + transcript.getEng().substring(startLan, endLan);
+					String startPhrase = tempBuffer.toString() + transcript.getStartsub().substring(startLan, endLan);
 					System.out.println("변경 전 startPhrase : " + startPhrase);
 					tempBuffer = new StringBuffer();
 					for(int j = startPhrase.length() -1; j >= 0; j--){
@@ -352,7 +351,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				int endLan = (parsedCount+1)*startLength/phraseNum;
 				if(endLan > startLength) endLan = startLength;
 				
-				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getEng().substring(startLan, endLan), parsedTran.toString(), startTime, endTime, "default.jpg"));
+				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getStartsub().substring(startLan, endLan), parsedTran.toString(), startTime, endTime, "default.jpg"));
 				System.out.println(parsedTran.toString());
 				{
 					// srt 양식 맞추는 과정
@@ -385,9 +384,9 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		try {
 			System.out.println("translate start");
 			for (Transcript transcript : tranList) {
-				System.out.println(transcript.getEng());
-				transcript.setKor(papago.EngToKoR(transcript.getEng(), startLanguage, targetLanguage));
-				System.out.println(transcript.getKor());
+				System.out.println(transcript.getStartsub());
+				transcript.setTargetsub(papago.EngToKoR(transcript.getStartsub(), startLanguage, targetLanguage));
+				System.out.println(transcript.getTargetsub());
 			}
 	
 			System.out.println("translate end");

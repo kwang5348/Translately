@@ -3,6 +3,7 @@ package com.kwang.dto;
 import java.time.LocalDateTime;
 
 public class UserData {
+    private int userid;
     private String email;
     private String name;
     private String password;
@@ -10,8 +11,17 @@ public class UserData {
     private LocalDateTime createdate;
     private String token;
 
-    public String toString(){
-        return "email : " + email + "\nname : " + name + "\npassword : " + password + "\nremaintime : " + remaintime + "\ncreatedate : " + createdate + "\ntoken : " + token;
+    public String toString() {
+        return "email : " + email + "\nname : " + name + "\npassword : " + password + "\nremaintime : " + remaintime
+                + "\ncreatedate : " + createdate + "\ntoken : " + token;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public String getEmail() {
