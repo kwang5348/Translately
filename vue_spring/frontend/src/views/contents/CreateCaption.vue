@@ -61,25 +61,22 @@
                     <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle"/>  
                   </div>
                 </div>
-              </b-alert>
-              <div :class="[isVisible ? 'bg-info' : 'bg-light', 'border', 'p-2', 'text-center']" style="height: 550px; overflow-y: scroll;">
-                <b-overlay
-                  :show="translateBusy"
-                  rounded
-                  opacity="0.6"
-                  spinner-small
-                  spinner-variant="primary"
-                  class="d-inline-block"
-                  @hidden="onHidden"
-                >
-                  <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle" />
-                </b-overlay>
-              </div>
+                <div :class="[isVisible ? 'bg-info' : 'bg-light', 'border', 'p-2', 'text-center']" style="height: 550px; overflow-y: scroll;">
+                  <b-overlay
+                    :show="translateBusy"
+                    rounded
+                    opacity="0.6"
+                    spinner-small
+                    spinner-variant="primary"
+                    class="d-inline-block"
+                    @hidden="onHidden"
+                  >
+                    <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle" />
+                  </b-overlay>
+                </div>
             </div>
           </div>
-
-
-
+        </div>
       </div>
     </div>
   </div>
