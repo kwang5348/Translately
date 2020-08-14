@@ -4,8 +4,10 @@
 
         <!-- Page Content  -->
         <div class="img mb-5" style="margin-top: 70px;">
-            <h1>나의 프로젝트를 볼 수 있습니다.</h1>
-            <img src='../../../src/img/img-myproject.png' alt="마이프로젝트 임시 이미지" height="400" style="margin-top: 50px;"/>
+          <form class="form-inline d-flex justify-content-center">
+            <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">
+            <button class="btn btn-secondary" type="submit" id="subtitle-button">Enter</button>
+          </form>
         </div>
         
         
@@ -29,5 +31,17 @@
 </script>
 
 <style scoped>
+#subtitle-search {
+  border-radius: 0;
+  margin-right: 6px;
+}
+
+#subtitle-button {
+  border-radius: 0;
+  padding: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 
 </style>

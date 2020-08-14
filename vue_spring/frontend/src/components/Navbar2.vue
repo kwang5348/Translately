@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="light" variant="light">
+    <b-navbar toggleable="lg" type="light" variant="light" class="navbar2">
       <!-- <b-navbar-brand href="#">NavBar</b-navbar-brand> -->
       <b-nav-text class="ml-auto mr-4" style="font-size: 15px;"><b>님 안녕하세요!</b></b-nav-text>
     </b-navbar>
@@ -14,5 +14,8 @@ export default {
 </script>
 
 <style>
+.navbar2 {
+  margin-bottom: 0px;
+}
 
 </style>

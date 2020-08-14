@@ -5,24 +5,41 @@
   <!-- Page Content  -->
   <div class="img mb-5" style="margin-top: 70px;">
     <!-- <img src='../../../src/img/prepare.png' alt="준비중 로고" height="300"/> -->
-    <h4>다른 사람들이 만든 자막을 볼 수 있습니다.</h4>
+    <p style="font-size: 20px; font-weight: bold;">다른 사람들이 만든 자막을 키워드로 검색해보세요.</p>
     <form class="form-inline d-flex justify-content-center">
       <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">
       <button class="btn btn-secondary" type="submit" id="subtitle-button">Enter</button>
     </form>
+    <div class="row mt-3">
+      <div class="col-2"></div>
+      <div class="col-4"><p style="font-size: 60px;">1000</p>
+        <p>오늘 만들어진 자막</p>
+      </div>
+      <div class="col-4">
+        <p style="font-size: 60px;">510</p>
+        <p>오늘 다운로드된 자막</p>
+      </div>
+      <div class="col-2"></div>
+    </div>
     <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Title</th>
-          <th scope="col">작성자</th>
+          <th scope="col">영상 제목</th>
+          <th scope="col">썸네일</th>
+          <th scope="col">영상 언어</th>
+          <th scope="col">자막 언어</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="article in articles" :key="article.id">
-          <th scope="row">{{ article.id }}</th>
-          <td>{{ article.title }}</td>
-          <td>{{ article.user.username }}</td>
+        <tr v-for="subtitle in subtitles" :key="subtitle.id">
+          <th scope="row">{{ subtitle.subid }}</th>
+          <td>{{ subtitle.video_name }}</td>
+          <td>{{ subtitle.thumbnail }}</td>
+          <td>{{ subtitle.start_sub_code }}</td>
+          <td>{{ subtitle.target_sub_code }}</td>
+
         </tr>
       </tbody>
     </table>
@@ -31,20 +48,20 @@
 </template>
 
 <script>
-import axios from 'axios'
+  import axios from 'axios'
 
-const SERVER_URL = 'http://127.0.0.1:8000'
+  const SERVER_URL = 'http://i3a511.p.ssafy.io/'
 
 export default {
   name: 'ArticleListView',
   data() {
     return {
-      articles: []
+      subtitles: []
     }
   },
   methods: {
     getArticles() {
-      axios.get(SERVER_URL + '/articles/')
+      axios.get(SERVER_URL + '/community')
         .then(res => {
           this.articles = res.data
         })
