@@ -12,7 +12,6 @@
 <script>
 import UploadFiles1 from "../../components/UploadFiles1"
 import UploadFiles from "../../components/UploadFiles"
-import UploadFiles1 from "../../components/UploadFiles1"
 
 
   export default {
