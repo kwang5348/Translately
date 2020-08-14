@@ -5,7 +5,8 @@
       @upload-file="uploadFile" 
       :isLogin="isLogin" 
       :video="video" 
-      :subtitles="subtitles" 
+      :subtitles="subtitles"
+      :translateBusy="translateBusy" 
       @submit-login-data="login" 
       @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
@@ -20,7 +21,7 @@
 <script>
 import axios from 'axios';
 
-const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
+const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
 
 export default {
   name: 'app',
@@ -33,6 +34,7 @@ export default {
       subtitles: undefined,
       video: undefined,
       uploadData: null,
+      translateBusy: true,
     }
   },
   created() {
@@ -59,8 +61,7 @@ export default {
       axios.post(`${SERVER_URL}/api/account/login`, data)
       // .then(res => {console.log(res)})
       .then(response => {
-        console.log(response)
-        this.setCookie("coooooookies")
+        this.setCookie(response.data.object.token)
         this.isLogin = true
         this.navbar = false
         this.$router.push('/contents/tutorial')
@@ -103,8 +104,8 @@ export default {
       }
       axios.post(`${SERVER_URL}/api/account/join/`, data)
       .then(response => {
-        console.log(response)
-        this.setCookie('cooookieees')
+        this.setCookie(response.data.object.token)
+        this.setCookie(response.data.object.token)
         this.isLogin = true
         this.$router.push('/contents/tutorial')
         })
@@ -115,17 +116,22 @@ export default {
     },
     uploadOption(ud) {
       this.uploadData = ud
-      console.log("올라온 데이터")
       console.log(this.uploadData)      
-      axios.get(`${SERVER_URL}/api/translate?start=${this.uploadData.start}&target=${this.uploadData.target}&fileName=${this.uploadData.name}`)
+      axios.get(`${SERVER_URL}/api/translate?start=${this.uploadData.start}&target=${this.uploadData.target}&fileName=${this.uploadData.name}`, {
+        headers: {
+          "jwt-auth-token": this.$cookies.get("auth-token")
+        }
+      })
       .then(response => {
         console.log(response)
         this.subtitles = response.data.object
+        this.translateBusy = false
         this.$router.push('/createcaption')
         })
       .catch(response => {
         console.log(response)
         this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
+        this.translateBusy = false
         this.$router.push('/createcaption')
       })
     },
