@@ -29,15 +29,15 @@ public class translateDaoImpl implements translateDao {
 	}
 
 	@Override
-	public int saveFileInfo(SubtitleFileInfo fileinfo) {
-		int successCount = sqlSession.insert("transcript.subtitlefileinfo", fileinfo);
+	public int saveFileInfo(SubtitleFileInfo fileInfo) {
+		int successCount = sqlSession.insert("transcript.subtitlefileinfo", fileInfo);
 		if (successCount == 0){
 			System.out.println("transLateDao : 파일정보 저장에 실패하였습니다.");
+			return 0;
 		} else {
 			System.out.println("transLateDao : 파일정보 저장에 성공하였습니다.");
+			return fileInfo.getSubid();
 		}
-		System.out.println(fileinfo.getSubid());
-		return fileinfo.getSubid();
 	}
 
 	@Override

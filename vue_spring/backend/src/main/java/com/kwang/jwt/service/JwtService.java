@@ -1,10 +1,16 @@
 package com.kwang.jwt.service;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.google.gson.Gson;
 import com.kwang.dto.UserData;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -64,5 +70,22 @@ public class JwtService {
         }
 
         return claims.getBody();
+    }
+
+    public JSONObject getUserInfo(HttpServletRequest req) {
+        Object user = get(req.getHeader("jwt-auth-token")).get("UserData");
+        Gson gson = new Gson();
+        String mapToJsonString = gson.toJson(user, LinkedHashMap.class);
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObj = null;
+        try {
+            jsonObj = (JSONObject) jsonParser.parse(mapToJsonString);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            jsonObj = null;
+        }
+
+        return jsonObj;
     }
 }

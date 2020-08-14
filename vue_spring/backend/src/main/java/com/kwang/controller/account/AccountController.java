@@ -48,24 +48,6 @@ public class AccountController {
 	@Autowired
 	private JwtService jwtService;
 
-	@GetMapping("/api/login")
-	@ApiOperation(value = "로그인")
-	public ResponseEntity input_user(@RequestParam(required = true) final String uid,
-	@RequestParam(required = true) final String password) {
-		ResponseEntity response = null;
-		final BasicResponse result = new BasicResponse();
-		result.status = false;
-		System.out.println("start login.....");
-		// boolean loginflag = false;
-		if (uid.equals("test") & password.equals("1234")){
-			result.status = true;
-		}
-		
-		response = new ResponseEntity<>(result, HttpStatus.OK);
-		System.out.println("end login.....");
-		return response;
-	} 
-
 	@PostMapping("/api/account/login")
 	@ApiOperation(value = "로그인")
 	public Object login(@Valid @RequestBody UserData request, HttpServletResponse res) {
@@ -207,7 +189,7 @@ public class AccountController {
 		return response;	
 	}
 
-	@PostMapping("/api/account/info")
+	@GetMapping("/api/account/info")
 	@ApiOperation(value = "토큰으로 회원정보 조회")
 	public Object getInfo(HttpServletRequest req) {
 

@@ -55,8 +55,69 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	@Autowired
 	private translateDao transDao;
 	private static final String SERVER_LOCATION = "/home/ubuntu/resources";
+	//private static final String SERVER_LOCATION = "src/main/resources";
+	private static final String VTT_DIR = "/vtt/";
+	private static final String JPG_DIR = "/jpg/";
+	private static final String WAV_DIR = "/wav/";
+	private static final String TEMP_WAV_DIR = "/wav/temp/";
+	private static final String MP4_DIR = "/mp4/";
+
+	private static final String VTT_EX = ".vtt";
+	private static final String JPG_EX = ".jpg";
+	private static final String WAV_EX = ".wav";
+	private static final String MP4_EX = ".mp4";
 
 	static int subid;
+
+	@Override
+	public boolean convertToSubAudio(String fileName, int startPart, int parseTime) throws Exception {
+		
+		final Runtime run = Runtime.getRuntime();
+		
+		long time = System.currentTimeMillis();
+
+		final String command = "ffmpeg -y -i " + SERVER_LOCATION + MP4_DIR + fileName + MP4_EX + 
+								" -ss " + startPart*50 + " -t " + parseTime +  " -ar 16000 -ac 1 " + SERVER_LOCATION + TEMP_WAV_DIR + fileName + startPart + WAV_EX;
+		System.out.println("command : " + command);
+		Process proc = null;
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
+
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(3, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
+		}
+
+		return false;
+	}
 
 	@Override
 	public String convertToAudio(String fileName, String start, String target) throws Exception {
@@ -108,10 +169,74 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
-		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, fileName, "default.jpg", fileName.replace(".mp4", ""), null, start, target);
-		subid = transDao.saveFileInfo(fileInfo);
-
 		return resultFile;
+
+	}
+
+	@Override
+	public int getDurationFromMp4(String fileName) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+
+		final String mp4FilePath = SERVER_LOCATION + MP4_DIR + fileName + MP4_EX;
+		
+		int result = 0;
+		long time = System.currentTimeMillis();
+
+		//final String command = "ffprobe -i C:\\Users\\multicampus\\Desktop\\Translately\\s03p13a511\\vue_spring\\backend\\src\\main\\resources\\mp4\\qNRzHXQkagc.mp4 -show_format | findstr duration";
+		
+		//linux 명령어 grep 이 다르다.
+		final String command = "ffprobe -i " + mp4FilePath + " -show_format | grep duration ";
+		String[] cmd = {
+			"/bin/sh",
+			"-c",
+			command
+			};
+		System.out.println("command : " + command);
+		Process proc = null;
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			proc= run.exec(cmd);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+				if(line.charAt(0) == 'd'){
+					if(line.indexOf("duration=") == 0){
+						
+						float temp = Float.parseFloat(line.replace("duration=", ""));
+						result = (int) temp;
+					}
+				}
+			}
+
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(3, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
+		}
+
+		return result;
 
 	}
 
@@ -396,5 +521,12 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		}
 		return tranList;
 	}
+
+	@Override
+	public int saveFileInfo(SubtitleFileInfo fileInfo) {
+		return transDao.saveFileInfo(fileInfo);
+	}
+
+
 
 }

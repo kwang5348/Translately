@@ -11,6 +11,8 @@ public class UserData {
     private LocalDateTime createdate;
     private String token;
 
+
+
     public String toString() {
         return "email : " + email + "\nname : " + name + "\npassword : " + password + "\nremaintime : " + remaintime
                 + "\ncreatedate : " + createdate + "\ntoken : " + token;

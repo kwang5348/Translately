@@ -285,6 +285,26 @@ public class VideoController {
                 .contentLength(file.length())
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(resource);
+	}
+	
+    @GetMapping(value = "/api/mp4/download")
+    public ResponseEntity<Resource> mp4Download(@RequestParam(required = true) final String fileLink) throws IOException {
+        File file = new File(SERVER_LOCATION + "/wav/" + fileLink + ".mp4");
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=video.vtt");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
     }
 
 }
