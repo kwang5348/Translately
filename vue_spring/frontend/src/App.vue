@@ -116,24 +116,29 @@ export default {
     },
     uploadOption(ud) {
       this.uploadData = ud
-      console.log(this.uploadData)      
-      axios.get(`${SERVER_URL}/api/translate?start=${this.uploadData.start}&target=${this.uploadData.target}&fileName=${this.uploadData.name}`, {
-        headers: {
-          "jwt-auth-token": this.$cookies.get("auth-token")
-        }
-      })
-      .then(response => {
-        console.log(response)
-        this.subtitles = response.data.object
-        this.translateBusy = false
-        this.$router.push('/createcaption')
+      console.log(this.uploadData)
+      if (this.$cookies.isKey("auth-token")) {
+        axios.get(`${SERVER_URL}/api/translate?start=${this.uploadData.start}&target=${this.uploadData.target}&fileName=${this.uploadData.name}`, {
+          headers: {
+            "jwt-auth-token": this.$cookies.get("auth-token")
+          }
         })
-      .catch(response => {
-        console.log(response)
-        this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
-        this.translateBusy = false
-        this.$router.push('/createcaption')
-      })
+        .then(response => {
+          console.log(response)
+          this.subtitles = response.data.object
+          this.translateBusy = false
+          this.$router.push('/createcaption')
+          })
+        .catch(response => {
+          console.log(response)
+          this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
+          this.translateBusy = false
+          this.$router.push('/createcaption')
+        })
+      } else {
+        this.$router.push("/")
+      }    
+      
     },
   }
 }
