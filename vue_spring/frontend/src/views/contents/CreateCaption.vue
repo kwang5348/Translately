@@ -13,11 +13,8 @@
           <b-list-group-item href="/contents/myproject" class="text-white " style="background-color:#564892; height:70px; ">내 프로젝트</b-list-group-item>
           <b-list-group-item href="/contents/community" class="text-white " style="background-color:#564892; height:70px; ">커뮤니티</b-list-group-item>
           <b-list-group-item href="/contents/mypage" class="text-white " style="background-color:#564892; height:70px;">마이 페이지</b-list-group-item>
-          <!-- <b-list-group-item style="background-color:#564892; height:70px;">
-            <a href="https://github.com/eppy7819/projects/files/5048206/Translately.Tutorial.pdf"
-            class="list-group-item2download">튜토리얼 다운로드</a>
-          </b-list-group-item> -->
-          <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" variant="light">Back To HOME</b-button></a></b-list-group-item>
+          <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" variant="light" style="border-radius: 0px">
+            Back To HOME</b-button></a></b-list-group-item>
           <b-list-group-item style="background-color:#564892; margin: auto;">
             <a href="#" @click="logout"><span><i class="fa fa-power-off text-white"></i></span>
               <span class="text-white ">로그아웃</span>
@@ -41,7 +38,7 @@
             <div class="row">
                 <div class="col-5" style="border:1px solid transparent;">
                     <!-- <p>영상</p> -->
-                    <video-player-vue :video=video ></video-player-vue>
+                    <video-player-vue :video=video></video-player-vue>
                 </div>
                 <div class="col-7" style="border:1px solid transparent; padding-right: 10px">
                   <!-- <p>자막</p> -->

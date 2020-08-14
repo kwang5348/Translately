@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-2" style="background-color:#564892;">
         <b-list-group style="height:100vh; border-style:none;">
-          <b-list-group-item href="/" class="text-white pt-3 mb-2" style="background-color:#564892; height:150px;">
-            <img src='../img/logo-letter-w.png' class="mt-5" alt="서비스 로고" width="180"/>
+          <b-list-group-item href="/" class="text-white pt-3" style="background-color:#564892; height:150px;">
+            <img src='../img/logo-letter-w.png' class="mt-5" alt="서비스 로고" width="160"/>
           </b-list-group-item>
           <b-list-group-item href="/contents/tutorial" class="text-white " style="background-color:#564892; height:70px; ">튜토리얼</b-list-group-item>
           <b-list-group-item href="/contents/translate" class="text-white " style="background-color:#564892; height:70px; ">자막 변환</b-list-group-item>
@@ -15,7 +15,9 @@
             <a href="https://github.com/eppy7819/projects/files/5048206/Translately.Tutorial.pdf"
             class="list-group-item2download">튜토리얼 다운로드</a>
           </b-list-group-item> -->
-          <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" variant="light">Back To HOME</b-button></a></b-list-group-item>
+          <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" variant="light" style="border-radius: 0px">
+            Back To HOME
+          </b-button></a></b-list-group-item>
           <b-list-group-item style="background-color:#564892; margin: auto;">
             <a href="#" @click="logout"><span><i class="fa fa-power-off text-white"></i></span>
               <span class="text-white ">로그아웃</span>
@@ -23,7 +25,7 @@
           </b-list-group-item>
         </b-list-group>
       </div>
-      <div class="col-10" style="margin: 0;">
+      <div class="col-10" style="margin: 0; padding: 0;">
         <Navbar2/>
         <router-view @upload-file="uploadFile" @submit-upload-option="uploadOption"/>
       </div>
@@ -68,7 +70,7 @@ export default {
   }
 
 .list-group-item {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   background-color:#564892;
   padding: 0px;
