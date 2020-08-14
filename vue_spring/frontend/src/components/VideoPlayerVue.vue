@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <video id="video" controls class="col-12" width="500px" preload="metadata" crossorigin="anonymous">
-      <source :src="downloadUrl" type="video/mp4">
+      <source :src="objectUrl" type="video/mp4">
       <track label="korean" kind="subtitles" srclang="ko" :src="downloadUrl" default>
       <track label="english" kind="subtitles" srclang="en" :src="downloadUrl">
       <track label="english1" kind="subtitles" srclang="ko" :src=downloadUrl>
