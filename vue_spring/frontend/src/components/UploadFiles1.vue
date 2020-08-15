@@ -68,7 +68,7 @@
 <script>
 import axios from 'axios';
 
-const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
+const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
 
 export default {
   name: "upload-files1",

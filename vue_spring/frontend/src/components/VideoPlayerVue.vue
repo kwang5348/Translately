@@ -1,11 +1,11 @@
 <template>
   <div class="player">
     <video id="video" controls class="col-12" width="500px" preload="metadata" crossorigin="anonymous">
-      <source :src="objectUrl" type="video/mp4">
-      <track label="korean" kind="subtitles" srclang="ko" :src="downloadUrl" default>
+      <source src="http://i3a511.p.ssafy.io:8301/api/mp4/download?fileLink=kJ3x72--bpA" type="video/mp4">
+      <!-- <track label="korean" kind="subtitles" srclang="ko" :src="downloadUrl" default>
       <track label="english" kind="subtitles" srclang="en" :src="downloadUrl">
       <track label="english1" kind="subtitles" srclang="ko" :src=downloadUrl>
-      <track label="english2" kind="subtitles" srclang="en" :src=downloadUrl>
+      <track label="english2" kind="subtitles" srclang="en" :src=downloadUrl> -->
     </video>
     <b-button variant="primary"><a :href="downloadUrl"> 자막 다운로드 </a></b-button>
   </div>
@@ -26,14 +26,14 @@ export default {
 
   },
   computed: {
-    objectUrl() {
-      return URL.createObjectURL(this.video)
-    },
-    downloadUrl() {
-      const name = this.video.name.replace(".mp4", "")
-      const url = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + name
-      return url
-    }
+    // objectUrl() {
+    //   return URL.createObjectURL(this.video)
+    // },
+    // downloadUrl() {
+    //   const name = this.video.name.replace(".mp4", "")
+    //   const url = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + name
+    //   return url
+    // }
   }
 }
 </script>
