@@ -68,7 +68,7 @@
 <script>
 import axios from 'axios';
 
-const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
+const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
 
 export default {
   name: "upload-files1",
@@ -80,13 +80,16 @@ export default {
   data() {
     return {
       fileLink:'',
-      progress: 0,
 
 
       uploadData: {
-        name: null,
-        start: null,
-        target: null,
+        video_name: null,
+        thumbnail: null,
+        subtitle_file: "",
+        youtube_url: null,
+        start_sub_code: null,
+        target_sub_code: null,
+        duration: 0,
         option1: [
           { value: null, text: '선택해주세요' },
           { value: 'en', text: '영어' },
@@ -103,28 +106,23 @@ export default {
   methods: {
     uploadOption() {
       console.log("start")
-      this.progress = 0;
-      this.uploadData.name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-      console.log("기능기능")
+      console.log("유튜브 영상 파일 다운로드를 시작합니다.")
+      this.$emit('upload-file', this.fileLink.replace("https://www.youtube.com/watch?v=", ""))
       axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
         headers: {
           "jwt-auth-token": this.$cookies.get("auth-token")
         }
       })
-
-        // headers: {
-        //   "jwt-auth-token": this.$cookies.get("auth-token")
-        // }
-      
-
-        .then(response => {
-          console.log(response)
-          this.message = response.data.message;
-          this.$emit('submit-upload-option', this.uploadData)
-          this.$router.push('/createcaption')
-        }),
-
-      this.fileLink = ''
+      .then(response => {
+        console.log("유튜브 영상 다운로드가 완료되었습니다.")
+        console.log(response)
+        this.uploadData.video_name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+        this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+        this.uploadData.youtube_url = this.fileLink
+        this.message = response.data.message;
+        this.$emit('submit-upload-option', this.uploadData)
+        this.$router.push('/createcaption')
+      })
     }
   },
   

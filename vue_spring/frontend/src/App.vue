@@ -20,8 +20,9 @@
 
 <script>
 import axios from 'axios';
+// import { delete } from 'vue/types/umd';
 
-const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
+const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
 
 export default {
   name: 'app',
@@ -35,6 +36,13 @@ export default {
       video: undefined,
       uploadData: null,
       translateBusy: true,
+      subTranslateData: {
+        "buildId": 0,
+        "finalBuild": 0,
+        "transcript": null,
+        "fileInfo": undefined,
+        "vttResult": null 
+      }
     }
   },
   created() {
@@ -115,20 +123,33 @@ export default {
       this.video = video
     },
     uploadOption(ud) {
+      console.log("파일을 분할합니다.")
       this.uploadData = ud
+      delete this.uploadData.option1
+      delete this.uploadData.option2
       console.log(this.uploadData)
       if (this.$cookies.isKey("auth-token")) {
-        axios.get(`${SERVER_URL}/api/translate?start=${this.uploadData.start}&target=${this.uploadData.target}&fileName=${this.uploadData.name}`, {
-          headers: {
-            "jwt-auth-token": this.$cookies.get("auth-token")
-          }
-        })
+        axios.post(`${SERVER_URL}/api/wav/analysis/`, this.uploadData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
         .then(response => {
           console.log(response)
-          this.subtitles = response.data.object
+          const translateCount = parseInt(response.data.data.replace("개의 파일분할이 가능합니다.", ""))
+          this.subTranslateData.finalBuild = translateCount - 1
+          this.subTranslateData.fileInfo = response.data.object
+          for (let i = 0; i < translateCount; i++) {
+            console.log(`${i+1}번째 번역을 시작합니다.`)
+            this.subTranslateData.buildId = i
+            console.log(this.subTranslateData)
+            axios.post(`${SERVER_URL}/api/wav/subTranslate/`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
+            .then(response => {
+              console.log(response)
+              console.log(`${i+1} 번째 번역이 끝났습니다.`)
+              this.subtitles = response.data.object.transcript
+              this.subTranslateData.transcript = response.data.object.transcript
+              this.subTranslateData.vttResult = response.data.object.vttResult
+            })
+          }
           this.translateBusy = false
-          this.$router.push('/createcaption')
-          })
+        })
         .catch(response => {
           console.log(response)
           this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
@@ -136,9 +157,8 @@ export default {
           this.$router.push('/createcaption')
         })
       } else {
-        this.$router.push("/")
-      }    
-      
+        this.$router.push("/accounts/login")
+      } 
     },
   }
 }
