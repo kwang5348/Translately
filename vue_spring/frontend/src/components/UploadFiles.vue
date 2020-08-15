@@ -29,12 +29,12 @@
           </div>
           <!-- 언어 선택 -->
           <div class="d-flex justify-content-around">
-            <b-form-select v-model="uploadData.start" :options="uploadData.option1"></b-form-select>
-            <b-form-select v-model="uploadData.target" :options="uploadData.option2"></b-form-select>
+            <b-form-select v-model="uploadData.start_sub_code" :options="uploadData.option1"></b-form-select>
+            <b-form-select v-model="uploadData.target_sub_code" :options="uploadData.option2"></b-form-select>
           </div>
           <div class="d-flex justify-content-around">
-            <div class="mt-3">음성 언어: <strong>{{ uploadData.start }}</strong></div>
-            <div class="mt-3">자막 언어: <strong>{{ uploadData.target }}</strong></div>
+            <div class="mt-3">음성 언어: <strong>{{ uploadData.start_sub_code }}</strong></div>
+            <div class="mt-3">자막 언어: <strong>{{ uploadData.target_sub_code }}</strong></div>
           </div>
           <div class="d-flex justify-content-around">
             <!-- 링크 연결된 upload 버튼 -->
@@ -79,9 +79,13 @@ export default {
 
       // 모달 관련
       uploadData: {
-        name: null,
-        start: null,
-        target: null,
+        video_name: "",
+        thumbnail: null,
+        subtitle_file: "",
+        youtube_url: null,
+        start_sub_code: null,
+        target_sub_code: null,
+        duration: 0,
         option1: [
           { value: null, text: '선택해주세요' },
           { value: 'en', text: '영어' },
@@ -112,27 +116,24 @@ export default {
     uploadOption() {
       console.log("start")
       this.progress = 0;
-      this.uploadData.name = this.selectedFiles.item(0).name
       this.currentFile = this.selectedFiles.item(0);
       this.$emit('upload-file', this.currentFile)
       UploadService.upload(this.currentFile, event => {
         this.progress = Math.round((100 * event.loaded) / event.total);
       })
         .then(response => {
+          this.uploadData.video_name = this.selectedFiles.item(0).name.replace(".mp4", "")
+          this.uploadData.subtitle_file= this.selectedFiles.item(0).name.replace(".mp4", "")
           this.message = response.data.message;
           this.$emit('submit-upload-option', this.uploadData)
           this.$router.push('/createcaption')
           // return UploadService.getFiles();
         })
-        // .then(files => {
-        //   this.fileInfos = files.data;
-        // })
-        // .catch(() => {
-        //   this.progress = 0;
-        //   this.message = "Could not upload the file!";
-        //   this.currentFile = undefined;
-        // });
-      this.selectedFiles = undefined;
+        .catch(() => {
+          this.progress = 0;
+          this.message = "Could not upload the file!";
+          this.currentFile = undefined;
+        });
     }
   },
   // mounted() {
