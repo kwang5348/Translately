@@ -5,7 +5,9 @@
     <p style="font-size: 20px; font-weight: bold;">다른 사람들이 만든 자막을 키워드로 검색해보세요.</p>
     <form class="form-inline d-flex justify-content-center">
       <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">
-      <button class="btn btn-secondary" type="submit" id="subtitle-button">Enter</button>
+      <button class="btn btn-secondary" type="submit" id="subtitle-button" :click="getSub">
+        Enter
+      </button>
     </form>
     <div class="row mt-3">
       <div class="col-2"></div>
@@ -47,7 +49,7 @@
 <script>
   import axios from 'axios'
 
-  const SERVER_URL = 'http://i3a511.p.ssafy.io/'
+  const SERVER_URL = 'http://i3a511.p.ssafy.io'
 
 export default {
   name: 'ArticleListView',
@@ -57,16 +59,23 @@ export default {
     }
   },
   methods: {
-    getArticles() {
-      axios.get(SERVER_URL + '/community')
-        .then(res => {
-          this.articles = res.data
-        })
-        .catch(err => console.log(err))
-    }
+    // getArticles() {
+    //   axios.get(SERVER_URL + '/community')
+    //     .then(res => {
+    //       this.articles = res.data
+    //     })
+    //     .catch(err => console.log(err))
+    // },
+    getSub() {
+        axios.get(SERVER_URL + '/api/subtitle/selectAll?input=3816')
+          .then(res => {
+            this.sub = res.data
+            console.log(res.data)
+          })
+      },
   },
   created() {
-    this.getArticles()
+    this.getSub()
   }
 
 }

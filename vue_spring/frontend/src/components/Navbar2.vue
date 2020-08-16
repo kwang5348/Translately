@@ -16,6 +16,9 @@ export default {
 <style>
 .navbar2 {
   margin-bottom: 0px;
+  font-family: 'InfinitySans-RegularA1'
 }
+
+
 
 </style>

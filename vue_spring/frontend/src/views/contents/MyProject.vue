@@ -6,7 +6,9 @@
         <div class="img mb-5" style="margin-top: 70px;">
           <form class="form-inline d-flex justify-content-center">
             <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">
-            <button class="btn btn-secondary" type="submit" id="subtitle-button">Enter</button>
+            <button class="btn btn-secondary" type="submit" id="subtitle-button" v-on:click="getData">
+              Enter
+            </button>
           </form>
         </div>
         
@@ -17,14 +19,17 @@
 <script>
   import axios from 'axios'
 
-  const SERVER_URL = 'http://127.0.0.1:8000'
+  const SERVER_URL = 'http://i3a511.p.ssafy.io'
 
   export default {
     name: 'MyProject',
     
     methods: {
-      getUser() {
-        axios.get(SERVER_URL + '/project')
+      getData() {
+        axios.get(SERVER_URL + '/api/subtitle/selectAll?input=3816')
+          .then(res => {
+            console.log(res)
+          })
       },
     }
   }

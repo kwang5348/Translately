@@ -123,6 +123,6 @@ export default {
   display : block;
   margin : -100px auto 50px auto;
   width: 250px;
+  font-family: 'InfinitySans-RegularA1'
 }
-
 </style>

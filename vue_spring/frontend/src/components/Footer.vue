@@ -58,11 +58,13 @@ export default {
 .footer {
   background: black;
   left: 0;
+  font-family: 'InfinitySans-RegularA1'
 }
 
 p {
   margin-bottom : 5px;
   font-size: 15px;
+  font-family: 'InfinitySans-RegularA1'
 }
 
 </style>
