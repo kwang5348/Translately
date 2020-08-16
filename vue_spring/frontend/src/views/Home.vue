@@ -124,4 +124,5 @@ export default {
   margin : -100px auto 50px auto;
   width: 250px;
 }
+
 </style>
