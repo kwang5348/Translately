@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="mb-3 mt-5">
       <p style="font-size: 20px;"><b>유튜브 영상 URL로 번역</b></p>
-      <upload-files1 @submit-upload-option="uploadOption"></upload-files1>
+      <upload-files1 @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files1>
     </div>
 
     <p style="font-size: 20px;"><b>또는</b></p>
