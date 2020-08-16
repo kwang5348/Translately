@@ -22,7 +22,7 @@
 import axios from 'axios';
 // import { delete } from 'vue/types/umd';
 
-const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
+const SERVER_URL = 'http://i3a511.p.ssafy.io:8302'
 
 export default {
   name: 'app',

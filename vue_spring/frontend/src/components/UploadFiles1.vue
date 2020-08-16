@@ -81,7 +81,6 @@ export default {
     return {
       fileLink:'',
 
-
       uploadData: {
         video_name: null,
         thumbnail: null,
@@ -94,11 +93,15 @@ export default {
           { value: null, text: '선택해주세요' },
           { value: 'en', text: '영어' },
           { value: 'ko', text: '한국어' },
+          { value: 'ru', text: '러시아어' },
+          { value: 'jp', text: '일본어' },
         ],
         option2: [
           { value: null, text: '선택해주세요' },
           { value: 'en', text: '영어' },
           { value: 'ko', text: '한국어' },
+          { value: 'ru', text: '러시아어' },
+          { value: 'jp', text: '일본어' },
         ]
           }
       }

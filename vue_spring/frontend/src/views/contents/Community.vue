@@ -25,7 +25,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Title</th>
+          <!-- <th scope="col">Title</th> -->
           <th scope="col">영상 제목</th>
           <th scope="col">썸네일</th>
           <th scope="col">영상 언어</th>
@@ -38,11 +38,53 @@
           <td>{{ subtitle.video_name }}</td>
           <td>{{ subtitle.thumbnail }}</td>
           <td><b-badge pill variant="primary">{{ subtitle.start_sub_code }}</b-badge></td>
-          <td>{{ subtitle.target_sub_code }}</td>
+          <td><b-badge pill variant="warning">{{ subtitle.target_sub_code }}</b-badge></td>
 
         </tr>
       </tbody>
     </table>
+
+     <v-card class="d-inline-block mx-auto">
+      <v-container>
+        <v-row justify="space-between">
+          <v-col cols="auto">
+            <v-img
+              height="200"
+              width="200"
+              src="https://cdn.vuetifyjs.com/images/cards/store.jpg"
+            ></v-img>
+          </v-col>
+
+          <v-col
+            cols="auto"
+            class="text-center pl-0"
+          >
+            <v-row
+              class="flex-column ma-0 fill-height"
+              justify="center"
+            >
+              <v-col class="px-0">
+                <v-btn icon>
+                  <v-icon>mdi-heart</v-icon>
+                </v-btn>
+              </v-col>
+
+              <v-col class="px-0">
+                <v-btn icon>
+                  <v-icon>mdi-bookmark</v-icon>
+                </v-btn>
+              </v-col>
+
+              <v-col class="px-0">
+                <v-btn icon>
+                  <v-icon>mdi-share-variant</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
   </div>
   </div>
 </template>
@@ -53,7 +95,7 @@
   const SERVER_URL = 'http://i3a511.p.ssafy.io'
 
 export default {
-  name: 'CommunityView',
+  name: 'Community',
   data() {
     return {
       subtitles: []
@@ -68,13 +110,18 @@ export default {
     //     .catch(err => console.log(err))
     // },
     getSub() {
-        axios.get(SERVER_URL + '/api/subtitle/selectAll?input=3816')
-          .then(res => {
-            this.subtitles = res.data
-            console.log(res)
-            console.log(this.subtitles)
-          })
-      },
+        axios.get(`${SERVER_URL}/api/subtitle/selectAll?input=3816`, {
+        headers: {
+          "jwt-auth-token": this.$cookies.get("auth-token")
+        }
+      })
+      .then(res => {
+        this.subtitles = res.data.object
+        // console.log(res.data)
+        // console.log(this)
+        console.log(this.subtitles)
+      })
+    },
   },
   created() {
     this.getSub()
