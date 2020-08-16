@@ -1,10 +1,7 @@
 <template>
 <div class="wrapper">
-  <!-- Sidebar  -->
-  <!-- <div class="article-list-view"> -->
   <!-- Page Content  -->
   <div class="img mb-5" style="margin-top: 70px;">
-    <!-- <img src='../../../src/img/prepare.png' alt="준비중 로고" height="300"/> -->
     <p style="font-size: 20px; font-weight: bold;">다른 사람들이 만든 자막을 키워드로 검색해보세요.</p>
     <form class="form-inline d-flex justify-content-center">
       <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">

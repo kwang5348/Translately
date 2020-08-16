@@ -1,7 +1,7 @@
 <template>
   <div> 
   <!-- Image and text  이미지에 글자 -->
-  <nav class="navbar navbar-expand-lg navbar-white bg-white" id="whole-navbar">
+  <nav class="navbar navbar-expand-lg navbar-white bg-white notosanskr" id="whole-navbar">
     <a class="navbar-brand ml-5" href="/">
       <img src='../img/logo-letter2.png' alt="서비스 로고" width="180"/>
     </a>
@@ -61,5 +61,11 @@ export default {
 </script>
 
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+            
 
 </style>
