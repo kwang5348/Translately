@@ -9,7 +9,8 @@ class UploadFilesService {
 
     return http.post(`${SERVER_URL}/api/wav/upload`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data"
+        "Content-Type": "multipart/form-data",
+        "jwt-auth-token": this.$cookies.get("auth-token")
       },
       onUploadProgress
     });
