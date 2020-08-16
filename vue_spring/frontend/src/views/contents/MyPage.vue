@@ -1,19 +1,152 @@
 <template>
- <div class="wrapper">
-    <!-- Sidebar  -->
-        
-    <!-- Page Content  -->
-    <div class="img mb-5" style="margin-top: 70px;">
-        <h1>마이페이지입니다.</h1>
-        <!-- <img src='../../../src/img/img-mypage.png' alt="마이페이지 임시 이미지" height="400"  style="margin-top: 50px;"/> -->
+ <div style="margin: 40px;">
+    <div style="justify-content: center;">
+        <h2 style="text-align: left;">{{}} 님의 프로필 <b-icon icon="person-fill"></b-icon></h2>
+    </div>
+    <hr>
+    <br>
+    <div>
+        <h4 style="text-align: left;">회원 정보 수정</h4>
+    </div>
+    <br>
+    <div>
+        <b-container fluid>
+            <b-row class="my-1">
+                <b-col sm="3">
+                <label for="input-default">이메일 주소</label>
+                </b-col>
+                <b-col sm="5">
+                <p>{{ userdata.email }}</p>
+                </b-col>
+            </b-row>
+            <b-row class="my-1">
+                <b-col sm="3">
+                <label for="input-default">닉네임</label>
+                </b-col>
+                <b-col sm="5">
+                <p>{{ userdata.name }}</p>
+                </b-col>
+            </b-row>
+            <!-- <b-row class="my-1">
+                <b-col sm="2">
+                <label for="input-default">비밀번호</label>
+                </b-col>
+                <b-col sm="5">
+                <b-form-input id="input-default" placeholder="Enter your password"></b-form-input>
+                <b-form-text id="input-live-help">Your present password.</b-form-text>
+                </b-col>
+            </b-row>
+            <b-row class="my-1">
+                <b-col sm="2">
+                <label for="input-default">새 비밀번호</label>
+                </b-col>
+                <b-col sm="5">
+                <b-form-input id="input-default" placeholder="Enter your new password"></b-form-input>
+                <b-form-text id="input-live-help">Your new password.</b-form-text>
+                </b-col>
+            </b-row> -->
+            <b-row class="my-1">
+                <b-col sm="3">
+                <label for="input-default">원래 비밀번호</label>
+                </b-col>
+                <b-col sm="5">
+                <div role="group">
+                    <label for="input-live"></label>
+                    <b-form-input
+                        id="input-live"
+                        v-model="pw_input1"
+                        :state="PwState"
+                        aria-describedby="input-live-help input-live-feedback"
+                        placeholder="현재 비밀번호를 입력하세요."
+                        trim
+                    ></b-form-input>
+                </div>
+                </b-col>
+            </b-row>
+            
+
+        <div>
+            <label for="pw_input2">새 비밀번호</label><br>
+            <input v-model="pw_input2" type="text">
+        </div>
+
+
+
+        </b-container>
+    </div>
+    <div>
+      <b-button @click="change_pw" variant="outline-primary">Button</b-button>
     </div>
 </div>
 </template>
 
-
 <script>
-export default {
+import axios from 'axios'
 
+const SERVER_URL = 'http://i3a511.p.ssafy.io/'
+
+export default {
+    name : 'MyPage',
+    computed: {
+      PwState() {
+          return this.pw_input1 == this.userdata.password? true : false
+      }  
+    },
+    data() {
+        return {
+            pw_input1:'',
+            pw_input2:'',
+            userdata: []
+        }
+    },
+    methods: {
+        setCookie(key) {
+        this.$cookies.set('auth-token', key)
+        },
+        mypage() {
+            console.log("start")
+            axios.get(`${SERVER_URL}/api/account/info`, {
+                headers: {
+                    "jwt-auth-token": this.$cookies.get("auth-token")
+                }
+            })
+            .then(response => {
+                console.log(response)
+                this.userdata = response.data.object
+            })
+        },
+        change_pw() {
+            const data = {
+                "password": this.pw_input2,
+                "name": this.userdata.name,
+                "email": this.userdata.email
+            }
+            if (this.pw_input2.length >= 8) {
+                console.log("비밀번호 변경 성공")
+                axios.post(`${SERVER_URL}/api/account/modify`, data , {
+                headers: {
+                    "jwt-auth-token": this.$cookies.get("auth-token")
+                }
+            })
+                .then(response => {
+                    console.log(response)
+                    // this.$cookies.remove('auth-token')
+                    // this.setCookie(response.data.object.token)
+                })
+                alert("비밀번호 변경 성공")
+                // this.$router.push('/contents/mypage')
+                this.mypage()
+            } else {
+                alert("8글자 이상으로")
+            }
+        this.pw_input1 = ''
+        this.pw_input2 = ''
+        }
+    },
+    created() {
+        this.mypage()
+    }
+    
 }
 </script>
 

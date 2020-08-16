@@ -22,7 +22,7 @@
 import axios from 'axios';
 // import { delete } from 'vue/types/umd';
 
-const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
+const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
 
 export default {
   name: 'app',
@@ -112,7 +112,6 @@ export default {
       }
       axios.post(`${SERVER_URL}/api/account/join/`, data)
       .then(response => {
-        this.setCookie(response.data.object.token)
         this.setCookie(response.data.object.token)
         this.isLogin = true
         this.$router.push('/contents/tutorial')

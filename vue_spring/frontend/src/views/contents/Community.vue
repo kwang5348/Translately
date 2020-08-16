@@ -45,9 +45,9 @@
 </template>
 
 <script>
-  import axios from 'axios'
+import axios from 'axios'
 
-  const SERVER_URL = 'http://i3a511.p.ssafy.io/'
+const SERVER_URL = 'http://i3a511.p.ssafy.io/'
 
 export default {
   name: 'ArticleListView',
