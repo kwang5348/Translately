@@ -25,7 +25,7 @@
     <ul class="navbar-nav">  
       <li class="nav-item form-inline mr-5" style="font-size: 19px;">
         <b-link class="nav-link" v-if="isLogin" @click="logout">
-          Logout</b-link>
+          로그아웃</b-link>
         <a v-else>
           <a><router-link to="/accounts/login">
             로그인 </router-link></a>

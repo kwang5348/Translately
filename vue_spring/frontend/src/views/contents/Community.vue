@@ -20,6 +20,7 @@
       </div>
       <div class="col-2"></div>
     </div>
+    
     <table class="table">
       <thead>
         <tr>
@@ -32,11 +33,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="subtitle in subtitles" :key="subtitle.id">
+        <tr v-for="subtitle in subtitles" :key="subtitle.subid">
           <th scope="row">{{ subtitle.subid }}</th>
           <td>{{ subtitle.video_name }}</td>
           <td>{{ subtitle.thumbnail }}</td>
-          <td>{{ subtitle.start_sub_code }}</td>
+          <td><b-badge pill variant="primary">{{ subtitle.start_sub_code }}</b-badge></td>
           <td>{{ subtitle.target_sub_code }}</td>
 
         </tr>
@@ -52,7 +53,7 @@
   const SERVER_URL = 'http://i3a511.p.ssafy.io'
 
 export default {
-  name: 'ArticleListView',
+  name: 'CommunityView',
   data() {
     return {
       subtitles: []
@@ -69,8 +70,9 @@ export default {
     getSub() {
         axios.get(SERVER_URL + '/api/subtitle/selectAll?input=3816')
           .then(res => {
-            this.sub = res.data
-            console.log(res.data)
+            this.subtitles = res.data
+            console.log(res)
+            console.log(this.subtitles)
           })
       },
   },

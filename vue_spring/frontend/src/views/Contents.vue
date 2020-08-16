@@ -15,12 +15,12 @@
             <a href="https://github.com/eppy7819/projects/files/5048206/Translately.Tutorial.pdf"
             class="list-group-item2download">튜토리얼 다운로드</a>
           </b-list-group-item> -->
-          <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" variant="light" style="border-radius: 0px">
-            Back To HOME
+          <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" style="background-color: rgb(162, 151, 204); border-radius: 0px">
+            메인으로 돌아가기
           </b-button></a></b-list-group-item>
           <b-list-group-item style="background-color:#564892; margin: auto;">
             <a href="#" @click="logout"><span><i class="fa fa-power-off text-white"></i></span>
-              <span class="text-white ">로그아웃</span>
+              <span class="text-white "> 로그아웃</span>
             </a>
           </b-list-group-item>
         </b-list-group>
