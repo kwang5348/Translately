@@ -125,4 +125,8 @@ export default {
   width: 250px;
   font-family: 'InfinitySans-RegularA1'
 }
+
+.v-application a {
+    color: white;
+}
 </style>

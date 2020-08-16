@@ -1,6 +1,5 @@
 <template>
-  <div id="app">
-     <!-- v-if="navbar" -->
+  <v-app id="app">
     <div class="container-fluid m-0 p-0"><router-view 
       @upload-file="uploadFile" 
       :isLogin="isLogin" 
@@ -12,20 +11,18 @@
       @submit-signup-data="signup"
       @logout="logout" />
     </div>
-
-  </div>
-
-
+  
+  </v-app>
 </template>
 
 <script>
 import axios from 'axios';
-// import { delete } from 'vue/types/umd';
 
-const SERVER_URL = 'http://i3a511.p.ssafy.io:8302'
+const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
 
 export default {
-  name: 'app',
+  name: 'App',
+
   components: {
   },
   data() {
@@ -162,6 +159,7 @@ export default {
     },
   }
 }
+
 </script>
 
 <style>

@@ -5,7 +5,7 @@
     <a class="navbar-brand ml-5" href="/">
       <img src='../img/logo-letter2.png' alt="서비스 로고" width="180"/>
     </a>
-    <ul class="navbar-nav mx-auto" style="margin: 0px">
+    <ul class="navbar-nav mx-auto" style="margin: 0px; color: black;">
       <li class="nav-item active ml-2" style="color: black; font-size: 19px;">
         <a class="nav-link" href="/contents/tutorial">서비스 튜토리얼<span class="sr-only">(current)</span></a>
       </li>
@@ -60,9 +60,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .navbar {
   font-family: 'InfinitySans-RegularA1';
+}
+
+.v-application a {
+    color: black;
 }
 
 </style>

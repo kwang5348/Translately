@@ -1,16 +1,12 @@
 <template>
     <div class="wrapper">
-        <!-- Sidebar  -->
-
-        <!-- Page Content  -->
-        <div class="img mb-5" style="margin-top: 70px;">
-          <form class="form-inline d-flex justify-content-center">
-            <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">
-            <button class="btn btn-secondary" type="submit" id="subtitle-button" v-on:click="getData">
-              Enter
-            </button>
-          </form>
-        </div>
+      <div class="img mb-5 font-ment" style="margin-top: 90px;">
+        <p class="mb-5" style="font-size: 20px; font-weight: bold;">내가 만들었던 자막을 다시 볼 수 있어요.</p>
+        <v-toolbar color="transparent" dark class="mx-auto" max-width="1200">
+        <v-text-field class="mx-4" flat hide-details label="Search" solo-inverted :enter="getSub"></v-text-field>
+        <v-btn icon color="grey darken-3" :click="getSub"><v-icon>mdi-magnify</v-icon></v-btn>
+        </v-toolbar>
+      </div>
         
         
     </div>
@@ -48,5 +44,8 @@
   padding-right: 8px;
 }
 
+.font-ment {
+  font-family: 'InfinitySans-RegularA1';
+}
 
 </style>
