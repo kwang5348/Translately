@@ -42,7 +42,6 @@
                     spinner-small
                     spinner-variant="primary"
                     class="d-inline-block"
-                    @hidden="onHidden"
                   >
                   </b-overlay>
                   <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle" />
@@ -105,10 +104,10 @@
           callback()
         }, 5000)
       },
-      onHidden() {
-        // Return focus to the button once hidden
-        this.$refs.button.focus()
-      },
+      // onHidden() {
+      //   // Return focus to the button once hidden
+      //   this.$refs.button.focus()
+      // },
       logout() {
         this.$cookies.remove('auth-token')
         this.isLogin = false

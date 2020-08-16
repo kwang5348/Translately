@@ -2,7 +2,7 @@ import http from "../http-common";
 
 class UploadFilesService {
   upload(file, onUploadProgress) {
-    const SERVER_URL = 'http://i3a511.p.ssafy.io:8399'
+    const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
     let formData = new FormData();
 
     formData.append("file", file);
