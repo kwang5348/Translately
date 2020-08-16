@@ -27,10 +27,23 @@ export default {
   },
   computed: {
     objectUrl() {
-      return URL.createObjectURL(this.video)
+      console.log("url찍어보기")
+      console.log(this.video)
+      if (typeof this.video === 'string') {
+        return "http://i3a511.p.ssafy.io:8301/api/mp4/download?fileLink=" + this.video
+      } else {
+        return URL.createObjectURL(this.video)
+      }
     },
     downloadUrl() {
-      const name = this.video.name.replace(".mp4", "")
+      console.log("url찍어보기")
+      console.log(this.video)
+      let name = ""
+      if (typeof this.video === 'string') {
+        name = this.video
+      } else {
+        name = this.video.name.replace(".mp4", "")
+      }
       const url = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + name
       return url
     }
