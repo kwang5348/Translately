@@ -67,17 +67,17 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	private static final String WAV_EX = ".wav";
 	private static final String MP4_EX = ".mp4";
 
-	static int subid;
+	static final int parseTimeLength = 50;
 
 	@Override
-	public boolean convertToSubAudio(String fileName, int startPart, int parseTime) throws Exception {
+	public boolean convertToSubAudio(String fileName, int startPart, int parseTime, String languageTag) throws Exception {
 		
 		final Runtime run = Runtime.getRuntime();
 		
 		long time = System.currentTimeMillis();
 
-		final String command = "ffmpeg -y -i " + SERVER_LOCATION + MP4_DIR + fileName + MP4_EX + 
-								" -ss " + startPart*50 + " -t " + parseTime +  " -ar 16000 -ac 1 " + SERVER_LOCATION + TEMP_WAV_DIR + fileName + startPart + WAV_EX;
+		final String command = "ffmpeg -y -i " + SERVER_LOCATION + WAV_DIR + fileName + WAV_EX + 
+								" -ss " + startPart*50 + " -t " + parseTime +  " -ar 16000 -ac 1 " + SERVER_LOCATION + TEMP_WAV_DIR + fileName + languageTag + startPart + WAV_EX;
 		System.out.println("command : " + command);
 		Process proc = null;
 		try {
@@ -120,17 +120,12 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public String convertToAudio(String fileName, String start, String target) throws Exception {
+	public String convertToAudio(String fileName, String languageTag) throws Exception {
 		final Runtime run = Runtime.getRuntime();
-		String filePath = "/home/ubuntu/resources/wav/";
 		
-		if (fileName.indexOf(".mp4") == -1) {
-			return null;
-		}
 		long time = System.currentTimeMillis();
-		String resultFile = filePath + fileName.replace(".mp4", ".wav");
 
-		final String command = "ffmpeg -y -i " + filePath + fileName + " -t 20 -ar 16000 -ac 1 " + resultFile;
+		final String command = "ffmpeg -y -i " + SERVER_LOCATION + MP4_DIR + fileName + MP4_EX + " -t 160 -ar 16000 -ac 1 " + SERVER_LOCATION + WAV_DIR + fileName + languageTag + WAV_EX;
 		System.out.println("command : " + command);
 		Process proc = null;
 		try {
@@ -169,7 +164,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
-		return resultFile;
+		return "success to convert";
 
 	}
 
@@ -177,7 +172,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	public int getDurationFromMp4(String fileName) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 
-		final String mp4FilePath = SERVER_LOCATION + MP4_DIR + fileName + MP4_EX;
+		final String wavFilePath = SERVER_LOCATION + WAV_DIR + fileName + WAV_EX;
 		
 		int result = 0;
 		long time = System.currentTimeMillis();
@@ -185,7 +180,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		//final String command = "ffprobe -i C:\\Users\\multicampus\\Desktop\\Translately\\s03p13a511\\vue_spring\\backend\\src\\main\\resources\\mp4\\qNRzHXQkagc.mp4 -show_format | findstr duration";
 		
 		//linux 명령어 grep 이 다르다.
-		final String command = "ffprobe -i " + mp4FilePath + " -show_format | grep duration ";
+		final String command = "ffprobe -i " + wavFilePath + " -show_format | grep duration ";
 		String[] cmd = {
 			"/bin/sh",
 			"-c",
@@ -243,7 +238,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	@Override
 	public String downLoadYoutube(String fileLink, String epicLink) throws Exception {
 		final Runtime run = Runtime.getRuntime();
-		String filePath = "/home/ubuntu/resources/wav/";
+		String filePath = "/home/ubuntu/resources/mp4/";
 
 		long time = System.currentTimeMillis();
 
@@ -395,11 +390,18 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public ParseResultSet parseTranslateResult(List<Transcript> tranList, String fileName) throws IOException {
-		List<Transcript> subTranList = new ArrayList<Transcript>();
+	public ParseResultSet parseTranslateResult(ParseResultSet result, List<Transcript> tranList, String fileName, int buildId) throws IOException {
+		List<Transcript> subTranList = result.getTranlist();
+		if(result.getParsedResult() == null){
+			subTranList = new ArrayList<Transcript>();
+		}
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
-		setSrt.append("WEBVTT\n\n");
+		if(result.getParsedResult() == null){
+			setSrt.append("WEBVTT\n\n");
+		} else {
+			setSrt.append(result.getParsedResult());
+		}
 		System.out.println(tranList.size());
 		for (Transcript transcript : tranList) {
 			System.out.println("====================================");
@@ -476,7 +478,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				int endLan = (parsedCount+1)*startLength/phraseNum;
 				if(endLan > startLength) endLan = startLength;
 				
-				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getStartsub().substring(startLan, endLan), parsedTran.toString(), startTime, endTime, "default.jpg"));
+				subTranList.add(new Transcript(tempBuffer.toString() + transcript.getStartsub().substring(startLan, endLan), parsedTran.toString(), startTime + parseTimeLength * buildId, endTime + parseTimeLength * buildId, "default.jpg"));
 				System.out.println(parsedTran.toString());
 				{
 					// srt 양식 맞추는 과정
@@ -496,7 +498,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		}
 
 
-		transDao.saveTranscript(subTranList, subid);
+		//transDao.saveTranscript(subTranList, subid);
 		
 		return new ParseResultSet(setSrt.toString(), subTranList);
 	}

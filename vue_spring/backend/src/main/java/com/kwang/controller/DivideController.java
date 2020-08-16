@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class DivideController {
 
 	private static final String SERVER_LOCATION = "/home/ubuntu/resources";
-	//private static final String SERVER_LOCATION = "src/main/resources";
+	// private static final String SERVER_LOCATION = "src/main/resources";
 	private static final String VTT_DIR = "/vtt/";
 	private static final String JPG_DIR = "/jpg/";
 	private static final String WAV_DIR = "/wav/";
@@ -65,7 +65,7 @@ public class DivideController {
 	public Object selectSubtitle(@Valid @RequestBody SubtitleFileInfo fileInfo, HttpServletRequest req) {
 		final BasicResponse result = new BasicResponse();
 		ResponseEntity response = null;
-
+		final String languageTag = "_" + fileInfo.getStart_sub_code() + "_" + fileInfo.getTarget_sub_code();
 		int userid = (int) (long) JwtService.getUserInfo(req).get("userid");
 		fileInfo.setUserid(userid);
 		// int subid = videoService.saveFileInfo(fileInfo);
@@ -78,8 +78,23 @@ public class DivideController {
 		// return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		// }
 
+		System.out.println("translateStart");
+		System.out.println("변환 전 파일 경로 " + SERVER_LOCATION + MP4_DIR + fileInfo.getSubtitle_file() + MP4_EX);
 		try {
-			duration = videoService.getDurationFromMp4(fileInfo.getSubtitle_file());
+			videoService.convertToAudio(fileInfo.getSubtitle_file(), languageTag );
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			System.out.println("ffmpeg 변환이 실패하였습니다.");
+			result.status = true;
+			result.data = "ffmpeg 변환이 실패하였습니다.";
+			result.object = fileInfo;
+			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		}
+		System.out.println("변환 후 파일 경로 " + SERVER_LOCATION + WAV_DIR + fileInfo.getSubtitle_file() + languageTag + WAV_EX);
+		System.out.println("ffmpeg 작업 종료");
+
+		try {
+			duration = videoService.getDurationFromMp4(fileInfo.getSubtitle_file() + languageTag);
 			fileInfo.setDuration(duration);
 			System.out.println(duration);
 		} catch (Exception e) {
@@ -121,11 +136,12 @@ public class DivideController {
 
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-		final String rawFilePath = SERVER_LOCATION + MP4_DIR + resultSet.getFileInfo().getSubtitle_file() + MP4_EX;
-		final String subFilePath = SERVER_LOCATION + TEMP_WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + resultSet.getBuildId() + WAV_EX;
-		final String vttFilePath = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file() + VTT_EX;
-		final String wavFilePath = SERVER_LOCATION + WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + WAV_EX;
-		final String jpgFilePath = SERVER_LOCATION + JPG_DIR + resultSet.getFileInfo().getSubtitle_file() + JPG_EX;
+		final String languageTag = "_" + resultSet.getFileInfo().getStart_sub_code() + "_" + resultSet.getFileInfo().getTarget_sub_code();
+		final String rawFilePath = SERVER_LOCATION + MP4_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + MP4_EX;
+		final String subFilePath = SERVER_LOCATION + TEMP_WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + resultSet.getBuildId() + WAV_EX;
+		final String vttFilePath = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + VTT_EX;
+		final String wavFilePath = SERVER_LOCATION + WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + WAV_EX;
+		final String jpgFilePath = SERVER_LOCATION + JPG_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + JPG_EX;
 		List<Transcript> tranList = null;
 		System.out.println(resultSet);
 		int parseTime = 50;
@@ -133,10 +149,18 @@ public class DivideController {
 			parseTime = resultSet.getFileInfo().getDuration() % parseTime;
 		}
 
-		System.out.println("변환 전 파일 경로 " + rawFilePath);
+		if(resultSet.getFinalBuild() < resultSet.getBuildId()){
+			result.status = false;
+			result.data = "분할파일 index 가 잘못되었습니다.";
+			result.object = null;
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			return response;
+		}
+
+		System.out.println("변환 전 파일 경로 " + wavFilePath);
 		try {
 			System.out.println("translateStart");
-			videoService.convertToSubAudio(resultSet.getFileInfo().getSubtitle_file(), resultSet.getBuildId(), parseTime);
+			videoService.convertToSubAudio(resultSet.getFileInfo().getSubtitle_file(), resultSet.getBuildId(), parseTime, languageTag);
 
 			System.out.println("ffmpeg 작업 종료");
 			
@@ -165,12 +189,12 @@ public class DivideController {
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 
-		ParseResultSet parsedResult = null;
+		ParseResultSet parsedResult = new ParseResultSet(resultSet.getVttResult(), resultSet.getTranscript());
 		boolean vttSuccess = false;
 		try {
 			vttSuccess = true;
 			System.out.println("parse Start");
-			parsedResult = videoService.parseTranslateResult(tranList, subFilePath);
+			parsedResult = videoService.parseTranslateResult(parsedResult, tranList, subFilePath, resultSet.getBuildId());
 			System.out.println("parse End");
 		} catch (Exception e) {
 			result.status = false;
@@ -200,11 +224,12 @@ public class DivideController {
 
 			return response;
 		}
-
+		resultSet.setTranscript(parsedResult.getTranlist());
+		resultSet.setVttResult(parsedResult.getParsedResult());
 		if (vttSuccess) {
 			result.status = true;
 			result.data = "success";
-			result.object = parsedResult.getTranlist();
+			result.object = resultSet;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

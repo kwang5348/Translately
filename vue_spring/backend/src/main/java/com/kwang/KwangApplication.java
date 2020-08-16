@@ -26,6 +26,9 @@ public class KwangApplication implements WebMvcConfigurer {
 		List<String> excludePatterns = new ArrayList<String>();
 		excludePatterns.add("/api/account/login");
 		excludePatterns.add("/api/account/join");
+		excludePatterns.add("/api/mp4/download");
+		excludePatterns.add("/api/vtt/download");
+		
 		registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**").excludePathPatterns(excludePatterns);
 	}
 	// @Override
