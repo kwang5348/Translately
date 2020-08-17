@@ -25,24 +25,6 @@
         <div class="col-2"></div>
       </div>
       
-      <!-- <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">영상 제목</th><th scope="col">썸네일</th><th scope="col">영상 언어</th><th scope="col">자막 언어</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="subtitle in subtitles" :key="subtitle.subid">
-            <th scope="row">{{ subtitle.subid }}</th>
-            <td>{{ subtitle.video_name }}</td>
-            <td>{{ subtitle.thumbnail }}</td>
-            <td><b-badge pill variant="primary">{{ subtitle.start_sub_code }}</b-badge></td>
-            <td><b-badge pill variant="warning">{{ subtitle.target_sub_code }}</b-badge></td>
-          </tr>
-        </tbody>
-      </table> -->
-
       <!-- 카드 -->
       <v-card class="mx-auto" max-width="1200">
         <!-- <v-toolbar color="indigo" dark><v-btn icon><v-icon>mdi-magnify</v-icon></v-btn></v-toolbar> -->

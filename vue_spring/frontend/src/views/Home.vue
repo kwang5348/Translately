@@ -14,7 +14,7 @@
             <div class="carousel-caption d-none d-md-block">
               <!-- <h5>First slide label</h5> -->
               <b-button class="start-button" href="/contents/translate" 
-                style="background: transparent; border:2px solid white; border-radius: 0px; font-weight: bold; font-size: 24px;">
+                style="background: transparent; border:3px solid white; border-radius: 0px; font-weight: bold; font-size: 25px;">
                   자막 변환 시작하기
                 </b-button>
             </div>

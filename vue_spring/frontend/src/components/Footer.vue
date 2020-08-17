@@ -8,7 +8,7 @@
 
           <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mt-3">
             <h5 class="text-uppercase mb-4 font-weight-bold text-white">Translately</h5>
-            <p>내가 원하는 영상을 원하는 언어로</p>
+            <p class="mt-5">내가 원하는 영상을 원하는 언어로</p>
             <p>지금 나에게 필요한 영상을 원하는 언어의 자막으로 변환해 보세요.</p>
           </div>
 

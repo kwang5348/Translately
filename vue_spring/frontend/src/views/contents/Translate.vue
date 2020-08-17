@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper font">
     <div class="mb-3 mt-5">
       <p style="font-size: 20px;"><b>유튜브 영상 URL로 번역</b></p>
       <upload-files1 @submit-upload-option="uploadOption"></upload-files1>
@@ -42,5 +42,8 @@ import UploadFiles from "../../components/UploadFiles"
 </script>
 
 <style scoped>
-
+.font {
+  margin-bottom: 0px;
+  font-family: 'InfinitySans-RegularA1'
+}
 </style>
