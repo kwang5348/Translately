@@ -1,67 +1,62 @@
 <template>
   <div role="group" class="font">
-      <label for="input-live"></label>
-      <b-form-input
-        id="input-live"
-        v-model="fileLink"
-        :state="LinkState"
-        aria-describedby="input-live-help input-live-feedback"
-        placeholder="예시) https://www.youtube.com/watch?v="
-        trim
-      ></b-form-input>
+    <div class="container">
+      <img src=".\..\img\box-youtube.png" alt="유튜브 박스" class="upload-box">
+    </div>
+    <label for="input-live"></label>
+    <b-form-input
+      id="input-live"
+      v-model="fileLink"
+      :state="LinkState"
+      aria-describedby="input-live-help input-live-feedback"
+      placeholder="예시) https://www.youtube.com/watch?v="
+      trim
+    ></b-form-input>
 
-      <b-button v-if="LinkState" v-b-modal.show-btn class="uploadbtn btn btn-warning font" 
-        @click="$bvModal.show('bv-modal-youtube')">
-          자막 생성 시작
-        </b-button>
-      
-          <b-modal id="bv-modal-youtube" hide-footer>
-          <!-- 헤더 -->
-          <template v-slot:modal-title class="font">언어 선택</template>
-          <p style="font-size: 15px;" class="font mb-3">해당 영상의 언어와 자막으로 번역하려는 언어를 설정해주세요.</p>
-          <div class="d-flex justify-content-around">
-            <p><b-button variant="light" size="lg" class="font" squared v-b-popover.hover.top="'해당 영상의 언어를 선택해주세요'" title="음성 언어" style="font-weight: bold;">
-              음성</b-button></p>
-            <p><b-button variant="light" size="lg" class="font" squared v-b-popover.hover.top="'자막으로 번역하려는 언어를 선택해주세요'" title="자막 언어" style="font-weight: bold;">
-              자막</b-button></p>
+    <b-button v-if="LinkState" v-b-modal.show-btn variant="danger" class="uploadbtn btn font" 
+      @click="$bvModal.show('bv-modal-youtube')">
+        자막 생성 시작
+      </b-button>
+    
+        <b-modal id="bv-modal-youtube" hide-footer>
+        <!-- 헤더 -->
+        <template v-slot:modal-title class="font">언어 선택</template>
+        <p style="font-size: 15px;" class="font mb-3">해당 영상의 언어와 자막으로 번역하려는 언어를 설정해주세요.</p>
+        <div class="d-flex justify-content-around">
+          <p><b-button variant="light" size="lg" class="font" squared v-b-popover.hover.top="'해당 영상의 언어를 선택해주세요'" title="음성 언어" style="font-weight: bold;">
+            음성</b-button></p>
+          <p><b-button variant="light" size="lg" class="font" squared v-b-popover.hover.top="'자막으로 번역하려는 언어를 선택해주세요'" title="자막 언어" style="font-weight: bold;">
+            자막</b-button></p>
+        </div>
+        <!-- 언어 선택 -->
+        <div class="d-flex justify-content-around font">
+          <b-form-select v-model="uploadData.start_sub_code" :options="uploadData.option1"></b-form-select>
+          <b-form-select v-model="uploadData.target_sub_code" :options="uploadData.option2"></b-form-select>
+        </div>
+        <div class="d-flex justify-content-around font">
+          <div class="mt-3">음성 언어: <strong>{{ uploadData.start_sub_code }}</strong></div>
+          <div class="mt-3">자막 언어: <strong>{{ uploadData.target_sub_code }}</strong></div>
+        </div>
+        <div class="d-flex justify-content-around font">
+          <!-- 링크 연결된 upload 버튼 -->
+          <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
+          <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-youtube')">취소</b-button> -->
+        </div>
+        <hr>
+        <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
+        <!-- <div v-if="currentFile" class="progress">
+          <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            :aria-valuenow="progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            :style="{ width: progress + '%' }"
+          >
+            {{ progress }}%
           </div>
-          <!-- 언어 선택 -->
-          <div class="d-flex justify-content-around font">
-            <b-form-select v-model="uploadData.start_sub_code" :options="uploadData.option1"></b-form-select>
-            <b-form-select v-model="uploadData.target_sub_code" :options="uploadData.option2"></b-form-select>
-          </div>
-          <div class="d-flex justify-content-around font">
-            <div class="mt-3">음성 언어: <strong>{{ uploadData.start_sub_code }}</strong></div>
-            <div class="mt-3">자막 언어: <strong>{{ uploadData.target_sub_code }}</strong></div>
-          </div>
-          <div class="d-flex justify-content-around font">
-            <!-- 링크 연결된 upload 버튼 -->
-            <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
-            <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-youtube')">취소</b-button> -->
-          </div>
-          <hr>
-          <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
-          <!-- <div v-if="currentFile" class="progress">
-            <div
-              class="progress-bar progress-bar-info progress-bar-striped"
-              role="progressbar"
-              :aria-valuenow="progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              :style="{ width: progress + '%' }"
-            >
-              {{ progress }}%
-            </div>
-          </div> -->
-        </b-modal>
-
-
-
-
-
-
-
-      <!-- <b-form-text id="input-live-help">유투브 영상 링크를 입력해주세요.</b-form-text> -->
+        </div> -->
+      </b-modal>
     </div>
 </template>
 
@@ -124,14 +119,11 @@ export default {
         this.uploadData.youtube_url = this.fileLink
         this.message = response.data.message;
         this.$emit('submit-upload-option', this.uploadData)
-        this.$router.push('/createcaption')
+        this.$router.push('/contents/createcaption')
       })
     }
-  },
-  
-    
+  },    
 }
-    
   
 
 </script>
@@ -144,10 +136,23 @@ export default {
 
 .uploadbtn {
   margin: 10px 0px;
+  background-color: #564892;
+  color: white;
+  border-color: transparent;
 }
 
 .font {
   margin-bottom: 0px;
   font-family: 'InfinitySans-RegularA1'
+}
+
+#input-live {
+  display: block;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.upload-box {
+  max-width: 500px 
 }
 </style>

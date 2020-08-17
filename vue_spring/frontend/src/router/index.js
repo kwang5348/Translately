@@ -48,9 +48,14 @@ Vue.use(VueRouter)
       component: MyPage
     },
     {
-    path: 'translate',
-    name: 'Translate',
-    component: Translate
+      path: 'translate',
+      name: 'Translate',
+      component: Translate
+    },
+    {
+      path: 'createcaption',
+      name: 'CreateCaption',
+      component: CreateCaption
     },
   ]},
   {
@@ -79,11 +84,6 @@ Vue.use(VueRouter)
         next('/accounts/login')
       }
     }
-  },
-  {
-    path: '/createcaption',
-    name: 'CreateCaption',
-    component: CreateCaption
   },
 ]
 
