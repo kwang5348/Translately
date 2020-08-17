@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import UploadService from "../services/UploadFilesService";
+import http from "../http-common"
 
 export default {
   name: "upload-files",
@@ -105,6 +105,20 @@ export default {
     }
   },
   methods: {
+    upload(file, onUploadProgress) {
+      const SERVER_URL = 'http://i3a511.p.ssafy.io:8301'
+      let formData = new FormData();
+
+      formData.append("file", file);
+
+      http.post(`${SERVER_URL}/api/wav/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "jwt-auth-token": this.$cookies.get("auth-token")
+        },
+        onUploadProgress
+      })
+    },
     selectFile() {
       console.log("exex")
       this.selectedFiles = this.$refs.file.files
@@ -118,7 +132,7 @@ export default {
       this.progress = 0;
       this.currentFile = this.selectedFiles.item(0);
       this.$emit('upload-file', this.currentFile)
-      UploadService.upload(this.currentFile, event => {
+      this.upload(this.currentFile, event => {
         this.progress = Math.round((100 * event.loaded) / event.total);
       })
         .then(response => {
