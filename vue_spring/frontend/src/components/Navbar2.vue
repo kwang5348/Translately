@@ -19,20 +19,17 @@ export default {
     }
   },
   methods: {
-    setCookie(key) {
-      this.$cookies.set('auth-token', key)
-      },
-      navbar() {
-        axios.get(`${SERVER_URL}/api/account/info`, {
-          headers: {
-            "jwt-auth-token": this.$cookies.get("auth-token")
-            }
-          })
-          .then(response => {
-              console.log(response)
-              this.userdata = response.data.object
-          })
-        }
+    navbar() {
+      axios.get(`${SERVER_URL}/api/account/info`, {
+        headers: {
+          "jwt-auth-token": this.$cookies.get("auth-token")
+          }
+        })
+        .then(response => {
+            console.log(response)
+            this.userdata = response.data.object
+        })
+      }
     },
     created() {
       this.navbar()
