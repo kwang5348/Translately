@@ -51,15 +51,15 @@ export default {
   },
   methods: {
     translate(i) { 
-      console.log(`${i+1}번째 번역을 시작합니다.`)
+      console.log(`${i}번째 번역을 시작합니다.`)
       console.log(this.subTranslateData)
+      this.subTranslateData.buildId = i
       axios.post(`${SERVER_URL}/api/wav/subTranslate/`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
       .then(response => {
         console.log(response)
-        console.log(`${i+1} 번째 번역이 끝났습니다.`)
+        console.log(`${i} 번째 번역이 끝났습니다.`)
         const resSubtitles = response.data.object.transcript
         this.subtitles = resSubtitles
-        this.subtitles.buildId = i
         this.subTranslateData.transcript = resSubtitles
         this.subTranslateData.vttResult = response.data.object.vttResult
         if (i >= 10) {
