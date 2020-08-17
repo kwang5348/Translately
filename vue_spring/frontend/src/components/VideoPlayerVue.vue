@@ -30,7 +30,7 @@ export default {
       console.log("url찍어보기")
       console.log(this.video)
       if (typeof this.video === 'string') {
-        return "http://i3a511.p.ssafy.io:8301/api/mp4/download?fileLink=" + this.video
+        return "http://i3a511.p.ssafy.io:8399/api/mp4/download?fileLink=" + this.video
       } else {
         return URL.createObjectURL(this.video)
       }
