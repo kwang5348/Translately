@@ -10,7 +10,7 @@ import CompleteView from '../views/accounts/CompleteView.vue'
 // contents
 import ArticleCreateView from '../views/contents/ArticleCreateView.vue'
 import TutorialView from '../views/contents/TutorialView.vue'
-import MyProject from '../views/contents/MyProject.vue'
+import MyPageModify from '../views/contents/MyPageModify.vue'
 import Community from '../views/contents/Community.vue'
 import MyPage from '../views/contents/MyPage.vue'
 import CreateCaption from '../views/contents/CreateCaption.vue'
@@ -38,14 +38,14 @@ Vue.use(VueRouter)
       component: Community
     },
     {
-      path: 'myproject',
-      name: 'MyProject',
-      component: MyProject
+      path: 'modify',
+      name: 'MyPageModify',
+      component: MyPageModify
     },
     {
       path: 'mypage',
       name: 'MyPage',
-      component: MyPage
+      component: MyPage,
     },
     {
     path: 'translate',

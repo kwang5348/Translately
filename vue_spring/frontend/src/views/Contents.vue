@@ -8,7 +8,7 @@
           </b-list-group-item>
           <b-list-group-item href="/contents/tutorial" class="text-white " style="background-color:#564892; height:70px; ">튜토리얼</b-list-group-item>
           <b-list-group-item href="/contents/translate" class="text-white " style="background-color:#564892; height:70px; ">자막 변환</b-list-group-item>
-          <b-list-group-item href="/contents/myproject" class="text-white " style="background-color:#564892; height:70px; ">내 프로젝트</b-list-group-item>
+          <!-- <b-list-group-item href="/contents/myproject" class="text-white " style="background-color:#564892; height:70px; ">내 프로젝트</b-list-group-item> -->
           <b-list-group-item href="/contents/community" class="text-white " style="background-color:#564892; height:70px; ">커뮤니티</b-list-group-item>
           <b-list-group-item href="/contents/mypage" class="text-white " style="background-color:#564892; height:70px;">마이 페이지</b-list-group-item>
           <!-- <b-list-group-item style="background-color:#564892; height:70px;">
