@@ -27,7 +27,14 @@
       </div>
       <div class="col-10" style="margin: 0; padding: 0;">
         <Navbar2/>
-        <router-view @upload-file="uploadFile" @submit-upload-option="uploadOption"/>
+        <router-view 
+          @upload-file="uploadFile" 
+          @submit-upload-option="uploadOption"
+          :video="video"
+          :isLogin="isLogin"
+          :subtitles="subtitles"
+          :translateBusy="translateBusy"
+        />
       </div>
     </div>
   </div>
@@ -40,6 +47,12 @@ export default {
   name : 'Contents',
   components : {
     Navbar2,
+  },
+  props: {
+    isLogin: {},
+    video: {},
+    subtitles: {},
+    translateBusy: {},
   },
   methods: {
     logout() {
