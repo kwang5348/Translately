@@ -17,7 +17,7 @@
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
             <h5 class="text-uppercase mb-4 font-weight-bold text-white">사이트 링크</h5>
             <p><a class="text-black" href="/contents/tutorial" style="text-decoration: none;">튜토리얼</a></p>
-            <p><a class="text-black" href="/contents/myproject" style="text-decoration: none;">내 프로젝트</a></p>
+            <p><a class="text-black" href="/contents/translate" style="text-decoration: none;">자막 변환</a></p>
             <p><a class="text-black" href="/contents/community" style="text-decoration: none;">커뮤니티</a></p>
             <p><a class="text-black" href="/contents/mypage" style="text-decoration: none;">마이 페이지</a></p>
           </div>

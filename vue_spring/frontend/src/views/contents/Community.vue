@@ -1,7 +1,10 @@
 <template>
   <div class="wrapper">
     <!-- Page Content  -->
-    <div class="img mb-5 font-ment" style="margin-top: 90px;">
+    <div class="img mb-5 font-ment" style="margin-top: 50px;">
+      <div class="my-2" style="text-align: right; margin-right: 50px;">
+        <span><v-btn color="warning" dark><v-icon class="mr-2">mdi-account-circle</v-icon><b>내가 만든 자막</b></v-btn></span>
+      </div>
       <p class="mb-5" style="font-size: 20px; font-weight: bold;">다른 사람들이 만든 자막을 키워드로 검색해보세요.</p>
       <v-toolbar color="transparent" dark class="mx-auto" max-width="1200">
       <v-text-field class="mx-4" flat hide-details label="Search" solo-inverted :enter="getSub"></v-text-field>
@@ -15,11 +18,11 @@
       </form> -->
       <div class="row mt-5 mb-5">
         <div class="col-2"></div>
-        <div class="col-4"><p style="font-size: 60px; margin-bottom: 2px">1000</p>
+        <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">1000</p>
           <p>오늘 만들어진 자막</p>
         </div>
         <div class="col-4">
-          <p style="font-size: 60px; margin-bottom: 2px">510</p>
+          <p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">510</p>
           <p>오늘 다운로드된 자막</p>
         </div>
         <div class="col-2"></div>
@@ -60,6 +63,7 @@ export default {
   data() {
     return {
       subtitles: [],
+      // mysubs: [],
     }
   },
   methods: {   
@@ -74,11 +78,20 @@ export default {
         console.log(this.subtitles)
       })
     },
-  },
+    // getMy() {
+    //   axios.get(`${SERVER_URL}:8399/api/subtitle/mylist`, {
+    //   headers: {
+    //     "jwt-auth-token": this.$cookies.get("auth-token")
+    //   }
+    // })
+    // .then(res => {
+    //   this.mysubs = res.data.object
+    //   console.log(this.mysubs)
+    // })
+  // },
   created() {
-    this.getSub()
   }
-
+  }
 }
 </script>
 
