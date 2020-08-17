@@ -1,10 +1,10 @@
 <template>
-  <div @drop.prevent="addFile" @dragover.prevent>
+  <div @drop.prevent="addFile" @dragover.prevent class="font">
     <div class="container">
       <img src=".\..\img\upload-box.png" alt="업로드 박스" class="upload-box">
     </div>
     <div class="upload-content">
-      <label class="selectbtn btn btn-default" style="position: absolute; margin: -100px 0px 0px -150px;">
+      <label class="selectbtn btn btn-default font" style="position: absolute; margin: -100px 0px 0px -150px;">
         <!-- <input type="file"  /> -->
         <input type="text" value="선택된 파일이 없습니다." id="fileName" class="file_input_textbox" readonly="readonly">
         <input type="button" value="파일 선택" class="file_input_button font-weight-bold"/>
@@ -12,31 +12,31 @@
       </label>
       <!-- :disabled="!selectedFiles" -->
       <div class="formodal">
-        <b-button v-b-modal.show-btn class="uploadbtn btn btn-warning mt-1" 
+        <b-button v-b-modal.show-btn class="uploadbtn btn btn-warning mt-1 font" 
         @click="$bvModal.show('bv-modal-example')" style="margin-left: -70px">
           자막 생성 시작
         </b-button>
         <!-- 모달 창 -->
         <b-modal id="bv-modal-example" hide-footer>
           <!-- 헤더 -->
-          <template v-slot:modal-title>언어 선택</template>
-          <p style="font-size: 15px;">해당 영상의 언어와 자막으로 번역하려는 언어를 설정해주세요.</p>
-          <div class="d-flex justify-content-around">
-            <p><b-button variant="light" size="lg" squared v-b-popover.hover.top="'해당 영상의 언어를 선택해주세요'" title="음성 언어" style="font-weight: bold;">
+          <template v-slot:modal-title class="font">언어 선택</template>
+          <p style="font-size: 15px;" class="font mb-3">해당 영상의 언어와 자막으로 번역하려는 언어를 설정해주세요.</p>
+          <div class="d-flex justify-content-around font">
+            <p><b-button variant="light" size="lg" class="font" quared v-b-popover.hover.top="'해당 영상의 언어를 선택해주세요'" title="음성 언어" style="font-weight: bold;">
               음성</b-button></p>
             <p><b-button variant="light" size="lg" squared v-b-popover.hover.top="'자막으로 번역하려는 언어를 선택해주세요'" title="자막 언어" style="font-weight: bold;">
               자막</b-button></p>
           </div>
           <!-- 언어 선택 -->
-          <div class="d-flex justify-content-around">
+          <div class="d-flex justify-content-around font">
             <b-form-select v-model="uploadData.start_sub_code" :options="uploadData.option1"></b-form-select>
             <b-form-select v-model="uploadData.target_sub_code" :options="uploadData.option2"></b-form-select>
           </div>
-          <div class="d-flex justify-content-around">
+          <div class="d-flex justify-content-around font">
             <div class="mt-3">음성 언어: <strong>{{ uploadData.start_sub_code }}</strong></div>
             <div class="mt-3">자막 언어: <strong>{{ uploadData.target_sub_code }}</strong></div>
           </div>
-          <div class="d-flex justify-content-around">
+          <div class="d-flex justify-content-around font">
             <!-- 링크 연결된 upload 버튼 -->
             <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
             <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button> -->
@@ -90,11 +90,17 @@ export default {
           { value: null, text: '선택해주세요' },
           { value: 'en', text: '영어' },
           { value: 'ko', text: '한국어' },
+          { value: 'ru', text: '러시아어' },
+          { value: 'jp', text: '일본어' },
+
+
         ],
         option2: [
           { value: null, text: '선택해주세요' },
           { value: 'en', text: '영어' },
           { value: 'ko', text: '한국어' },
+          { value: 'ru', text: '러시아어' },
+          { value: 'jp', text: '일본어' },
         ]
           }
       }
@@ -208,5 +214,9 @@ filter:alpha(opacity=0);
   margin-left: -1100px;
 } */
 
+.font {
+  margin-bottom: 0px;
+  font-family: 'InfinitySans-RegularA1'
+}
 
 </style>

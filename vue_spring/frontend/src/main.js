@@ -8,6 +8,9 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// 뷰티파이
+import vuetify from './plugins/vuetify';
+
 Vue.use(VueCookies)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -18,5 +21,6 @@ new Vue({
   el: '#app',
   router,
   GoogleSignInButton,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')
