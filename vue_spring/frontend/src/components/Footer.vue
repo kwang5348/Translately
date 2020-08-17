@@ -8,7 +8,7 @@
 
           <div class="col-md-6 col-lg-6 col-xl-6 mx-auto mt-3">
             <h5 class="text-uppercase mb-4 font-weight-bold text-white">Translately</h5>
-            <p>내가 원하는 영상을 원하는 언어로</p>
+            <p class="mt-5">내가 원하는 영상을 원하는 언어로</p>
             <p>지금 나에게 필요한 영상을 원하는 언어의 자막으로 변환해 보세요.</p>
           </div>
 
@@ -27,7 +27,8 @@
 
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
             <h5 class="text-uppercase mb-4 font-weight-bold text-white">연락처</h5>
-            <p><i class="fa fa-home mr-3"></i>  SSAFY, 서울 5반, 대한민국</p>
+            <p id="button-1"><i class="fa fa-home mr-3"></i>  SSAFY, 서울 5반, B1A4</p>
+            <b-tooltip target="button-1" variant="dark" title="미녀와 개미 네마리"></b-tooltip>
             <p><i class="fa fa-envelope mr-3"></i><a href="mailto:hdp0545@gmail.com" class="text-black"> qna@translately.com </a></p>
             <p><i class="fa fa-phone mr-3"></i> 대표: 홍두표</p>
           </div>
@@ -38,9 +39,6 @@
             <img src="../img/logo-footer.png" class="d-block w-100" alt="로고 푸터">
           </div>
         </div>
-
-
-
       </div>
                   
     </footer>
@@ -58,11 +56,17 @@ export default {
 .footer {
   background: black;
   left: 0;
+  font-family: 'InfinitySans-RegularA1'
 }
 
 p {
   margin-bottom : 5px;
   font-size: 15px;
+  font-family: 'InfinitySans-RegularA1'
+}
+
+.v-application a {
+    color: gray;
 }
 
 </style>

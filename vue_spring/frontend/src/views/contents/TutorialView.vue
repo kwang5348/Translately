@@ -1,14 +1,17 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper font-ment">
         <!-- Page Content  -->
         <div class="tutorial-head">
-            <img src='../../../src/img/tutorial-head.png' alt="튜토리얼 헤드" class="tutorial-head"/>
+          <img src='../../../src/img/tutorial-head.png' alt="튜토리얼 헤드" class="tutorial-head"/>
         </div>
-        <b-button variant="warning" class="start-button" href="/contents/translate" style="font-weight: bold; font-size: 21px;">
-          지금 시작하기
-        </b-button>
-        <div class="img mb-5" style="margin-top: 210px; margin-left: -580px">
-            
+        <b-col>
+          <b-button variant="warning" class="start-button" href="/contents/translate" style="font-weight: bold; font-size: 21px;">
+            지금 시작하기
+          </b-button><hr>
+          <img src='../../../src/img/tutorial-exp1.png' alt="튜토리얼 바디" class="tutorial-body"/><hr> 
+          <img src='../../../src/img/tutorial-exp1.png' alt="튜토리얼 바디" class="tutorial-body"/>
+        </b-col>
+        <div class="img mb-5" style="margin-top: 210px; margin-left: -580px; width: 100px;">
         </div>
         
     </div>
@@ -32,7 +35,19 @@ export default {
   width: 100%;
 }
 
+.tutorial-body {
+  width: 800px;
+}
+
 .start-button {
-  margin-top: -150px;
+  margin-top: -250px;
+}
+
+.v-application a {
+    color: black;
+}
+
+.font-ment {
+  font-family: 'InfinitySans-RegularA1';
 }
 </style>

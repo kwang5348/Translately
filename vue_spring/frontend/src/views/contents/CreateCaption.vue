@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper font">
     <!-- Sidebar  -->
     <div class="container-fluid m-0 p-0" style="height:100vh;">
     
@@ -140,5 +140,10 @@
 .list-group-item2 {
   font-weight: bold;
   /* background-color: black; */
+}
+
+.font {
+  margin-bottom: 0px;
+  font-family: 'InfinitySans-RegularA1'
 }
 </style>

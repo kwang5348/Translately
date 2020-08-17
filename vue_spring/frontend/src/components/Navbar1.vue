@@ -1,11 +1,11 @@
 <template>
   <div> 
   <!-- Image and text  이미지에 글자 -->
-  <nav class="navbar navbar-expand-lg navbar-white bg-white notosanskr" id="whole-navbar">
+  <nav class="navbar navbar-expand-lg navbar-white bg-white" id="whole-navbar">
     <a class="navbar-brand ml-5" href="/">
       <img src='../img/logo-letter2.png' alt="서비스 로고" width="180"/>
     </a>
-    <ul class="navbar-nav mx-auto" style="margin: 0px">
+    <ul class="navbar-nav mx-auto" style="margin: 0px; color: black;">
       <li class="nav-item active ml-2" style="color: black; font-size: 19px;">
         <a class="nav-link" href="/contents/tutorial">서비스 튜토리얼<span class="sr-only">(current)</span></a>
       </li>
@@ -25,7 +25,7 @@
     <ul class="navbar-nav">  
       <li class="nav-item form-inline mr-5" style="font-size: 19px;">
         <b-link class="nav-link" v-if="isLogin" @click="logout">
-          Logout</b-link>
+          로그아웃</b-link>
         <a v-else>
           <a><router-link to="/accounts/login">
             로그인 </router-link></a>
@@ -60,12 +60,13 @@ export default {
 }
 </script>
 
-<style>
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
-.notosanskr * { 
- font-family: 'Noto Sans KR', sans-serif;
+<style scoped>
+.navbar {
+  font-family: 'InfinitySans-RegularA1';
 }
-            
+
+.v-application a {
+    color: black;
+}
 
 </style>
