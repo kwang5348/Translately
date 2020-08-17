@@ -124,7 +124,7 @@ export default {
         this.uploadData.youtube_url = this.fileLink
         this.message = response.data.message;
         this.$emit('submit-upload-option', this.uploadData)
-        this.$router.push('/createcaption')
+        this.$router.push('/contents/createcaption')
       })
     }
   },
