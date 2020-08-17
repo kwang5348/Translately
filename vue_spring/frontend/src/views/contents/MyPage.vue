@@ -6,12 +6,12 @@
     <hr>
     <br>
     <div>
-      <h4 style="text-align: left;">회원 정보 수정</h4>
+        <h4 style="text-align: left;">회원 정보 수정</h4>
     </div>
     <br>
     <div>
-      <b-container fluid>
-          <b-row class="my-1">
+        <b-container fluid>
+            <b-row class="my-1">
                 <b-col sm="3">
                 <label for="input-default">이메일 주소</label>
                 </b-col>
@@ -27,51 +27,48 @@
                 <p>{{ userdata.name }}</p>
                 </b-col>
             </b-row>
-            <!-- <b-row class="my-1">
-                <b-col sm="2">
-                <label for="input-default">비밀번호</label>
-                </b-col>
-                <b-col sm="5">
-                <b-form-input id="input-default" placeholder="Enter your password"></b-form-input>
-                <b-form-text id="input-live-help">Your present password.</b-form-text>
-                </b-col>
-            </b-row>
-            <b-row class="my-1">
-                <b-col sm="2">
-                <label for="input-default">새 비밀번호</label>
-                </b-col>
-                <b-col sm="5">
-                <b-form-input id="input-default" placeholder="Enter your new password"></b-form-input>
-                <b-form-text id="input-live-help">Your new password.</b-form-text>
-                </b-col>
-            </b-row> -->
             <b-row class="my-1">
                 <b-col sm="3">
-                <label for="input-default">원래 비밀번호</label>
+                <label for="input-live">기존 비밀번호</label>
                 </b-col>
                 <b-col sm="5">
                 <div role="group">
-                    <label for="input-live"></label>
                     <b-form-input
                         id="input-live"
+                        type="password"
                         v-model="pw_input1"
-                        :state="PwState"
+                        :state="PwState1"
                         aria-describedby="input-live-help input-live-feedback"
                         placeholder="현재 비밀번호를 입력하세요."
                         trim
                     ></b-form-input>
+                    <b-form-invalid-feedback id="input-live-feedback">
+                    Your present password.
+                    </b-form-invalid-feedback>
                 </div>
                 </b-col>
             </b-row>
-            
-
-        <div>
-            <label for="pw_input2">새 비밀번호</label><br>
-            <input v-model="pw_input2" type="text">
-        </div>
-
-
-
+            <b-row class="my-1">
+                <b-col sm="3">
+                <label for="input-live">새 비밀번호</label>
+                </b-col>
+                <b-col sm="5">
+                <div role="group">
+                    <b-form-input
+                        id="input-live"
+                        type="password"
+                        v-model="pw_input2"
+                        :state="PwState2"
+                        aria-describedby="input-live-help input-live-feedback"
+                        placeholder="새 비밀번호를 입력하세요."
+                        trim
+                    ></b-form-input>
+                    <b-form-invalid-feedback id="input-live-feedback">
+                    Longer than 8 characters.
+                    </b-form-invalid-feedback>
+                </div>
+                </b-col>
+            </b-row>
         </b-container>
     </div>
     <div>
@@ -88,9 +85,12 @@ const SERVER_URL = 'http://i3a511.p.ssafy.io/'
 export default {
     name : 'MyPage',
     computed: {
-      PwState() {
+      PwState1() {
           return this.pw_input1 == this.userdata.password? true : false
-      }  
+      },
+      PwState2() {
+          return this.pw_input2.length >= 8? true : false
+      },  
     },
     data() {
         return {

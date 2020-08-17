@@ -130,7 +130,6 @@ export default {
       axios.post(`${SERVER_URL}/api/account/join/`, data)
       .then(response => {
         this.setCookie(response.data.object.token)
-        this.setCookie(response.data.object.token)
         this.isLogin = true
         this.$router.push('/contents/tutorial')
         })

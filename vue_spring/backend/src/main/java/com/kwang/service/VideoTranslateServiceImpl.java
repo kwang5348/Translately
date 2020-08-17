@@ -108,7 +108,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
-		파일을 저장하는 dao 호출
+		// 파일을 저장하는 dao 호출
 		SubtitleFileInfo fileInfo = new SubtitleFileInfo(1, fileName, "default.jpg", fileName.replace(".mp4", ""), null, start, target);
 		subid = transDao.saveFileInfo(fileInfo);
 
