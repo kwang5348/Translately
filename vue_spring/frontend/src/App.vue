@@ -50,23 +50,38 @@ export default {
     }
   },
   methods: {
-    translate(i) {
-      console.log(`${i+1}번째 번역을 시작합니다.`)
-      this.subTranslateData.buildId = i
+    translate(i) { 
+      console.log(`${i}번째 번역을 시작합니다.`)
       console.log(this.subTranslateData)
+      this.subTranslateData.buildId = i
       axios.post(`${SERVER_URL}/api/wav/subTranslate/`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
       .then(response => {
         console.log(response)
-        console.log(`${i+1} 번째 번역이 끝났습니다.`)
+        console.log(`${i} 번째 번역이 끝났습니다.`)
         const resSubtitles = response.data.object.transcript
         this.subtitles = resSubtitles
         this.subTranslateData.transcript = resSubtitles
         this.subTranslateData.vttResult = response.data.object.vttResult
-        if (i >= this.subTranslateData.finalBuild) {
+        if (i >= 10) {
+          console.log("무한루프로 동작합니다.")
+          return
+        } else if (this.subTranslateData.buildId >= response.data.object.finalBuild) {
+          this.subTranslateData = {
+            "buildId": 0,
+            "finalBuild": 0,
+            "transcript": null,
+            "fileInfo": undefined,
+            "vttResult": null 
+          }
           return
         } else {
+          console.log("함수안에 왔습니다.")
           this.translate(++i)
         }
+      })
+      .catch(response => {
+        console.log(response)
+        console.log("에러를 감지 하였습니다.")
       })
     },
 
@@ -129,9 +144,9 @@ export default {
       }
       axios.post(`${SERVER_URL}/api/account/join/`, data)
       .then(response => {
-        this.setCookie(response.data.object.token)
-        this.isLogin = true
-        this.$router.push('/contents/tutorial')
+        console.log(response)
+        delete data.name
+        this.login(data)
         })
       .catch(err => {console.log(err)})
     },
@@ -158,7 +173,7 @@ export default {
           console.log(response)
           this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
           this.translateBusy = false
-          this.$router.push('/createcaption')
+          this.$router.push('/contents/createcaption')
         })
       } else {
         this.$router.push("/accounts/login")
