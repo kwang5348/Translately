@@ -1,10 +1,10 @@
 <template>
   <div @drop.prevent="addFile" @dragover.prevent class="font">
     <div class="container">
-      <img src=".\..\img\upload-box.png" alt="업로드 박스" class="upload-box">
+      <img src=".\..\img\box-upload.png" alt="업로드 박스" class="upload-box">
     </div>
     <div class="upload-content">
-      <label class="selectbtn btn btn-default font" style="position: absolute; margin: -100px 0px 0px -150px;">
+      <label class="selectbtn btn btn-default font" style="position: absolute; margin: 15px 0px 0px -220px;">
         <!-- <input type="file"  /> -->
         <input type="text" value="선택된 파일이 없습니다." id="fileName" class="file_input_textbox" readonly="readonly">
         <input type="button" value="파일 선택" class="file_input_button font-weight-bold"/>
@@ -12,8 +12,8 @@
       </label>
       <!-- :disabled="!selectedFiles" -->
       <div class="formodal">
-        <b-button v-b-modal.show-btn class="uploadbtn btn btn-warning mt-1 font" 
-        @click="$bvModal.show('bv-modal-example')" style="margin-left: -70px">
+        <b-button v-b-modal.show-btn class="uploadbtn btn font" 
+        @click="$bvModal.show('bv-modal-example')" style="margin: 70px 0px 0px -70px">
           자막 생성 시작
         </b-button>
         <!-- 모달 창 -->
@@ -180,21 +180,18 @@ export default {
 
 .uploadbtn {
   position: absolute;
-  margin-top: -80px;
-  margin-left: 1475px;
-  
+  background-color: #564892;
+  color: white;
+  border-color: transparent;
 }
 
 b-button {
   font-weight: bold;
 }
 
-.file_input_textbox{float:left}
-
-.file_input_div{position:relative;width:100px;height:23px;overflow:hidden;}
-
-.file_input_button{width:100px;position:absolute; margin-left:3px; top:6px; background-color:#aaa; color:#fff;}
-
+.file_input_textbox{width: 320px;}
+.file_input_div{position:relative;width:100px;height:23px;overflow:hidden; }
+.file_input_button{width:100px;position:absolute; margin-left:3px; top:6px; background-color:rgb(134, 134, 134); color:#fff;}
 .file_input_hidden{font-size:45px; width:100px; position:absolute; top:0px; opacity:0; 
 
 filter:alpha(opacity=0); 
@@ -204,9 +201,7 @@ filter:alpha(opacity=0);
 
 
 .upload-box {
-  /* margin-top: 100px;
-  margin-right: 500px; */
-  width:650px 
+  max-width: 500px 
 }
 
 /* .upload-content {
@@ -217,6 +212,16 @@ filter:alpha(opacity=0);
 .font {
   margin-bottom: 0px;
   font-family: 'InfinitySans-RegularA1'
+}
+
+.file_input_textbox {
+  height: 35px;
+  background-color: rgb(238, 238, 238);
+  padding-left: 15px;
+}
+
+.file_input_button{
+  height: 35px;
 }
 
 </style>
