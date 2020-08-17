@@ -62,11 +62,10 @@ export default {
         this.subtitles = resSubtitles
         this.subTranslateData.transcript = resSubtitles
         this.subTranslateData.vttResult = response.data.object.vttResult
-        if (i === this.subTranslateData.finalBuild) {
+        if (i >= this.subTranslateData.finalBuild) {
           return
         } else {
-          const j = i++
-          this.translate(j)
+          this.translate(++i)
         }
       })
     },
