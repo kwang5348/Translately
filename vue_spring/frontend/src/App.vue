@@ -65,7 +65,8 @@ export default {
         if (i === this.subTranslateData.finalBuild) {
           return
         } else {
-          this.translate(i++)
+          const j = i++
+          this.translate(j)
         }
       })
     },
