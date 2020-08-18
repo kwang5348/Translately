@@ -57,7 +57,7 @@ export default {
       axios.post(`${SERVER_URL}/api/wav/subTranslate/`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
       .then(response => {
         console.log(response)
-        console.log(`${this.index + 1} 번째 번역이 끝났습니다.`)
+        console.log(`${i} 번째 번역이 끝났습니다.`)
         const resSubtitles = response.data.object.transcript
         this.subtitles = resSubtitles
         this.subTranslateData.transcript = resSubtitles
