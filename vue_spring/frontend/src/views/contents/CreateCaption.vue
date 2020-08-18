@@ -33,6 +33,10 @@
                 </div>
               </b-alert>
               <div style="height: 550px; overflow-y: scroll;">
+                <subtitle-vue 
+                  v-for="subtitle in subtitles" 
+                  :key="subtitle.startTime" 
+                  :subtitle="subtitle" />
                 <b-overlay
                   :show="translateBusy"
                   rounded
@@ -42,10 +46,6 @@
                   class="d-inline-block"
                 >
                 </b-overlay>
-                <subtitle-vue 
-                  v-for="subtitle in subtitles" 
-                  :key="subtitle.startTime" 
-                  :subtitle="subtitle" />
               </div>
             </div>
           </div>
