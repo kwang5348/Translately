@@ -13,7 +13,7 @@
       trim
     ></b-form-input>
 
-    <b-button v-b-modal.show-btn class="uploadbtn btn font" style="background-color: #564892;"
+    <b-button variant="danger" v-b-modal.show-btn class="uploadbtn btn font"
       @click="$bvModal.show('bv-modal-youtube')">
         자막 생성 시작
       </b-button>
