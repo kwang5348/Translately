@@ -11,10 +11,7 @@
         <p style="font-size: 18px; margin-bottom: 30px;">'파일 선택' 버튼을 누르거나 마우스로 파일을 이곳에 끌어서 놓으세요.</p>
         <upload-files @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files> 
       </div>
-    
-    
     </div>
-
   </div>
 </template>
 
@@ -23,25 +20,25 @@ import UploadFiles1 from "../../components/UploadFiles1"
 import UploadFiles from "../../components/UploadFiles"
 
 
-  export default {
-    name: 'Translate',
-    components: {
-      UploadFiles1,
-      UploadFiles,
+export default {
+  name: 'Translate',
+  components: {
+    UploadFiles1,
+    UploadFiles,
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {
+    uploadFile(video) {
+      this.$emit('upload-file', video)
     },
-    data() {
-      return {
-      }
+    uploadOption(uploadData) {
+      this.$emit('submit-upload-option', uploadData)
     },
-    methods: {
-      uploadFile(video) {
-        this.$emit('upload-file', video)
-      },
-      uploadOption(uploadData) {
-        this.$emit('submit-upload-option', uploadData)
-      },
-    },
-  }
+  },
+}
 </script>
 
 <style scoped>

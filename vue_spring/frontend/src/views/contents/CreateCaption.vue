@@ -72,6 +72,7 @@
     },
     beforeDestroy() {
       this.clearTimeout()
+      this.$emit('destroy-create-caption')
     },
     props: {
       subtitles: {
@@ -104,12 +105,6 @@
       //   // Return focus to the button once hidden
       //   this.$refs.button.focus()
       // },
-      logout() {
-        this.$cookies.remove('auth-token')
-        this.isLogin = false
-        this.navbar = true
-        this.$router.push({name: "Home"})
-      },
     },
   }
 
