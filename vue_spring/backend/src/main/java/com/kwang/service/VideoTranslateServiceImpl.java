@@ -289,6 +289,55 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 
 	}
 
+
+	@Override
+	public boolean getYoutubeName(String youtubeLink, int subid) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+
+		long time = System.currentTimeMillis();
+
+		final String command = "python3.7 youtubeName.py " + youtubeLink + " " + subid;
+		System.out.println("command : " + command);
+		Process proc = null;
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
+
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(60, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
+		}
+
+		return false;
+	}
+
 	@Override
 	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception {
 		final Recognize rec = new Recognize();
@@ -592,6 +641,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	public int reduceRemainTime(int userid) {
 		return userDao.reduceRemainTime(userid);
 	}
+
 
 
 

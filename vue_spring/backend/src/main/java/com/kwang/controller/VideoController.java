@@ -65,9 +65,20 @@ import com.kwang.stt.Recognize;
 @RestController
 public class VideoController {
 
-	private static final String EXTENSION = ".vtt";
-    private static final String SERVER_LOCATION = "/home/ubuntu/resources";
 
+	private static final String SERVER_LOCATION = "/home/ubuntu/resources";
+	// private static final String SERVER_LOCATION = "src/main/resources";
+	private static final String VTT_DIR = "/vtt/";
+	private static final String TEMP_VTT_DIR = "/vtt/temp/";
+	private static final String JPG_DIR = "/jpg/";
+	private static final String WAV_DIR = "/wav/";
+	private static final String TEMP_WAV_DIR = "/wav/temp/";
+	private static final String MP4_DIR = "/mp4/";
+
+	private static final String VTT_EX = ".vtt";
+	private static final String JPG_EX = ".jpg";
+	private static final String WAV_EX = ".wav";
+	private static final String MP4_EX = ".mp4";
 	static boolean semaFlag = false;
 
 	@Autowired
@@ -269,7 +280,7 @@ public class VideoController {
 
     @GetMapping(value = "/api/vtt/download")
     public ResponseEntity<Resource> download(@RequestParam(required = true) final String fileLink) throws IOException {
-        File file = new File(SERVER_LOCATION + "/vtt/" + fileLink + EXTENSION);
+        File file = new File(SERVER_LOCATION + "/vtt/" + fileLink + VTT_EX);
 
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=subtitle.vtt");
@@ -307,6 +318,25 @@ public class VideoController {
                 .body(resource);
     }
 
+	@GetMapping(value = "/api/jpg/download")
+    public ResponseEntity<Resource> jpgDownload(@RequestParam(required = true) final String fileLink) throws IOException {
+        File file = new File(SERVER_LOCATION + JPG_DIR + fileLink + JPG_EX);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=temp.jpg");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
+	}
 }
 
 

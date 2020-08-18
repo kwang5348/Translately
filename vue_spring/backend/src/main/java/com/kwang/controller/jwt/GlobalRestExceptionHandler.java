@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import io.jsonwebtoken.MalformedJwtException;
+
 @RestControllerAdvice
 public class GlobalRestExceptionHandler {
-    @ExceptionHandler(value = {RuntimeException.class})
+    @ExceptionHandler(value = {RuntimeException.class, MalformedJwtException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Object internalServerError(Exception e){
         ResponseEntity response = null;
@@ -18,7 +20,7 @@ public class GlobalRestExceptionHandler {
 
 		
         result.status = false;
-        result.data = "로그인이 필요한 서비스 입니다.";
+        result.data = "msg";
         result.object = e.getMessage();
         response = new ResponseEntity<>(result, HttpStatus.OK);
 	

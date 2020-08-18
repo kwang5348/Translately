@@ -17,6 +17,7 @@ public interface VideoTranslateService {
 	public boolean convertToSubAudio(String fileName, int startTime, int duration, String languageTag) throws Exception;
 
 	public String downLoadYoutube(String fileLink, String epicLink) throws Exception;
+	public boolean getYoutubeName(String youtubeLink, int subid) throws Exception;
 	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception;
 	public String convertToSrt_(double time);
 	public String convertToVTT_(double time);

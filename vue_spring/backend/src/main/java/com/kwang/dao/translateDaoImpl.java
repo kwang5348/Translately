@@ -1,7 +1,10 @@
 package com.kwang.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.kwang.dto.BuildTranslateResult;
 import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 import com.kwang.dto.UserData;
@@ -86,6 +89,38 @@ public class translateDaoImpl implements translateDao {
 		}
 		System.out.println("transLateDao : 총 " + result + " 의 번역 큐가 수정되었습니다.");
 		return result;
+	}
+
+	@Override
+	public BuildTranslateResult findSubtitleByYoutubeUrl(String youtubeUrl) {
+		int subid = 0;
+		subid = sqlSession.selectOne("transcript.get_sub_youtubeUrl", youtubeUrl);
+
+		if(subid == 0){
+			return null;
+		} else {
+			//List<Transcript> translist = 
+		}
+		return null;
+	}
+
+	@Override
+	public int deleteSubtitleBySubid(int subid, int userid) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("subid", subid);
+		map.put("userid", userid);
+		int successCount = sqlSession.delete("transcript.delete", map);
+		return successCount;
+	}
+
+	@Override
+	public int countUser() {
+		return sqlSession.selectOne("transcript.count_user");
+	}
+
+	@Override
+	public int countSubtitle() {
+		return sqlSession.selectOne("transcript.count_subtitle");
 	}
 
 

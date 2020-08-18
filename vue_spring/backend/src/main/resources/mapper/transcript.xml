@@ -46,4 +46,20 @@
         , targetsub = #{targetsub}
 		where subqueid = #{subqueid}
 	</update>
+
+	<delete id="delete" parameterType="java.util.Map">
+		DELETE from ssafydb.subtitle
+		WHERE subid = #{subid} and
+		userid = #{userid}
+
+	</delete>
+	
+	<select id="count_user" resultType = "Integer">
+		select userid from userinfo order by userid desc limit 1
+	</select>
+	
+	<select id="count_subtitle" resultType = "Integer" >
+		select subid from subtitle order by subid desc limit 1
+	</select>
+
 </mapper>

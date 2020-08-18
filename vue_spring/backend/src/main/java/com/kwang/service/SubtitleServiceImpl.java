@@ -3,6 +3,7 @@ package com.kwang.service;
 import java.util.List;
 
 import com.kwang.dao.translateDao;
+import com.kwang.dto.BuildTranslateResult;
 import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 
@@ -42,6 +43,27 @@ public class SubtitleServiceImpl implements SubtitleService {
     @Override
     public int modifyTranscript(List<Transcript> translist) {
         return transDao.modifyTranscript(translist);
+    }
+
+    @Override
+    public BuildTranslateResult findSubtitleByYoutubeUrl(String youtubeUrl) {
+        return transDao.findSubtitleByYoutubeUrl(youtubeUrl);
+    }
+
+    @Override
+    public int deleteSubtitleBySubid(int subid, int userid) {
+        System.out.println(subid + " " + userid);
+        return transDao.deleteSubtitleBySubid(subid, userid);
+    }
+
+    @Override
+    public int countUser() {
+        return transDao.countUser();
+    }
+
+    @Override
+    public int countSubtitle() {
+        return transDao.countSubtitle();
     }
 
 

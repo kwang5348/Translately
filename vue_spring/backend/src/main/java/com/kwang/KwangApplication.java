@@ -28,6 +28,7 @@ public class KwangApplication implements WebMvcConfigurer {
 		excludePatterns.add("/api/account/join");
 		excludePatterns.add("/api/mp4/download");
 		excludePatterns.add("/api/vtt/download");
+		excludePatterns.add("/api/jpg/download");
 		
 		registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**").excludePathPatterns(excludePatterns);
 	}

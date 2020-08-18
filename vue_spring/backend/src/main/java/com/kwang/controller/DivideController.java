@@ -57,7 +57,7 @@ public class DivideController {
 	private static final String JPG_EX = ".jpg";
 	private static final String WAV_EX = ".wav";
 	private static final String MP4_EX = ".mp4";
-	
+
 	@Autowired
 	private VideoTranslateService videoService;
 
@@ -67,7 +67,6 @@ public class DivideController {
 	@Autowired
 	private UserService userService;
 
-
 	@PostMapping("/api/wav/analysis")
 	@ApiOperation(value = "요청 영상 분석")
 	public Object selectSubtitle(@Valid @RequestBody SubtitleFileInfo fileInfo, HttpServletRequest req) {
@@ -75,7 +74,7 @@ public class DivideController {
 		ResponseEntity response = null;
 		final String languageTag = "_" + fileInfo.getStart_sub_code() + "_" + fileInfo.getTarget_sub_code();
 		int userid = (int) (long) JwtService.getUserInfo(req).get("userid");
-		int userRemainTime = (int) (long) JwtService.getUserInfo(req).get("remaintime");
+		int userRemainTime = userService.getRemainTime(userid);
 		fileInfo.setUserid(userid);
 		// int subid = videoService.saveFileInfo(fileInfo);
 		int duration = 0;
@@ -107,7 +106,7 @@ public class DivideController {
 			duration = videoService.getDurationFromMp4(fileInfo.getSubtitle_file() + languageTag);
 			fileInfo.setDuration(duration);
 			System.out.println(duration);
-			if(userRemainTime < duration){
+			if (userRemainTime < duration) {
 				System.out.println("remain time 이 부족합니다.");
 				result.status = false;
 				result.data = "remain time 이 부족합니다.";
@@ -124,7 +123,7 @@ public class DivideController {
 		}
 
 		int wavCount = duration / 30;
-		
+
 		result.status = true;
 		result.data = (wavCount + 1) + "개의 파일분할이 가능합니다.";
 		result.object = fileInfo;
@@ -184,10 +183,10 @@ public class DivideController {
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			return response;
 		}
-		
+
 		System.out.println(userRemainTime + " 에서 " + parseTime + "만큼의 시간이 차감됩니다.");
-		System.out.println("변경후 userRemainTime : " +  userService.getRemainTime(userid));
-		if(userRemainTime < parseTime){
+		System.out.println("변경후 userRemainTime : " + userService.getRemainTime(userid));
+		if (userRemainTime < parseTime) {
 			result.status = false;
 			result.data = "잔여시간이 부족합니다.";
 			result.object = null;
@@ -256,16 +255,26 @@ public class DivideController {
 			System.out.println("ConverToSrt Start");
 			videoService.converToSrtFile_(parsedResult.getParsedResult(), tempVttFilePath);
 			if (resultSet.getBuildId() == resultSet.getFinalBuild()) {
-				try {
-					videoService.getCapture(resultSet.getFileInfo().getSubtitle_file());
-					resultSet.getFileInfo().setThumbnail(resultSet.getFileInfo().getSubtitle_file() + ".jpg");
-				} catch (Exception e) {
-					System.out.println("video 캡쳐에 실패하였습니다.");
-					e.printStackTrace();
-				}
+				
+				resultSet.getFileInfo().setThumbnail(resultSet.getFileInfo().getSubtitle_file() + ".jpg");
 				int subid = videoService.saveFileInfo(resultSet.getFileInfo());
 				int queCount = videoService.saveTranscript(parsedResult.getTranlist(), subid);
-				
+				if (resultSet.getFileInfo().getYoutube_url() == null) {
+					try {
+						videoService.getCapture(resultSet.getFileInfo().getSubtitle_file());
+					} catch (Exception e) {
+						System.out.println("video 캡쳐에 실패하였습니다.");
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						videoService.getYoutubeName(resultSet.getFileInfo().getYoutube_url(),
+						resultSet.getFileInfo().getSubid());
+					} catch (Exception e) {
+						System.out.println("유튜브 이름 불러오기에 실패하였습니다.");
+						e.printStackTrace();
+					}
+				}
 				System.out.println(queCount + " 개의 번역큐가 입력되었습니다.");
 				videoService.converToSrtFile_(parsedResult.getParsedResult(), vttFilePath);
 				System.out.println("최종파일 번역 완료 path : " + vttFilePath);
