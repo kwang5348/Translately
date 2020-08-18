@@ -7,7 +7,7 @@
       <track label="english1" kind="subtitles" srclang="ko" :src=downloadUrl>
       <track label="english2" kind="subtitles" srclang="en" :src=downloadUrl>
     </video>
-    <b-button variant="primary"><a class="text-white" :href="downloadUrl"> 자막 다운로드 </a></b-button>
+    <b-button style="background-color: #564892;"><a class="text-white" :href="downloadUrl"> 자막 다운로드 </a></b-button>
   </div>
 </template>
 

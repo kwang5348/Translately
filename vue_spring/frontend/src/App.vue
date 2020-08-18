@@ -85,6 +85,8 @@ export default {
       })
       .catch(response => {
         console.log(response)
+        this.subtitles = [{"startsub":"ERROR ", "targetsub":"XXXXXXXXXXXXXXXXXXXXXXXerrXXXXXXXXXXXXXXXXXXXXXXX", "startTime":0 , "endTime":0}]
+        this.translateBusy = false
         console.log("에러를 감지 하였습니다.")
       })
     },

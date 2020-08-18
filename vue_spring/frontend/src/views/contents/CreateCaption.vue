@@ -32,11 +32,23 @@
                   </div>
                 </div>
               </b-alert>
-              <div style="height: 550px; overflow-y: scroll;">
+              <!-- <div style="height: 550px; overflow-y: scroll;"> -->
+                <v-responsive
+                  class="overflow-y-auto"
+                  min-height="400"
+                  max-height="400"
+                >
+              <!-- <v-virtual-scroll
+              :items="items"
+              :item-height="50"
+              height="300"
+              > -->
                 <subtitle-vue 
-                  v-for="subtitle in subtitles" 
-                  :key="subtitle.startTime" 
-                  :subtitle="subtitle" />
+                  v-for="(subtitle, index) in subtitles" 
+                  :key="index" 
+                  :subtitle="subtitle"
+                  :index="index" />
+                <hr>
                 <b-overlay
                   :show="translateBusy"
                   rounded
@@ -46,18 +58,16 @@
                   class="d-inline-block"
                 >
                 </b-overlay>
-
-                <v-responsive
-                  class="overflow-y-auto"
-                  max-height="400"
-                >
+              <!-- </v-virtual-scroll> -->
                 </v-responsive>
-              </div>
+              <!-- </div> -->
+               <!-- variant="outline-primary" -->
+              <b-button @click="change_subtitle" style="background-color: #564892;">Button</b-button>
             </div>
           </div>
-        </div>
       </div>
     </div>
+  </div>
     
 </template>
 
