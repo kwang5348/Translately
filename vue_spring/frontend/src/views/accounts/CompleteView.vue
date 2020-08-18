@@ -2,7 +2,6 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         
-        
         <!-- Page Content  -->
         <div class="img" style="margin-top: 90px;">
             <img src='../../../src/img/logo-color2.png' alt="로고" height="40"/>
