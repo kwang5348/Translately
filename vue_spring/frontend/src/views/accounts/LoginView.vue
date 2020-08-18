@@ -37,7 +37,7 @@
           <!-- <div class="d-flex justify-content-between"> -->
           <div class="d-flex justify-content-between">
             <p class="signintext mt-1" style="font-size: 13px">&#128505; 회원가입으로 다양하고 특별한 혜택을 즐겨보세요.</p>
-            <b-col><b-button size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
+            <b-col><b-button class="text-white" size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
           </div>
         </div>
       </b-card>
