@@ -18,6 +18,16 @@
                 <!-- <p>영상</p> -->
                 <video-player-vue :downloadUrl="downloadUrl" :video=video ></video-player-vue>
             </div>
+            <div
+              class="progress-bar progress-bar-info progress-bar-striped"
+              role="progressbar"
+              :aria-valuenow="progress"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              :style="{ width: progress + '%' }"
+            >
+              {{ progress }}%
+            </div>
             <div class="col-7" style="border:1px solid transparent; padding-right: 10px">
               <!-- <p>자막</p> -->
               <b-alert show dismissible fade variant="warning" style="margin-top:2px; padding-left: 20px; padding-bottom: 0px;">
@@ -70,7 +80,8 @@
     },
     data() {
       return {
-        timeout: null
+        timeout: null,
+        progress: 0,
       }
     },
     beforeDestroy() {

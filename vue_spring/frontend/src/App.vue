@@ -56,7 +56,7 @@ export default {
     translate(i) {
       console.log(`${i}번째 번역을 시작합니다.`)
       this.subTranslateData.buildId = i
-      axios.post(`${SERVER_URL}/api/wav/subTranslate/`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
+      axios.post(`${SERVER_URL}/api/wav/subTranslate`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
       .then(response => {
         console.log(response)
         console.log(`${i} 번째 번역이 끝났습니다.`)
@@ -168,7 +168,7 @@ export default {
       delete this.uploadData.option2
       console.log(this.uploadData)
       if (this.$cookies.isKey("auth-token")) {
-        axios.post(`${SERVER_URL}/api/wav/analysis/`, this.uploadData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
+        axios.post(`${SERVER_URL}/api/wav/analysis`, this.uploadData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
         .then(response => {
           console.log(response)
           const translateCount = parseInt(response.data.data.replace("개의 파일분할이 가능합니다.", ""))
