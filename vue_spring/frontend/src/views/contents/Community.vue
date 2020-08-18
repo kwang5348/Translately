@@ -2,9 +2,6 @@
   <div class="wrapper">
     <!-- Page Content  -->
     <div class="img mb-5 font-ment" style="margin-top: 50px;">
-      <!-- <div class="my-2" style="text-align: right; margin-right: 50px;">
-        <span><v-btn color="warning" dark><v-icon class="mr-2">mdi-account-circle</v-icon><b>내가 만든 자막</b></v-btn></span>
-      </div> -->
       <p class="mb-5" style="font-size: 20px; font-weight: bold;">다른 사람들이 만든 자막을 키워드로 검색해보세요.</p>
       <v-toolbar color="transparent" dark class="mx-auto" max-width="1200">
       <v-text-field class="mx-4" flat hide-details label="Search" v-model="searchdata" solo-inverted></v-text-field>
@@ -32,7 +29,6 @@
       </v-tabs>
       <!-- 카드 -->
       <v-card class="mx-auto" max-width="1150">
-        <!-- <v-toolbar color="indigo" dark><v-btn icon><v-icon>mdi-magnify</v-icon></v-btn></v-toolbar> -->
         <div class="text-center">
           <v-row dense>
             <community-card class="col-4" v-for="(data, index) in calData" :key="index" :data="data" :index="index" cols="4"></community-card>
@@ -63,7 +59,6 @@ export default {
   data() {
     return {
       subtitles: [],
-      // mysubs: [],
       searchdata:'',
       listData: [],
       dataPerPage:6,
