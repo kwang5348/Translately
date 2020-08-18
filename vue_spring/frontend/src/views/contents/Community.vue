@@ -2,9 +2,6 @@
   <div class="wrapper">
     <!-- Page Content  -->
     <div class="img mb-5 font-ment" style="margin-top: 50px;">
-      <!-- <div class="my-2" style="text-align: right; margin-right: 50px;">
-        <span><v-btn color="warning" dark><v-icon class="mr-2">mdi-account-circle</v-icon><b>내가 만든 자막</b></v-btn></span>
-      </div> -->
       <p class="mb-5" style="font-size: 20px; font-weight: bold;">다른 사람들이 만든 자막을 키워드로 검색해보세요.</p>
       <v-toolbar color="transparent" dark class="mx-auto" max-width="1200">
       <v-text-field class="mx-4" flat hide-details label="Search" v-model="searchdata" solo-inverted></v-text-field>
@@ -32,24 +29,9 @@
       </v-tabs>
       <!-- 카드 -->
       <v-card class="mx-auto" max-width="1150">
-        <!-- <v-toolbar color="indigo" dark><v-btn icon><v-icon>mdi-magnify</v-icon></v-btn></v-toolbar> -->
         <div class="text-center">
           <v-row dense>
-            <v-col v-for="(data, index) in calData" :key="index" cols="4">
-              <v-card>
-                <v-img :src="thumbnailUrl" class="white--text align-end m-1"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="250px">
-                  <v-card-title v-text="data.video_name"></v-card-title>
-                </v-img>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <b-badge pill variant="primary" style="font-size: 17px; margin: 0px 2px;">{{ data.start_sub_code }}</b-badge>
-                  <b-badge pill variant="warning" style="font-size: 17px; margin: 0px 2px;">{{ data.target_sub_code }}</b-badge>
-                  <!-- <v-btn icon><v-icon>mdi-bookmark</v-icon></v-btn> -->
-                  <v-btn icon><v-icon>mdi-open-in-new</v-icon></v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
+            <community-card class="col-4" v-for="(data, index) in calData" :key="index" :data="data" :index="index" cols="4"></community-card>
           </v-row>
           <v-pagination
             v-model="curPageNum"
@@ -65,16 +47,18 @@
 
 <script>
 import axios from 'axios'
+import CommunityCard from "../../components/CommunityCard"
 
 const SERVER_URL = 'http://i3a511.p.ssafy.io'
 
 export default {
   name: 'Community',
+  components: {
+    CommunityCard,
+  },
   data() {
     return {
       subtitles: [],
-      thumbnailUrl: "",
-      // mysubs: [],
       searchdata:'',
       listData: [],
       dataPerPage:6,
@@ -104,8 +88,12 @@ export default {
         console.log(response)
         this.subtitles = response.data.object
         this.thumbnailUrl = "http://i3a511.p.ssafy.io/api/jpg/download?fileLink=" + response.data.object.subtitle_file
-        this.listData = this.subtitles
+        console.log("이제 할 수 있ㄸ으")
         console.log(this.subtitles)
+        console.log(this.subtitles.subtitle_file)
+        console.log(this.thumbnailUrl)
+        this.listData = this.subtitles
+        // console.log(this.subtitles)
       })
     },
     getMy() {
