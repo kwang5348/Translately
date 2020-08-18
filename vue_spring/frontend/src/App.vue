@@ -5,11 +5,13 @@
       :isLogin="isLogin" 
       :video="video" 
       :subtitles="subtitles"
-      :translateBusy="translateBusy" 
+      :translateBusy="translateBusy"
+      :downloadUrl="downloadUrl"
       @submit-login-data="login" 
       @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
-      @logout="logout" />
+      @logout="logout"
+      @destroy-create-caption="destroyCreateCaption" />
     </div>
   
   </v-app>
@@ -33,13 +35,14 @@ export default {
       video: undefined,
       uploadData: null,
       translateBusy: true,
+      downloadUrl: "",
       subTranslateData: {
         "buildId": 0,
         "finalBuild": 0,
         "transcript": null,
         "fileInfo": undefined,
         "vttResult": null 
-      }
+      },
     }
   },
   created() {
@@ -50,9 +53,8 @@ export default {
     }
   },
   methods: {
-    translate(i) { 
+    translate(i) {
       console.log(`${i}번째 번역을 시작합니다.`)
-      console.log(this.subTranslateData)
       this.subTranslateData.buildId = i
       axios.post(`${SERVER_URL}/api/wav/subTranslate/`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
       .then(response => {
@@ -60,23 +62,25 @@ export default {
         console.log(`${i} 번째 번역이 끝났습니다.`)
         const resSubtitles = response.data.object.transcript
         this.subtitles = resSubtitles
+        this.downloadUrl = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + response.data.object.fileInfo.subtitle_file + "_" + response.data.object.fileInfo.start_sub_code + "_" + response.data.object.fileInfo.target_sub_code
         this.subTranslateData.transcript = resSubtitles
         this.subTranslateData.vttResult = response.data.object.vttResult
-        if (i >= 10) {
-          console.log("무한루프로 동작합니다.")
-          return
-        } else if (this.subTranslateData.buildId >= response.data.object.finalBuild) {
+        return response
+      })
+      .then(response => {
+        if (this.subTranslateData.buildId >= response.data.object.finalBuild) {
           this.subTranslateData = {
             "buildId": 0,
             "finalBuild": 0,
             "transcript": null,
             "fileInfo": undefined,
-            "vttResult": null 
+            "vttResult": null
           }
+          this.translateBusy = false
           return
         } else {
-          console.log("함수안에 왔습니다.")
-          this.translate(++i)
+          console.log(this.subTranslateData.buildId)
+          this.translate(i+1)
         }
       })
       .catch(response => {
@@ -104,7 +108,7 @@ export default {
         this.setCookie(response.data.object.token)
         this.isLogin = true
         this.navbar = false
-        this.$router.push('/contents/tutorial')
+        this.$router.push('/')
       })
       .catch(err => {
         console.log(err)
@@ -156,6 +160,8 @@ export default {
       this.video = video
     },
     uploadOption(ud) {
+      this.subtitles = undefined
+      this.translateBusy = true
       console.log("파일을 분할합니다.")
       this.uploadData = ud
       delete this.uploadData.option1
@@ -169,7 +175,6 @@ export default {
           this.subTranslateData.finalBuild = translateCount - 1
           this.subTranslateData.fileInfo = response.data.object
           this.translate(0)
-          this.translateBusy = false
         })
         .catch(response => {
           console.log(response)
@@ -181,6 +186,15 @@ export default {
         this.$router.push("/accounts/login")
       } 
     },
+    destroyCreateCaption() {
+      this.subtitles = undefined
+      this.downloadUrl = ""
+    }
+  },
+  watch: {
+    index() {
+      console.log("watch" + this.index)
+    }
   }
 }
 

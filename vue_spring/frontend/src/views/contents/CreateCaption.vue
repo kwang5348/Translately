@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-5" style="border:1px solid transparent;">
                 <!-- <p>영상</p> -->
-                <video-player-vue :video=video ></video-player-vue>
+                <video-player-vue :downloadUrl="downloadUrl" :video=video ></video-player-vue>
             </div>
             <div class="col-7" style="border:1px solid transparent; padding-right: 10px">
               <!-- <p>자막</p> -->
@@ -32,7 +32,11 @@
                   </div>
                 </div>
               </b-alert>
-              <!-- <div style="height: 550px; overflow-y: scroll;"> -->
+              <div style="height: 550px; overflow-y: scroll;">
+                <subtitle-vue 
+                  v-for="subtitle in subtitles" 
+                  :key="subtitle.startTime" 
+                  :subtitle="subtitle" />
                 <b-overlay
                   :show="translateBusy"
                   rounded
@@ -47,43 +51,8 @@
                   class="overflow-y-auto"
                   max-height="400"
                 >
-                  <!-- <div class="pa-6 text-center">
-                    Scroll down
-                  </div>
-
-                  <v-responsive
-                    height="200vh"
-                    class="text-center pa-2"
-                  >
-                    <v-responsive min-height="50vh"></v-responsive>
-                    <div class="text-center body-2 mb-12">The card will appear below:</div>
-
-                    <v-lazy
-                      v-model="isActive"
-                      :options="{
-                        threshold: .5
-                      }"
-                      min-height="200"
-                      transition="fade-transition"
-                    >
-                      <v-card
-                        class="mx-auto"
-                        max-width="336"
-                      >
-                        <v-card-title>Card title</v-card-title>
-
-                        <v-card-text>
-                          Phasellus magna. Quisque rutrum. Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Aliquam lobortis. Quisque libero metus, condimentum nec, tempor a, commodo mollis, magna.
-
-                          In turpis. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. In turpis. Pellentesque dapibus hendrerit tortor. Ut varius tincidunt libero.
-                        </v-card-text>
-                      </v-card>
-                    </v-lazy>
-                  </v-responsive> -->
-                <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle" />
                 </v-responsive>
 
-              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -112,6 +81,7 @@
     },
     beforeDestroy() {
       this.clearTimeout()
+      this.$emit('destroy-create-caption')
     },
     props: {
       subtitles: {
@@ -121,6 +91,9 @@
       },
       translateBusy: {
         type: Boolean
+      },
+      downloadUrl: {
+        type: String
       }
     },
     methods: {
@@ -144,12 +117,6 @@
       //   // Return focus to the button once hidden
       //   this.$refs.button.focus()
       // },
-      logout() {
-        this.$cookies.remove('auth-token')
-        this.isLogin = false
-        this.navbar = true
-        this.$router.push({name: "Home"})
-      },
     },
   }
 

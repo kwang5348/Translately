@@ -13,7 +13,7 @@
       trim
     ></b-form-input>
 
-    <b-button v-if="LinkState" v-b-modal.show-btn variant="danger" class="uploadbtn btn font" 
+    <b-button v-b-modal.show-btn class="uploadbtn btn font" style="background-color: #564892;"
       @click="$bvModal.show('bv-modal-youtube')">
         자막 생성 시작
       </b-button>
@@ -105,22 +105,24 @@ export default {
     uploadOption() {
       console.log("start")
       console.log("유튜브 영상 파일 다운로드를 시작합니다.")
-      this.$emit('upload-file', this.fileLink.replace("https://www.youtube.com/watch?v=", ""))
-      axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
-        headers: {
-          "jwt-auth-token": this.$cookies.get("auth-token")
-        }
-      })
-      .then(response => {
-        console.log("유튜브 영상 다운로드가 완료되었습니다.")
-        console.log(response)
-        this.uploadData.video_name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-        this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-        this.uploadData.youtube_url = this.fileLink
-        this.message = response.data.message;
-        this.$emit('submit-upload-option', this.uploadData)
-        this.$router.push('/contents/createcaption')
-      })
+      if(this.LinkState){
+        this.$emit('upload-file', this.fileLink.replace("https://www.youtube.com/watch?v=", ""))
+        axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
+          headers: {
+            "jwt-auth-token": this.$cookies.get("auth-token")
+          }
+        })
+        .then(response => {
+          console.log("유튜브 영상 다운로드가 완료되었습니다.")
+          console.log(response)
+          this.uploadData.video_name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+          this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+          this.uploadData.youtube_url = this.fileLink
+          this.message = response.data.message;
+          this.$emit('submit-upload-option', this.uploadData)
+          this.$router.push('/contents/createcaption')
+        })
+      }
     }
   },    
 }

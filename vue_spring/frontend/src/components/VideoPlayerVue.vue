@@ -16,7 +16,8 @@
 export default {
   name: 'video-player-vue',
   props: {
-    video: {}
+    video: {},
+    downloadUrl: {}
   },
   data() {
     return {
@@ -35,18 +36,6 @@ export default {
         return URL.createObjectURL(this.video)
       }
     },
-    downloadUrl() {
-      console.log("url찍어보기")
-      console.log(this.video)
-      let name = ""
-      if (typeof this.video === 'string') {
-        name = this.video
-      } else {
-        name = this.video.name.replace(".mp4", "")
-      }
-      const url = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + name
-      return url
-    }
   }
 }
 </script>

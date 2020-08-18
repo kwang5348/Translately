@@ -75,9 +75,9 @@ export default {
     mypage() {
         console.log("start")
         axios.get(`${SERVER_URL}/api/account/info`, {
-            headers: {
-                "jwt-auth-token": this.$cookies.get("auth-token")
-            }
+          headers: {
+              "jwt-auth-token": this.$cookies.get("auth-token")
+          }
         })
         .then(response => {
             this.userdata = response.data.object
