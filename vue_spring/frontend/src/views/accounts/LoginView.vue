@@ -18,7 +18,7 @@
         <div style="width: 400px;" class="mx-auto">
           <div class="form-group text-left">
             <label for="Input1">이메일</label><br>
-            <input v-model="loginData.uid" type="text" class="form-control" id="Input1" aria-describedby="emailHelp">
+            <input v-model="loginData.email" type="text" class="form-control" id="Input1" aria-describedby="emailHelp">
             <small class="form-text text-muted">이메일을 작성해주세요</small>
           </div>
           <div class="form-group text-left">
