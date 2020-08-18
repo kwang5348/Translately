@@ -52,7 +52,7 @@
                   max-height="400"
                 >
                 </v-responsive>
-
+              </div>
             </div>
           </div>
         </div>
