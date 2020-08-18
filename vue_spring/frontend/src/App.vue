@@ -102,7 +102,7 @@ export default {
         this.setCookie(response.data.object.token)
         this.isLogin = true
         this.navbar = false
-        this.$router.push('/contents/tutorial')
+        this.$router.push('/')
       })
       .catch(err => {
         console.log(err)
