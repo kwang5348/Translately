@@ -10,11 +10,11 @@
 
       <div class="row mt-5 mb-5">
         <div class="col-2"></div>
-        <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">1000</p>
+        <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.contents }}</p>
           <p>오늘까지 만들어진 자막</p>
         </div>
         <div class="col-4">
-          <p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">510</p>
+          <p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.users }}</p>
           <p>사용 중인 유저</p>
         </div>
         <div class="col-2 row align-items-end">
@@ -58,6 +58,8 @@ export default {
   },
   data() {
     return {
+      contents:'',
+      users:'',
       subtitles: [],
       searchdata:'',
       listData: [],
@@ -65,7 +67,21 @@ export default {
       curPageNum:1,
     }
   },
-  methods: {  
+  methods: {
+    find_count() {
+      axios.get(`${SERVER_URL}/api/subtitle/userCount`, {
+        headers: {
+          "jwt-auth-token": this.$cookies.get("auth-token")
+        }
+      })
+      .then(response => {
+        console.log("인원수 체크용")
+        console.log(response)
+        console.log(response.data)
+        this.contents = response.data.object.subtitleCount
+        this.users = response.data.object.userCount
+      })
+    },  
     getsearch() {
       axios.get(`${SERVER_URL}/api/subtitle/search?keyword=${this.searchdata}`, {
         headers: {
@@ -108,15 +124,9 @@ export default {
         console.log(this.subtitles)
       })
     },
-    // delete_caption() {
-    //   console.log("data를 찍어보자")
-    //   console.log(this.data)     
-    //   axios.get(`${SERVER_URL}/api/subtitle/delete?subid=${this.data.subid}`, {
-    //     headers: {
-    //       "jwt-auth-token": this.$cookies.get("auth-token")
-    //     }
-    //   })
-    // }
+  },
+  created() {
+    this.find_count()
   },
   computed: {
     startOffset() {
