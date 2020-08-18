@@ -72,10 +72,10 @@ export default {
           "jwt-auth-token": this.$cookies.get("auth-token")
         }
       })
-      .then(response => {
-        this.subtitles = response.data.object
+      .then(res => {
+        this.subtitles = res.data.object
+        this.listData = this.subtitles
         console.log(this.subtitles)
-        this.searchdata = ''
       })
     }, 
     getSub() {
@@ -106,10 +106,17 @@ export default {
         this.subtitles = res.data.object
         this.listData = this.subtitles
         console.log(this.subtitles)
-        
       })
-    
     },
+    // delete_caption() {
+    //   console.log("data를 찍어보자")
+    //   console.log(this.data)     
+    //   axios.get(`${SERVER_URL}/api/subtitle/delete?subid=${this.data.subid}`, {
+    //     headers: {
+    //       "jwt-auth-token": this.$cookies.get("auth-token")
+    //     }
+    //   })
+    // }
   },
   computed: {
     startOffset() {
