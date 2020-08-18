@@ -9,7 +9,8 @@
       @submit-login-data="login" 
       @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
-      @logout="logout" />
+      @logout="logout"
+      @destroy-create-caption="destroyCreateCaption" />
     </div>
   
   </v-app>
@@ -62,10 +63,7 @@ export default {
         this.subtitles = resSubtitles
         this.subTranslateData.transcript = resSubtitles
         this.subTranslateData.vttResult = response.data.object.vttResult
-        if (i >= 10) {
-          console.log("무한루프로 동작합니다.")
-          return
-        } else if (this.subTranslateData.buildId >= response.data.object.finalBuild) {
+        if (this.subTranslateData.buildId >= response.data.object.finalBuild) {
           this.subTranslateData = {
             "buildId": 0,
             "finalBuild": 0,
@@ -156,6 +154,8 @@ export default {
       this.video = video
     },
     uploadOption(ud) {
+      this.subtitles = undefined
+      this.translateBusy = true
       console.log("파일을 분할합니다.")
       this.uploadData = ud
       delete this.uploadData.option1
@@ -181,6 +181,9 @@ export default {
         this.$router.push("/accounts/login")
       } 
     },
+    destroyCreateCaption() {
+      this.subtitles = undefined
+    }
   }
 }
 

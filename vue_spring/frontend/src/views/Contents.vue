@@ -30,6 +30,7 @@
         <router-view 
           @upload-file="uploadFile" 
           @submit-upload-option="uploadOption"
+          @destroy-create-caption="destroyCreateCaption"
           :video="video"
           :isLogin="isLogin"
           :subtitles="subtitles"
@@ -57,15 +58,18 @@ export default {
   methods: {
     logout() {
       this.$emit('logout')
-      },
-    uploadFile(video) {
-        this.$emit('upload-file', video)
-      },
-    uploadOption(uploadData) {
-        this.$emit('submit-upload-option', uploadData)
-      },
     },
-  }
+    uploadFile(video) {
+      this.$emit('upload-file', video)
+    },
+    uploadOption(uploadData) {
+      this.$emit('submit-upload-option', uploadData)
+    },
+    destroyCreateCaption() {
+      this.$emit('destroy-create-caption')
+    }
+  },
+}
 
 </script>
 
@@ -87,6 +91,7 @@ export default {
   font-weight: bold;
   background-color:#564892;
   padding: 0px;
+  padding-top: 25px;
   border-color: transparent;
 }
 
