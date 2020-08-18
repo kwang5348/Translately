@@ -39,7 +39,7 @@ public class JwtService {
 
         builder.setSubject("로그인토큰")
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin))
-                .claim("UserData", user).claim("second", "더 담고 싶은거 있어?");
+                .claim("UserData", user);
 
         builder.signWith(SignatureAlgorithm.HS256, salt.getBytes());
 
@@ -59,13 +59,10 @@ public class JwtService {
 
     public Map<String, Object> get(final String jwt){
         Jws<Claims> claims = null;
-        System.out.println("여기까지 ㄱㅊ");
         System.out.println(Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt));
-        System.out.println("여기 괜찮");
         try {
             claims = Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt);
         } catch (Exception e) {
-            System.out.println("여기서 터지나?");
             throw new RuntimeException();
         }
 

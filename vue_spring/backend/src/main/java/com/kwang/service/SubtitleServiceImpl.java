@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kwang.dao.translateDao;
 import com.kwang.dto.SubtitleFileInfo;
+import com.kwang.dto.Transcript;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,22 @@ public class SubtitleServiceImpl implements SubtitleService {
     public List<SubtitleFileInfo> findFilesByKeyword(String keyword) {
         
         return transDao.findFilesByKeyword(keyword);
+    }
+
+    @Override
+    public List<SubtitleFileInfo> findFilesByUserid(int userid) {
+        return transDao.findFilesByUserid(userid);
+    }
+
+    @Override
+    public List<Transcript> findSubtitleBySubid(int subid) {
+        
+        return transDao.findSubtitleBySubid(subid);
+    }
+
+    @Override
+    public int modifyTranscript(List<Transcript> translist) {
+        return transDao.modifyTranscript(translist);
     }
 
 

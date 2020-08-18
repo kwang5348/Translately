@@ -1,12 +1,25 @@
 package com.kwang.dto;
 
 public class Transcript {
+    private int subqueid;
     private int subid;
     private String startsub;
     private String targetsub;
     private double starttime;
     private double endtime;
     private String que_thumbnail;
+
+    public Transcript() {
+
+    }
+
+    public int getSubqueid() {
+        return subqueid;
+    }
+
+    public void setSubqueid(int subqueid) {
+        this.subqueid = subqueid;
+    }
 
     public Transcript(String startsub, String targetsub, double starttime, double endtime, String que_thumbnail) {
         this.setStartsub(startsub);

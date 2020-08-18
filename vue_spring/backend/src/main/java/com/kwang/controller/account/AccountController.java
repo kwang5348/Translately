@@ -116,7 +116,7 @@ public class AccountController {
 	public Object signOut(@RequestParam(required = true) final String email){
 		System.out.println("email:" + email);
 		int successCnt = userService.deleteUserByEmail(email);
-
+		
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
 		if(email.equals("admin@translately.com")){

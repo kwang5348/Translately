@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.kwang.dao.translateDao;
 import com.kwang.dto.BasicResponse;
 import com.kwang.dto.BuildTranslateResult;
 import com.kwang.dto.ParseResultSet;
@@ -24,6 +25,7 @@ import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 import com.kwang.jwt.service.JwtService;
 import com.kwang.service.SubtitleService;
+import com.kwang.service.UserService;
 import com.kwang.service.VideoTranslateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ public class DivideController {
 	private static final String SERVER_LOCATION = "/home/ubuntu/resources";
 	// private static final String SERVER_LOCATION = "src/main/resources";
 	private static final String VTT_DIR = "/vtt/";
+	private static final String TEMP_VTT_DIR = "/vtt/temp/";
 	private static final String JPG_DIR = "/jpg/";
 	private static final String WAV_DIR = "/wav/";
 	private static final String TEMP_WAV_DIR = "/wav/temp/";
@@ -54,11 +57,16 @@ public class DivideController {
 	private static final String JPG_EX = ".jpg";
 	private static final String WAV_EX = ".wav";
 	private static final String MP4_EX = ".mp4";
+	
 	@Autowired
 	private VideoTranslateService videoService;
 
 	@Autowired
 	private JwtService JwtService;
+
+	@Autowired
+	private UserService userService;
+
 
 	@PostMapping("/api/wav/analysis")
 	@ApiOperation(value = "요청 영상 분석")
@@ -67,6 +75,7 @@ public class DivideController {
 		ResponseEntity response = null;
 		final String languageTag = "_" + fileInfo.getStart_sub_code() + "_" + fileInfo.getTarget_sub_code();
 		int userid = (int) (long) JwtService.getUserInfo(req).get("userid");
+		int userRemainTime = (int) (long) JwtService.getUserInfo(req).get("remaintime");
 		fileInfo.setUserid(userid);
 		// int subid = videoService.saveFileInfo(fileInfo);
 		int duration = 0;
@@ -81,22 +90,30 @@ public class DivideController {
 		System.out.println("translateStart");
 		System.out.println("변환 전 파일 경로 " + SERVER_LOCATION + MP4_DIR + fileInfo.getSubtitle_file() + MP4_EX);
 		try {
-			videoService.convertToAudio(fileInfo.getSubtitle_file(), languageTag );
+			videoService.convertToAudio(fileInfo.getSubtitle_file(), languageTag);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			System.out.println("ffmpeg 변환이 실패하였습니다.");
-			result.status = true;
+			result.status = false;
 			result.data = "ffmpeg 변환이 실패하였습니다.";
 			result.object = fileInfo;
 			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
-		System.out.println("변환 후 파일 경로 " + SERVER_LOCATION + WAV_DIR + fileInfo.getSubtitle_file() + languageTag + WAV_EX);
+		System.out.println(
+				"변환 후 파일 경로 " + SERVER_LOCATION + WAV_DIR + fileInfo.getSubtitle_file() + languageTag + WAV_EX);
 		System.out.println("ffmpeg 작업 종료");
 
 		try {
 			duration = videoService.getDurationFromMp4(fileInfo.getSubtitle_file() + languageTag);
 			fileInfo.setDuration(duration);
 			System.out.println(duration);
+			if(userRemainTime < duration){
+				System.out.println("remain time 이 부족합니다.");
+				result.status = false;
+				result.data = "remain time 이 부족합니다.";
+				result.object = fileInfo;
+				return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("ffprove 파일 정보를 읽어오는데 실패하였습니다.");
@@ -106,65 +123,90 @@ public class DivideController {
 			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 
-		int wavCount = duration / 50;
+		int wavCount = duration / 30;
+		
 		result.status = true;
-		result.data = (wavCount+1) + "개의 파일분할이 가능합니다.";
+		result.data = (wavCount + 1) + "개의 파일분할이 가능합니다.";
 		result.object = fileInfo;
 
 		// for (int i = 0; i <= wavCount; i++) {
-		// 	try {
-		// 		int parseTime = 50;
-		// 		if(wavCount == i){
-		// 			parseTime = duration - 50 * wavCount;
-		// 		}
-		// 		videoService.convertToSubAudio(fileInfo.getSubtitle_file(), i, parseTime);
-		// 	} catch (Exception e) {
-		// 		e.printStackTrace();
-		// 		System.out.println(i + " 번째 파일분할에 실패하였습니다.");
-		// 		result.status = true;
-		// 		result.data = i + " 번째 파일분할에 실패하였습니다.";
-		// 		result.object = fileInfo;
-		// 		return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-		// 	}
+		// try {
+		// int parseTime = 50;
+		// if(wavCount == i){
+		// parseTime = duration - 50 * wavCount;
+		// }
+		// videoService.convertToSubAudio(fileInfo.getSubtitle_file(), i, parseTime);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// System.out.println(i + " 번째 파일분할에 실패하였습니다.");
+		// result.status = true;
+		// result.data = i + " 번째 파일분할에 실패하였습니다.";
+		// result.object = fileInfo;
+		// return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		// }
 		// }
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/api/wav/subTranslate")
 	public Object translately(@Valid @RequestBody BuildTranslateResult resultSet, HttpServletRequest req) {
+		int userid = (int) (long) JwtService.getUserInfo(req).get("userid");
+		int userRemainTime = userService.getRemainTime(userid);
 
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
-		final String languageTag = "_" + resultSet.getFileInfo().getStart_sub_code() + "_" + resultSet.getFileInfo().getTarget_sub_code();
-		final String rawFilePath = SERVER_LOCATION + MP4_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + MP4_EX;
-		final String subFilePath = SERVER_LOCATION + TEMP_WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + resultSet.getBuildId() + WAV_EX;
-		final String vttFilePath = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + VTT_EX;
-		final String wavFilePath = SERVER_LOCATION + WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + WAV_EX;
-		final String jpgFilePath = SERVER_LOCATION + JPG_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag + JPG_EX;
+		final String languageTag = "_" + resultSet.getFileInfo().getStart_sub_code() + "_"
+				+ resultSet.getFileInfo().getTarget_sub_code();
+		final String rawFilePath = SERVER_LOCATION + MP4_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag
+				+ MP4_EX;
+		final String subFilePath = SERVER_LOCATION + TEMP_WAV_DIR + resultSet.getFileInfo().getSubtitle_file()
+				+ languageTag + resultSet.getBuildId() + WAV_EX;
+		final String vttFilePath = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag
+				+ VTT_EX;
+		final String tempVttFilePath = SERVER_LOCATION + TEMP_VTT_DIR + resultSet.getFileInfo().getSubtitle_file()
+				+ languageTag + VTT_EX;
+		final String wavFilePath = SERVER_LOCATION + WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag
+				+ WAV_EX;
+		final String jpgFilePath = SERVER_LOCATION + JPG_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag
+				+ JPG_EX;
 		List<Transcript> tranList = null;
 		System.out.println(resultSet);
-		int parseTime = 50;
-		if(resultSet.getFinalBuild() == resultSet.getBuildId()){
+		int parseTime = 30;
+		if (resultSet.getFinalBuild() == resultSet.getBuildId()) {
 			parseTime = resultSet.getFileInfo().getDuration() % parseTime;
 		}
 
-		if(resultSet.getFinalBuild() < resultSet.getBuildId()){
+		if (resultSet.getFinalBuild() < resultSet.getBuildId()) {
 			result.status = false;
 			result.data = "분할파일 index 가 잘못되었습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			return response;
 		}
+		
+		System.out.println(userRemainTime + " 에서 " + parseTime + "만큼의 시간이 차감됩니다.");
+		System.out.println("변경후 userRemainTime : " +  userService.getRemainTime(userid));
+		if(userRemainTime < parseTime){
+			result.status = false;
+			result.data = "잔여시간이 부족합니다.";
+			result.object = null;
+			System.out.println("잔여시간이 부족합니다.");
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			return response;
+		}
+		videoService.reduceRemainTime(userid);
 
 		System.out.println("변환 전 파일 경로 " + wavFilePath);
 		try {
 			System.out.println("translateStart");
-			videoService.convertToSubAudio(resultSet.getFileInfo().getSubtitle_file(), resultSet.getBuildId(), parseTime, languageTag);
+			videoService.convertToSubAudio(resultSet.getFileInfo().getSubtitle_file(), resultSet.getBuildId(),
+					parseTime, languageTag);
 
 			System.out.println("ffmpeg 작업 종료");
-			
-			tranList = videoService.translateLocalFile(subFilePath, resultSet.getFileInfo().getStart_sub_code(), resultSet.getFileInfo().getTarget_sub_code());
+
+			tranList = videoService.translateLocalFile(subFilePath, resultSet.getFileInfo().getStart_sub_code(),
+					resultSet.getFileInfo().getTarget_sub_code());
 			System.out.println("translateEnd");
 		} catch (Exception e) {
 			result.status = false;
@@ -177,7 +219,8 @@ public class DivideController {
 		}
 		try {
 			System.out.println("papago translate start");
-			tranList = videoService.papagoTranslate(tranList, resultSet.getFileInfo().getStart_sub_code(), resultSet.getFileInfo().getTarget_sub_code());
+			tranList = videoService.papagoTranslate(tranList, resultSet.getFileInfo().getStart_sub_code(),
+					resultSet.getFileInfo().getTarget_sub_code());
 			System.out.println("papago translate end");
 		} catch (Exception e) {
 			result.status = false;
@@ -194,7 +237,8 @@ public class DivideController {
 		try {
 			vttSuccess = true;
 			System.out.println("parse Start");
-			parsedResult = videoService.parseTranslateResult(parsedResult, tranList, subFilePath, resultSet.getBuildId());
+			parsedResult = videoService.parseTranslateResult(parsedResult, tranList, subFilePath,
+					resultSet.getBuildId());
 			System.out.println("parse End");
 		} catch (Exception e) {
 			result.status = false;
@@ -206,12 +250,26 @@ public class DivideController {
 
 			return response;
 		}
-		
-		
-		System.out.println("vttFilePath : " + vttFilePath);
+
+		System.out.println("vttFilePath : " + tempVttFilePath);
 		try {
 			System.out.println("ConverToSrt Start");
-			videoService.converToSrtFile_(parsedResult.getParsedResult(), vttFilePath);
+			videoService.converToSrtFile_(parsedResult.getParsedResult(), tempVttFilePath);
+			if (resultSet.getBuildId() == resultSet.getFinalBuild()) {
+				try {
+					videoService.getCapture(resultSet.getFileInfo().getSubtitle_file());
+					resultSet.getFileInfo().setThumbnail(resultSet.getFileInfo().getSubtitle_file() + ".jpg");
+				} catch (Exception e) {
+					System.out.println("video 캡쳐에 실패하였습니다.");
+					e.printStackTrace();
+				}
+				int subid = videoService.saveFileInfo(resultSet.getFileInfo());
+				int queCount = videoService.saveTranscript(parsedResult.getTranlist(), subid);
+				
+				System.out.println(queCount + " 개의 번역큐가 입력되었습니다.");
+				videoService.converToSrtFile_(parsedResult.getParsedResult(), vttFilePath);
+				System.out.println("최종파일 번역 완료 path : " + vttFilePath);
+			}
 			System.out.println("ConverToSrt End");
 			vttSuccess = true;
 		} catch (IOException e) {
@@ -226,6 +284,7 @@ public class DivideController {
 		}
 		resultSet.setTranscript(parsedResult.getTranlist());
 		resultSet.setVttResult(parsedResult.getParsedResult());
+		resultSet.setBuildId(resultSet.getBuildId()+1);
 		if (vttSuccess) {
 			result.status = true;
 			result.data = "success";

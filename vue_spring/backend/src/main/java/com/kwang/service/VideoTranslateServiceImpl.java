@@ -40,6 +40,7 @@ import com.google.cloud.speech.v1.StreamingRecognizeResponse;
 import com.google.cloud.speech.v1.WordInfo;
 import com.google.protobuf.ByteString;
 import com.kwang.bucket.UploadObject;
+import com.kwang.dao.UserDao;
 import com.kwang.dao.translateDao;
 import com.kwang.dto.ParseResultSet;
 import com.kwang.dto.SubtitleFileInfo;
@@ -54,6 +55,9 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 
 	@Autowired
 	private translateDao transDao;
+
+	@Autowired
+	private UserDao userDao;
 	private static final String SERVER_LOCATION = "/home/ubuntu/resources";
 	//private static final String SERVER_LOCATION = "src/main/resources";
 	private static final String VTT_DIR = "/vtt/";
@@ -67,7 +71,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	private static final String WAV_EX = ".wav";
 	private static final String MP4_EX = ".mp4";
 
-	static final int parseTimeLength = 50;
+	static final int parseTimeLength = 30;
 
 	@Override
 	public boolean convertToSubAudio(String fileName, int startPart, int parseTime, String languageTag) throws Exception {
@@ -76,7 +80,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		
 		long time = System.currentTimeMillis();
 
-		final String command = "ffmpeg -y -i " + SERVER_LOCATION + WAV_DIR + fileName + WAV_EX + 
+		final String command = "ffmpeg -y -i " + SERVER_LOCATION + WAV_DIR + fileName + languageTag + WAV_EX + 
 								" -ss " + startPart*50 + " -t " + parseTime +  " -ar 16000 -ac 1 " + SERVER_LOCATION + TEMP_WAV_DIR + fileName + languageTag + startPart + WAV_EX;
 		System.out.println("command : " + command);
 		Process proc = null;
@@ -361,12 +365,12 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	public String convertToVTT_(double time) {
 		StringBuffer timeLine = new StringBuffer();
 		int hourInfo = (int) (time / 3600);
-		time -= hourInfo;
+		time -= hourInfo * 3600;
 		int minuteInfo = (int) (time / 60);
-		time -= minuteInfo;
-		int secondInfo = (int) (time);
+		time -= minuteInfo * 60;
+		int secondInfo = (int) (time % 60);
 		time -= secondInfo;
-		int microInfo = (int) (time * 100);
+		int microInfo = (int) (time * 1000);
 		timeLine.append(String.format("%02d", hourInfo));
 		timeLine.append(':');
 		timeLine.append(String.format("%02d", minuteInfo));
@@ -398,7 +402,8 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
 		if(result.getParsedResult() == null){
-			setSrt.append("WEBVTT\n\n");
+			setSrt.append("WEBVTT\n\n00:00:00.000 --> 00:00:05.000\n이 자막은 Translately 에서 제공되는 자막입니다. \nhttp://i3a511.p.ssafy.io/ 에서 더 많은 정보를 얻어가세요!\n\n");
+			setSrt.append("STYLE\n::cue {\nbackground-image: linear-gradient(to bottom, dimgray, lightgray)\n;color: papayawhip;\n}\n\n");
 		} else {
 			setSrt.append(result.getParsedResult());
 		}
@@ -420,7 +425,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			// System.out.println("구문 시간" + tranTime);
 
 			// 여기서 index (4) 가 구문 나누는 기준
-			int phraseNum = (int)(tranTime / 6);
+			int phraseNum = (int)(tranTime / 4);
 			if(phraseNum == 0) phraseNum = 1;
 			int phraseMaxLength = tranLength / phraseNum;
 			int phraseLength = 0;
@@ -452,16 +457,16 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 						}
 					}
 					parsedCount++;
-					subTranList.add(new Transcript(startPhrase, parsedTran.toString(), phraseStartTime, phraseEndTime, "default.jpg"));
+					subTranList.add(new Transcript(startPhrase, parsedTran.toString(), phraseStartTime + parseTimeLength * buildId , phraseEndTime + parseTimeLength * buildId, "default.jpg"));
 					System.out.println(parsedTran.toString());
 					{
 						// srt 양식 맞추는 과정
 						tranIndex++;
 						setSrt.append(tranIndex);
 						setSrt.append("\n");
-						setSrt.append(convertToVTT_(phraseStartTime));
+						setSrt.append(convertToVTT_(phraseStartTime + parseTimeLength * buildId));
 						setSrt.append(" --> ");
-						setSrt.append(convertToVTT_(phraseEndTime));
+						setSrt.append(convertToVTT_(phraseEndTime + parseTimeLength * buildId));
 						setSrt.append("\n");
 						setSrt.append(parsedTran.toString());
 						setSrt.append("\n");
@@ -485,9 +490,9 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 					tranIndex++;
 					setSrt.append(tranIndex);
 					setSrt.append("\n");
-					setSrt.append(convertToVTT_(startTime));
+					setSrt.append(convertToVTT_(startTime + parseTimeLength * buildId));
 					setSrt.append(" --> ");
-					setSrt.append(convertToVTT_(endTime));
+					setSrt.append(convertToVTT_(endTime + parseTimeLength * buildId));
 					setSrt.append("\n");
 					setSrt.append(parsedTran.toString());
 					setSrt.append("\n");
@@ -527,6 +532,65 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	@Override
 	public int saveFileInfo(SubtitleFileInfo fileInfo) {
 		return transDao.saveFileInfo(fileInfo);
+	}
+
+	@Override
+	public int saveTranscript(List<Transcript> translist, int subid) {
+		return transDao.saveTranscript(translist, subid);
+	}
+
+	@Override
+	public boolean getCapture(String fileName) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+		
+		long time = System.currentTimeMillis();
+
+		final String command = "ffmpeg -ss 1 -i " + SERVER_LOCATION + MP4_DIR + fileName + MP4_EX + 
+								" -y -vframes 1 "  + SERVER_LOCATION + JPG_DIR + fileName + JPG_EX;
+		System.out.println("command : " + command);
+		Process proc = null;
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
+
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(3, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
+		}
+
+		return false;
+	}
+
+	@Override
+	public int reduceRemainTime(int userid) {
+		return userDao.reduceRemainTime(userid);
 	}
 
 

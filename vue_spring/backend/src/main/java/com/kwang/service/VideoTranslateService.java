@@ -11,6 +11,7 @@ import org.apache.ibatis.transaction.Transaction;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoTranslateService {
+	public boolean getCapture(String fileName) throws Exception;
 	public String convertToAudio(String fileName, String languageTag) throws Exception;
 	public int getDurationFromMp4(String fileName) throws Exception;
 	public boolean convertToSubAudio(String fileName, int startTime, int duration, String languageTag) throws Exception;
@@ -23,5 +24,7 @@ public interface VideoTranslateService {
 	public ParseResultSet parseTranslateResult(ParseResultSet result, List<Transcript> tranList, String fileName, int buildId) throws IOException;
 	public List<Transcript> papagoTranslate(List<Transcript> tranList, String startLanguage, String targetLanguage) throws Exception;
 	public int saveFileInfo(SubtitleFileInfo fileInfo);
+	public int saveTranscript(List<Transcript> translist, int subid);
+	public int reduceRemainTime(int userid);
 
 }

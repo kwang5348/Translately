@@ -63,5 +63,15 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
+	@Override
+	public int reduceRemainTime(int userid) {
+		int successCount = sqlSession.update("userinfo.reduce_remain", userid);
+		return successCount;
+	}
 
+	@Override
+	public int getRemainTime(int userid) {
+		int result = sqlSession.selectOne("userinfo.get_remain", userid);
+		return result;
+	}
 }

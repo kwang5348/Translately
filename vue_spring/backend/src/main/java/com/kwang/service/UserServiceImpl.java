@@ -71,4 +71,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.modifyUser(request);
 	}
 
+    @Override
+    public int getRemainTime(int userid) {
+        
+        return userDao.getRemainTime(userid);
+    }
+
 }

@@ -19,7 +19,21 @@ public class translateDaoImpl implements translateDao {
 	@Override
 	public List<SubtitleFileInfo> findFilesByKeyword(String keyword) {
 		System.out.println("dao 진입 성공");
-		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.showfilesbykeyword", keyword);
+		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.showfiles_by_keyword", keyword);
+		return result;
+	}
+
+	@Override
+	public List<SubtitleFileInfo> findFilesByUserid(int userid) {
+		System.out.println("유저 id로 자막 찾기 dao 진입 성공");
+		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.showfiles_by_userid", userid);
+		return result;
+	}
+
+	@Override
+	public List<Transcript> findSubtitleBySubid(int subid) {
+		System.out.println("유저 id로 자막 찾기 dao 진입 성공");
+		List<Transcript> result = sqlSession.selectList("transcript.find_subtitle_by_subid", subid);
 		return result;
 	}
 
@@ -59,6 +73,19 @@ public class translateDaoImpl implements translateDao {
 		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.selectAll");
 		return result;
 
+	}
+
+	@Override
+	public int modifyTranscript(List<Transcript> translist) {
+		int result = 0;
+		for (Transcript transcript : translist) {
+			System.out.println(transcript.getSubid());
+			int successCount = sqlSession.update("transcript.modify_transcript", transcript);
+			System.out.println( "이게 뭐임 : " + successCount);
+			result += successCount;
+		}
+		System.out.println("transLateDao : 총 " + result + " 의 번역 큐가 수정되었습니다.");
+		return result;
 	}
 
 

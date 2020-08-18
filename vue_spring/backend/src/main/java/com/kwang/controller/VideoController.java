@@ -191,7 +191,7 @@ public class VideoController {
 	public Object youTubeUploadToLocalFileSystem(@RequestParam(required = true) final String fileLink) {
 		final BasicResponse result = new BasicResponse();
 		ResponseEntity response = null;
-		String filePath = "/home/ubuntu/resources/wav/";
+		String filePath = "/home/ubuntu/resources/mp4/";
 
 		try {
 			System.out.println("youtube 다운로드가 시작됩니다.");
@@ -289,7 +289,7 @@ public class VideoController {
 	
     @GetMapping(value = "/api/mp4/download")
     public ResponseEntity<Resource> mp4Download(@RequestParam(required = true) final String fileLink) throws IOException {
-        File file = new File(SERVER_LOCATION + "/wav/" + fileLink + ".mp4");
+        File file = new File(SERVER_LOCATION + "/mp4/" + fileLink + ".mp4");
 
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=video.mp4");

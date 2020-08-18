@@ -4,9 +4,15 @@
 
 <mapper namespace="transcript">
 
-   <select id="showfilesbykeyword" parameterType = "String" resultType="com.kwang.dto.SubtitleFileInfo">
+   <select id="showfiles_by_keyword" parameterType = "String" resultType="com.kwang.dto.SubtitleFileInfo">
       SELECT * from subtitle
 	  WHERE video_name like CONCAT('%', #{keyword}, '%')
+
+   </select>
+
+   <select id="showfiles_by_userid" parameterType = "int" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+	  WHERE userid = #{userid}
 
    </select>
 
@@ -14,15 +20,15 @@
       SELECT * from subtitle
    </select>
 
-   <select id="showTransList" parameterType = "Integer" resultType="com.kwang.dto.Transcript">
+   <select id="find_subtitle_by_subid" parameterType = "Integer" resultType="com.kwang.dto.Transcript">
       SELECT * from subtitleque
 	  where subid = #{subid}
    </select>
 
 
    	<insert id="subtitlefileinfo" parameterType="com.kwang.dto.SubtitleFileInfo">
-		insert into ssafydb.subtitle (userid, video_name, thumbnail, subtitle_file, youtube_url, start_sub_code, target_sub_code)
-		values (#{userid}, #{video_name}, #{thumbnail}, #{subtitle_file}, #{youtube_url}, #{start_sub_code}, #{target_sub_code})
+		insert into ssafydb.subtitle (userid, video_name, thumbnail, subtitle_file, youtube_url, start_sub_code, target_sub_code, duration)
+		values (#{userid}, #{video_name}, #{thumbnail}, #{subtitle_file}, #{youtube_url}, #{start_sub_code}, #{target_sub_code}, #{duration})
 		<selectKey resultType="int" keyProperty="subid" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -33,4 +39,11 @@
 		insert into ssafydb.subtitleque (subid, startsub, targetsub, starttime, endtime, que_thumbnail)
 		values (#{subid}, #{startsub}, #{targetsub}, #{starttime}, #{endtime}, #{que_thumbnail})
 	</insert>
+
+	<update id="modify_transcript" parameterType="com.kwang.dto.Transcript">
+		update ssafydb.subtitleque
+		set startsub = #{startsub}
+        , targetsub = #{targetsub}
+		where subqueid = #{subqueid}
+	</update>
 </mapper>

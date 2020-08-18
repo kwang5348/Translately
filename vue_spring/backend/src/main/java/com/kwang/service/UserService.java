@@ -14,4 +14,6 @@ public interface UserService {
 	public UserData findUserByEmail(String email);
 	public int deleteUserByEmail(String request);
 	public int modifyUser(UserData request);
+	public int getRemainTime(int userid);
+
 }
