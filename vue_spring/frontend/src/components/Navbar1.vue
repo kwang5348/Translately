@@ -34,10 +34,10 @@
             회원가입</router-link></a>
           <!-- <a class="ml-3"><router-link to="/accounts/signup">Sign up</router-link></a> -->
         </a>
-        <div id="lan">
+        <!-- <div id="lan">
           <b-link class="mx-1 font-weight-bolder" href="#">KOR</b-link>
           <b-link class="mx-1 font-weight-bolder text-muted" href="#">ENG</b-link>
-        </div>
+        </div> -->
       </li>
     </ul>
   </nav>
