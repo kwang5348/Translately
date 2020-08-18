@@ -95,7 +95,7 @@ export default {
     },
     login(loginData) {
       const data = {
-        "email": loginData.uid,
+        "email": loginData.email,
         "password": loginData.password
       }
       axios.post(`${SERVER_URL}/api/account/login`, data)
@@ -142,10 +142,12 @@ export default {
         password: signupData.password1,
         name: signupData.name,
       }
-      axios.post(`${SERVER_URL}/api/account/join/`, data)
+      console.log(data)
+      axios.post(`${SERVER_URL}/api/account/join`, data)
       .then(response => {
         console.log(response)
         delete data.name
+        console.log(data)
         this.login(data)
         })
       .catch(err => {console.log(err)})

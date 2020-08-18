@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       loginData: {
-        uid: null,
+        email: null,
         password: null
       },
       clientId: '382938302924-8nrvj4ljcins34ne37d1fqg5q5rp85ro.apps.googleusercontent.com',
