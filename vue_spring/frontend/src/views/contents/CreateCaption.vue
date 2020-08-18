@@ -8,10 +8,10 @@
           <div class="col-5">
             <p class="font-weight-bolder" style="font-size: 25px; color: black;">영상 미리보기</p>
           </div>
-          <div class="col-6">
+          <div class="col-7">
             <p class="font-weight-bolder" style="font-size: 25px; color: black;">자막 편집 창</p>
           </div>
-          <div class="col-1"></div>
+          <!-- <div class="col-1"></div> -->
         </div>
           <div class="row">
             <div class="col-5" style="border:1px solid transparent;">
@@ -22,7 +22,7 @@
               <!-- <p>자막</p> -->
               <b-alert show dismissible fade variant="warning" style="margin-top:2px; padding-left: 20px; padding-bottom: 0px;">
                 <div class="row">
-                  <div class="col-11" style="padding: 0px; padding-left: 20px">
+                  <div class="col-10" style="padding: 0px; padding-left: 20px">
                     <p style="color: gray; font-size: 13px; margin:0px">원래 음성의 자막이 표시됩니다.</p>
                     <p style="color: black; font-weight: bold; margin:0px; font-size: 13px;">이 곳에서 자막을 수정할 수 있습니다.</p>
                   </div>
@@ -32,11 +32,23 @@
                   </div>
                 </div>
               </b-alert>
-              <div style="height: 550px; overflow-y: scroll;">
+              <!-- <div style="height: 550px; overflow-y: scroll;"> -->
+                <v-responsive
+                  class="overflow-y-auto"
+                  min-height="400"
+                  max-height="400"
+                >
+              <!-- <v-virtual-scroll
+              :items="items"
+              :item-height="50"
+              height="300"
+              > -->
                 <subtitle-vue 
-                  v-for="subtitle in subtitles" 
-                  :key="subtitle.startTime" 
-                  :subtitle="subtitle" />
+                  v-for="(subtitle, index) in subtitles" 
+                  :key="index" 
+                  :subtitle="subtitle"
+                  :index="index" />
+                <hr>
                 <b-overlay
                   :show="translateBusy"
                   rounded
@@ -46,12 +58,16 @@
                   class="d-inline-block"
                 >
                 </b-overlay>
-              </div>
+              <!-- </v-virtual-scroll> -->
+                </v-responsive>
+              <!-- </div> -->
+               <!-- variant="outline-primary" -->
+              <b-button @click="change_subtitle" style="background-color: #564892;">Button</b-button>
             </div>
           </div>
-        </div>
       </div>
     </div>
+  </div>
     
 </template>
 

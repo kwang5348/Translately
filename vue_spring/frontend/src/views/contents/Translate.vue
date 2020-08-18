@@ -9,7 +9,7 @@
       <div class="col-6 section2">
         <p style="font-size: 20px; margin-bottom: 5px;"><b>내 컴퓨터에 있는 영상 번역</b></p>
         <p style="font-size: 18px; margin-bottom: 30px;">'파일 선택' 버튼을 누르거나 마우스로 파일을 이곳에 끌어서 놓으세요.</p>
-        <upload-files @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files> 
+        <upload-files @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files>
       </div>
     </div>
   </div>
