@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-5" style="border:1px solid transparent;">
                 <!-- <p>영상</p> -->
-                <video-player-vue :video=video ></video-player-vue>
+                <video-player-vue :downloadUrl="downloadUrl" :video=video ></video-player-vue>
             </div>
             <div class="col-7" style="border:1px solid transparent; padding-right: 10px">
               <!-- <p>자막</p> -->
@@ -42,7 +42,10 @@
                   class="d-inline-block"
                 >
                 </b-overlay>
-                <subtitle-vue v-for="subtitle in subtitles" :key="subtitle.startTime" :subtitle="subtitle" />
+                <subtitle-vue 
+                  v-for="subtitle in subtitles" 
+                  :key="subtitle.startTime" 
+                  :subtitle="subtitle" />
               </div>
             </div>
           </div>
@@ -82,6 +85,9 @@
       },
       translateBusy: {
         type: Boolean
+      },
+      downloadUrl: {
+        type: String
       }
     },
     methods: {

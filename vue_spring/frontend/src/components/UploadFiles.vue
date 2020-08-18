@@ -6,7 +6,7 @@
     <div class="upload-content">
       <label class="selectbtn btn btn-default font" style="position: absolute; margin: 15px 0px 0px -220px;">
         <!-- <input type="file"  /> -->
-        <input type="text" value="선택된 파일이 없습니다." id="fileName" class="file_input_textbox" readonly="readonly">
+        <input type="text" :value="fileName" id="fileName" class="file_input_textbox" readonly="readonly">
         <input type="button" value="파일 선택" class="file_input_button font-weight-bold"/>
         <input type="file" ref="file" @change="selectFile" class="file_input_hidden" onchange="javascript:document.getElementById('fileName').value = this.value.split('\\')[this.value.split('\\').length-1]">
       </label>
@@ -76,6 +76,7 @@ export default {
       message: "",
       link: "",
       fileInfos: [],
+      fileName: "선택된 파일이 없습니다.",
 
       // 모달 관련
       uploadData: {
@@ -131,6 +132,7 @@ export default {
     },
     addFile(e) {
       this.selectedFiles = e.dataTransfer.files;
+      this.fileName = e.dataTransfer.files[0].name
 
     },
     uploadOption() {

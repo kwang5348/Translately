@@ -5,7 +5,8 @@
       :isLogin="isLogin" 
       :video="video" 
       :subtitles="subtitles"
-      :translateBusy="translateBusy" 
+      :translateBusy="translateBusy"
+      :downloadUrl="downloadUrl"
       @submit-login-data="login" 
       @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
@@ -34,6 +35,7 @@ export default {
       video: undefined,
       uploadData: null,
       translateBusy: true,
+      downloadUrl: "",
       subTranslateData: {
         "buildId": 0,
         "finalBuild": 0,
@@ -60,6 +62,7 @@ export default {
         console.log(`${i} 번째 번역이 끝났습니다.`)
         const resSubtitles = response.data.object.transcript
         this.subtitles = resSubtitles
+        this.downloadUrl = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + response.data.object.fileInfo.subtitle_file + "_" + response.data.object.fileInfo.start_sub_code + "_" + response.data.object.fileInfo.target_sub_code
         this.subTranslateData.transcript = resSubtitles
         this.subTranslateData.vttResult = response.data.object.vttResult
         return response
@@ -73,6 +76,7 @@ export default {
             "fileInfo": undefined,
             "vttResult": null
           }
+          this.translateBusy = false
           return
         } else {
           console.log(this.subTranslateData.buildId)
@@ -171,7 +175,6 @@ export default {
           this.subTranslateData.finalBuild = translateCount - 1
           this.subTranslateData.fileInfo = response.data.object
           this.translate(0)
-          this.translateBusy = false
         })
         .catch(response => {
           console.log(response)
@@ -185,6 +188,7 @@ export default {
     },
     destroyCreateCaption() {
       this.subtitles = undefined
+      this.downloadUrl = ""
     }
   },
   watch: {

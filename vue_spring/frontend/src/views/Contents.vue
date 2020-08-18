@@ -35,6 +35,7 @@
           :isLogin="isLogin"
           :subtitles="subtitles"
           :translateBusy="translateBusy"
+          :downloadUrl="downloadUrl"
         />
       </div>
     </div>
@@ -54,6 +55,7 @@ export default {
     video: {},
     subtitles: {},
     translateBusy: {},
+    downloadUrl: {},
   },
   methods: {
     logout() {
