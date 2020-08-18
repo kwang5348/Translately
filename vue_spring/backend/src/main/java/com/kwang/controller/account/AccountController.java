@@ -6,11 +6,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.kwang.dao.UserDao;
 import com.kwang.dto.BasicResponse;
 import com.kwang.dto.UserData;
+import com.kwang.jwt.service.JwtService;
 import com.kwang.service.UserService;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -40,36 +43,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AccountController {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
-	@GetMapping("/api/login")
-	@ApiOperation(value = "로그인")
-	public ResponseEntity input_user(@RequestParam(required = true) final String uid,
-	@RequestParam(required = true) final String password) {
-		ResponseEntity response = null;
-		final BasicResponse result = new BasicResponse();
-		result.status = false;
-		System.out.println("start login.....");
-		// boolean loginflag = false;
-		if (uid.equals("test") & password.equals("1234")){
-			result.status = true;
-		}
-		
-		response = new ResponseEntity<>(result, HttpStatus.OK);
-		System.out.println("end login.....");
-		return response;
-	} 
+	@Autowired
+	private JwtService jwtService;
 
 	@PostMapping("/api/account/login")
 	@ApiOperation(value = "로그인")
-	public Object login(@Valid @RequestBody UserData request) {
+	public Object login(@Valid @RequestBody UserData request, HttpServletResponse res) {
 		UserData user = userService.findUserByEmailAndPassword(request);
 
         ResponseEntity response = null;
         
 		final BasicResponse result = new BasicResponse();
         if (user != null) {
-            System.out.println("로그인 성공");
+			System.out.println("로그인 성공");
+			String token = jwtService.create(user);
+			user.setToken(token);
+			res.setHeader("jwt-auth-token", token);
             result.status = true;
             result.data = "login success";
 			result.object = user;
@@ -103,7 +94,6 @@ public class AccountController {
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			return response;
 		} else {
-			request.setToken("temp Token@@FDASIJFEWIAFAS");
 			int successCnt = userService.join(request);
 			if(successCnt != 0){
 				result.status = true;
@@ -126,7 +116,7 @@ public class AccountController {
 	public Object signOut(@RequestParam(required = true) final String email){
 		System.out.println("email:" + email);
 		int successCnt = userService.deleteUserByEmail(email);
-
+		
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
 		if(email.equals("admin@translately.com")){
@@ -199,6 +189,30 @@ public class AccountController {
 		return response;	
 	}
 
+	@GetMapping("/api/account/info")
+	@ApiOperation(value = "토큰으로 회원정보 조회")
+	public Object getInfo(HttpServletRequest req) {
+
+        ResponseEntity response = null;
+		final BasicResponse result = new BasicResponse();
+
+		System.out.println(jwtService.get(req.getHeader("jwt-auth-token")).get("UserData"));
+		try{
+			result.object = jwtService.get(req.getHeader("jwt-auth-token")).get("UserData");
+			result.status = true;
+			result.data = "토큰 정보 조회에 성공하였습니다.";
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+
+		} catch (RuntimeException e) {
+			result.status = false;
+			result.data = "토큰정보 조회에 실패 하였습니다.";
+			result.object = e.getMessage();
+			response = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+
+        return response;
+	}
 	
 }
 
