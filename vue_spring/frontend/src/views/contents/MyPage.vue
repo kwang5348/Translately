@@ -31,7 +31,7 @@
 
         <b-row class="my-1">
           <b-col sm="3">
-          <label for="input-default">이름</label>
+          <label for="input-default">닉네임</label>
           </b-col>
           <b-col sm="5">
           <p>{{ userdata.name }}</p>

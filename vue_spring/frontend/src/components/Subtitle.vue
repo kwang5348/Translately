@@ -2,14 +2,15 @@
   <!-- <div class="wrapper"> -->
   
   <div class="row sub-box">
-    <div class="col-1">
+    <div class="col-2">
+      {{ subtitle.subid }}
       <!-- <img src="..\img\img-thumbnail.png" alt="썸네일" style="height: 50px; margin-left: 10px;"> -->
     </div>
-    <div class="col-9" style="padding: 0px;">
+    <div class="col-8" style="padding: 0px; text-align: left;">
       <p style="color: grey; font-size: 13px; margin:0px">{{ subtitle.startsub }}</p>
       <p style="color: black; font-weight: bold; font-size: 13px;">{{ subtitle.targetsub }}</p>
     </div>
-    <div class="col-2" style="padding: 0px;">
+    <div class="col-1" style="padding: 0px;">
       <!-- <p style="font-size: 13px; margin:0px">{{ subtitle.startTime }} ~</p>
       <p style="font-size: 13px; margin:0px">{{ subtitle.endTime }}</p> -->
       <p style="font-size: 13px; margin:0px">{{ start }} ~</p>
@@ -25,6 +26,10 @@ export default {
   props: {
     subtitle: {
       type: Object
+    }
+  },
+  data() {
+    return {
     }
   },
   computed: {

@@ -108,9 +108,11 @@
         </b-row>
       <br>
       <div>
-        <b-button class="c-button" @click="change_pw" variant="outline-primary">Button</b-button>
+        <b-button @click="change_pw" variant="outline-primary">Button</b-button>
+        <b-button @click="go_to_mypage" variant="outline-primary">뒤로</b-button>
       <!-- style="background-color:#564892;" -->
       </div>
+
     <!-- </b-col> -->
       </b-container>
     </div>
@@ -146,6 +148,9 @@ export default {
     }
   },
   methods: {
+    go_to_mypage() {
+      this.$router.push('/contents/mypage')
+    },
     setCookie(key) {
     this.$cookies.set('auth-token', key, "30MIN")
     },
