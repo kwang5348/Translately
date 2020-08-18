@@ -11,11 +11,6 @@
       <v-btn icon color="grey darken-3" :click="getSub"><v-icon>mdi-magnify</v-icon></v-btn>
       </v-toolbar>
 
-      <!-- <form class="form-inline d-flex justify-content-center">
-        <input class="form-control my-3" type="search" style="width: 600px" placeholder="자막 검색" aria-label="Search" id="subtitle-search">
-        <button class="btn btn-secondary" type="submit" id="subtitle-button" :click="getSub">
-          Enter</button>
-      </form> -->
       <div class="row mt-5 mb-5">
         <div class="col-2"></div>
         <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">1000</p>
@@ -27,7 +22,8 @@
         </div>
         <div class="col-2"></div>
       </div>
-      
+      <b-button @click="getSub" variant="outline-primary">전체보기</b-button>
+      <b-button @click="getMy" variant="outline-primary">내꺼보기</b-button>
       <!-- 카드 -->
       <v-card class="mx-auto" max-width="1200">
         <!-- <v-toolbar color="indigo" dark><v-btn icon><v-icon>mdi-magnify</v-icon></v-btn></v-toolbar> -->
@@ -68,7 +64,19 @@ export default {
   },
   methods: {   
     getSub() {
-        axios.get(`${SERVER_URL}/api/subtitle/selectAll?input=3816`, {
+      axios.get(`${SERVER_URL}/api/subtitle/selectAll?input=3816`, {
+        headers: {
+          "jwt-auth-token": this.$cookies.get("auth-token")
+        }
+      })
+      .then(response => {
+        console.log(response)
+        this.subtitles = response.data.object
+        console.log(this.subtitles)
+      })
+    },
+    getMy() {
+      axios.get(`${SERVER_URL}:8399/api/subtitle/mylist`, {
         headers: {
           "jwt-auth-token": this.$cookies.get("auth-token")
         }
@@ -77,20 +85,11 @@ export default {
         this.subtitles = res.data.object
         console.log(this.subtitles)
       })
+    
     },
-    // getMy() {
-    //   axios.get(`${SERVER_URL}:8399/api/subtitle/mylist`, {
-    //   headers: {
-    //     "jwt-auth-token": this.$cookies.get("auth-token")
-    //   }
-    // })
-    // .then(res => {
-    //   this.mysubs = res.data.object
-    //   console.log(this.mysubs)
-    // })
-  // },
-  created() {
-  }
+    // created() {
+    //   this.getSub()
+    // }
   }
 }
 </script>
