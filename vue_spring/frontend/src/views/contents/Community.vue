@@ -37,7 +37,7 @@
           <v-row dense>
             <v-col v-for="(data, index) in calData" :key="index" cols="4">
               <v-card>
-                <v-img :src="thumbnailUrl" class="white--text align-end m-1"
+                <v-img src="http://i3a511.p.ssafy.io/api/jpg/download?fileLink={{ data.object.subtitle_file }}" class="white--text align-end m-1"
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="250px">
                   <v-card-title v-text="data.video_name"></v-card-title>
                 </v-img>
@@ -122,6 +122,9 @@ export default {
       })
     
     },
+    // delete_data() {
+    //   axios.get(`${SERVER_URL}/api/subtitle/delete?subid=${this.subtitles[index].subid})
+    // }
   },
   computed: {
     startOffset() {

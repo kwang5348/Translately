@@ -6,6 +6,7 @@
       :video="video" 
       :subtitles="subtitles"
       :translateBusy="translateBusy"
+      :translateProgress="translateProgress"
       :downloadUrl="downloadUrl"
       @submit-login-data="login" 
       @submit-upload-option="uploadOption"
@@ -35,6 +36,7 @@ export default {
       video: undefined,
       uploadData: null,
       translateBusy: true,
+      translateProgress: 0,
       downloadUrl: "",
       subTranslateData: {
         "buildId": 0,
@@ -62,6 +64,7 @@ export default {
         console.log(`${i} 번째 번역이 끝났습니다.`)
         const resSubtitles = response.data.object.transcript
         this.subtitles = resSubtitles
+        this.translateProgress =  Math.round(100 * (i + 1) / (this.subTranslateData.finalBuild + 1))
         this.downloadUrl = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + response.data.object.fileInfo.subtitle_file + "_" + response.data.object.fileInfo.start_sub_code + "_" + response.data.object.fileInfo.target_sub_code
         this.subTranslateData.transcript = resSubtitles
         this.subTranslateData.vttResult = response.data.object.vttResult
