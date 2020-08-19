@@ -35,6 +35,8 @@
           :isLogin="isLogin"
           :subtitles="subtitles"
           :translateBusy="translateBusy"
+          :translateProgress="translateProgress"
+          :downloadUrl="downloadUrl"
         />
       </div>
     </div>
@@ -54,6 +56,8 @@ export default {
     video: {},
     subtitles: {},
     translateBusy: {},
+    translateProgress: {},
+    downloadUrl: {},
   },
   methods: {
     logout() {
@@ -91,7 +95,7 @@ export default {
   font-weight: bold;
   background-color:#564892;
   padding: 0px;
-  padding-top: 25px;
+  padding-top: 25px; 
   border-color: transparent;
 }
 

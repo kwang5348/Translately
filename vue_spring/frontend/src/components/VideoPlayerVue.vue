@@ -7,7 +7,7 @@
       <track label="english1" kind="subtitles" srclang="ko" :src=downloadUrl>
       <track label="english2" kind="subtitles" srclang="en" :src=downloadUrl>
     </video>
-    <b-button variant="primary"><a class="text-white" :href="downloadUrl"> 자막 다운로드 </a></b-button>
+    <b-button style="background-color: #564892;"><a class="text-white" :href="downloadUrl"> 자막 다운로드 </a></b-button>
   </div>
 </template>
 
@@ -16,7 +16,8 @@
 export default {
   name: 'video-player-vue',
   props: {
-    video: {}
+    video: {},
+    downloadUrl: {}
   },
   data() {
     return {
@@ -35,18 +36,6 @@ export default {
         return URL.createObjectURL(this.video)
       }
     },
-    downloadUrl() {
-      console.log("url찍어보기")
-      console.log(this.video)
-      let name = ""
-      if (typeof this.video === 'string') {
-        name = this.video
-      } else {
-        name = this.video.name.replace(".mp4", "")
-      }
-      const url = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + name
-      return url
-    }
   }
 }
 </script>
