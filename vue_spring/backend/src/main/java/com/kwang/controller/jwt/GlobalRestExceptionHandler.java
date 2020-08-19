@@ -20,7 +20,7 @@ public class GlobalRestExceptionHandler {
 
 		
         result.status = false;
-        result.data = "msg";
+        result.data = "토큰정보 확인이 필요합니다.";
         result.object = e.getMessage();
         response = new ResponseEntity<>(result, HttpStatus.OK);
 	

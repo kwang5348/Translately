@@ -12,7 +12,7 @@ public interface UserDao {
 	public UserData findUserByEmail(String email);
 	public int deleteUserByEmail(String request);
 	public int modifyUser(UserData request);
-	public int reduceRemainTime(int userid);
+	public int reduceRemainTime(int userid, int parseTime);
 	public int getRemainTime(int userid);
 
 }

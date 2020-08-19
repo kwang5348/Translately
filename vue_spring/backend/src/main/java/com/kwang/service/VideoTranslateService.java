@@ -2,6 +2,7 @@ package com.kwang.service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.kwang.dto.ParseResultSet;
 import com.kwang.dto.SubtitleFileInfo;
@@ -15,7 +16,7 @@ public interface VideoTranslateService {
 	public String convertToAudio(String fileName, String languageTag) throws Exception;
 	public int getDurationFromMp4(String fileName) throws Exception;
 	public boolean convertToSubAudio(String fileName, int startTime, int duration, String languageTag) throws Exception;
-
+	public Map<String, Object>  checkYoutubeInfo(String fileLink) throws Exception;
 	public String downLoadYoutube(String fileLink, String epicLink) throws Exception;
 	public boolean getYoutubeName(String youtubeLink, int subid) throws Exception;
 	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception;
@@ -26,7 +27,7 @@ public interface VideoTranslateService {
 	public List<Transcript> papagoTranslate(List<Transcript> tranList, String startLanguage, String targetLanguage) throws Exception;
 	public int saveFileInfo(SubtitleFileInfo fileInfo);
 	public int saveTranscript(List<Transcript> translist, int subid);
-	public int reduceRemainTime(int userid);
+	public int reduceRemainTime(int userid, int parseTime);
 	public String buildVTTString(List<Transcript> translist);
 
 }

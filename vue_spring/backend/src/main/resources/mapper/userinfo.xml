@@ -32,9 +32,9 @@
 		WHERE email =#{email}
 	</delete>
 
-	<update id="reduce_remain" parameterType="Integer">
+	<update id="reduce_remain" parameterType="java.util.Map">
 		update ssafydb.userinfo
-		set remaintime = remaintime - 30
+		set remaintime = remaintime - #{reduce_time}
 		where userid = #{userid}
 	</update>
 

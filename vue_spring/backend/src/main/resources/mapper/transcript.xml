@@ -34,6 +34,12 @@
 	  where subid = #{subid}
    </select>
 
+  <select id="get_sub_fileinfo_by_filename" parameterType = "java.util.Map" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+	  where subtitle_file = #{subtitle_file}
+	  and start_sub_code = #{start_sub_code}
+	  and target_sub_code = #{target_sub_code}
+   </select>
 
    	<insert id="subtitlefileinfo" parameterType="com.kwang.dto.SubtitleFileInfo">
 		insert into ssafydb.subtitle (userid, video_name, thumbnail, subtitle_file, youtube_url, start_sub_code, target_sub_code, duration)

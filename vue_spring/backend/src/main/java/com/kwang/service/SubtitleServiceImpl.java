@@ -1,6 +1,7 @@
 package com.kwang.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kwang.dao.translateDao;
 import com.kwang.dto.BuildTranslateResult;
@@ -75,6 +76,11 @@ public class SubtitleServiceImpl implements SubtitleService {
     public List<SubtitleFileInfo> findFilesByUseridAndKeyword(int userid, String keyword) {
         
         return transDao.findFilesByUseridAndKeyword(userid, keyword);
+    }
+
+    @Override
+    public SubtitleFileInfo findSubFileInfoBySubid(Map <String, String> fileName) {
+        return transDao.findSubFileInfoBySubid(fileName);
     }
 
 

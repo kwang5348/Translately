@@ -138,5 +138,10 @@ public class translateDaoImpl implements translateDao {
 		return result;
 	}
 
+	@Override
+	public SubtitleFileInfo findSubFileInfoBySubid(Map <String, String> fileName) {
+		return sqlSession.selectOne("transcript.get_sub_fileinfo_by_filename", fileName);
+	}
+
 
 }

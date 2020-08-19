@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,6 +69,75 @@ public class DivideController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private SubtitleService subtitleService;
+
+	@GetMapping("api/wav/youtubeAble")
+	@ApiOperation(value = "유튜브 중복체크")
+	public Object youtubeCheck(@RequestParam(required = true) final String fileLink) {
+		final BasicResponse result = new BasicResponse();
+		ResponseEntity response = null;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+			map = videoService.checkYoutubeInfo(fileLink);
+			if((int)map.get("exit") != 0){
+				result.status = false;
+				result.data = "유효하지 않은 유튜브 링크입니다.";
+				result.object = map;
+				return new ResponseEntity<>(result, HttpStatus.OK);
+			} else {
+				if(Integer.parseInt((String)map.get("fileLength")) > 900){
+					result.status = false;
+					result.data = "베타버전에서 15분 이상의 파일은 번역을 지원하지 않습니다.";
+					result.object = map;
+					return new ResponseEntity<>(result, HttpStatus.OK);
+				}
+				result.status = true;
+				result.data = "유효한 유튜브 링크입니다.";
+				result.object = map;
+			}
+		} catch (Exception e) {
+			result.status = false;
+			result.data = "유효하지 않은 유튜브 링크입니다.";
+			result.object = map;
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+
+	}
+
+	@GetMapping("api/wav/youtubeCheck")
+	@ApiOperation(value = "유튜브 중복체크")
+	public Object youtubeCheck(@RequestParam(required = true) final String fileName, @RequestParam(required = true) final String start_sub_code, @RequestParam(required = true) final String target_sub_code){
+		final BasicResponse result = new BasicResponse();
+		ResponseEntity response = null;
+
+		
+		Map <String, String> map = new HashMap<String, String>();
+		map.put("subtitle_file", fileName);
+		map.put("start_sub_code", start_sub_code);
+		map.put("target_sub_code", target_sub_code);
+
+		SubtitleFileInfo fileInfo = subtitleService.findSubFileInfoBySubid(map);
+
+		if(fileInfo == null){
+			result.status = false;
+			result.data = "해당 유튜브를 찾을 수 없습니다.";
+			result.object = null;
+		} else {
+			List<Transcript> translist = subtitleService.findSubtitleBySubid(fileInfo.getSubid());
+			BuildTranslateResult resultSet = new BuildTranslateResult(0, fileInfo.getDuration()/30, translist, fileInfo, null);
+			result.status = true;
+			result.data = "해당 유튜브를 찾았습니다.";
+			result.object = resultSet;
+		}
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+
+	}
 	@PostMapping("/api/wav/analysis")
 	@ApiOperation(value = "요청 영상 분석")
 	public Object selectSubtitle(@Valid @RequestBody SubtitleFileInfo fileInfo, HttpServletRequest req) {
@@ -76,6 +147,7 @@ public class DivideController {
 		int userid = (int) (long) JwtService.getUserInfo(req).get("userid");
 		int userRemainTime = userService.getRemainTime(userid);
 		fileInfo.setUserid(userid);
+		fileInfo.setSubtitle_file(fileInfo.getSubtitle_file().replace(" ", ""));
 		// int subid = videoService.saveFileInfo(fileInfo);
 		int duration = 0;
 		// if (subid == 0) {
@@ -96,7 +168,7 @@ public class DivideController {
 			result.status = false;
 			result.data = "ffmpeg 변환이 실패하였습니다.";
 			result.object = fileInfo;
-			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		System.out.println(
 				"변환 후 파일 경로 " + SERVER_LOCATION + WAV_DIR + fileInfo.getSubtitle_file() + languageTag + WAV_EX);
@@ -107,11 +179,11 @@ public class DivideController {
 			fileInfo.setDuration(duration);
 			System.out.println(duration);
 			if (userRemainTime < duration) {
-				System.out.println("remain time 이 부족합니다.");
+				System.out.println("잔여시간이 부족합니다.");
 				result.status = false;
-				result.data = "remain time 이 부족합니다.";
+				result.data = "잔여시간이 부족합니다.";
 				result.object = fileInfo;
-				return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(result, HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,7 +191,7 @@ public class DivideController {
 			result.status = true;
 			result.data = "ffprove 파일 정보를 읽어오는데 실패하였습니다.";
 			result.object = fileInfo;
-			return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(result, HttpStatus.OK);
 		}
 
 		int wavCount = duration / 30;
@@ -180,7 +252,7 @@ public class DivideController {
 			result.status = false;
 			result.data = "분할파일 index 가 잘못되었습니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
 
@@ -191,10 +263,10 @@ public class DivideController {
 			result.data = "잔여시간이 부족합니다.";
 			result.object = null;
 			System.out.println("잔여시간이 부족합니다.");
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
-		videoService.reduceRemainTime(userid);
+		videoService.reduceRemainTime(userid, parseTime);
 
 		System.out.println("변환 전 파일 경로 " + wavFilePath);
 		try {
@@ -209,11 +281,11 @@ public class DivideController {
 			System.out.println("translateEnd");
 		} catch (Exception e) {
 			result.status = false;
-			result.data = "translate failed";
+			result.data = "번역이 실패하였습니다.";
 			result.object = null;
 
 			e.printStackTrace();
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
 		try {
@@ -223,12 +295,12 @@ public class DivideController {
 			System.out.println("papago translate end");
 		} catch (Exception e) {
 			result.status = false;
-			result.data = "papago Fail";
+			result.data = "파파고 api 호출에 실패하였습니다.";
 			result.object = null;
 
 			e.printStackTrace();
 
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 
 		ParseResultSet parsedResult = new ParseResultSet(resultSet.getVttResult(), resultSet.getTranscript());
@@ -241,11 +313,11 @@ public class DivideController {
 			System.out.println("parse End");
 		} catch (Exception e) {
 			result.status = false;
-			result.data = "parse fail";
+			result.data = "번역문 파싱에 실패하였습니다.";
 			result.object = null;
 
 			e.printStackTrace();
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 
 			return response;
 		}
@@ -283,11 +355,11 @@ public class DivideController {
 			vttSuccess = true;
 		} catch (IOException e) {
 			result.status = false;
-			result.data = "vtt convert Fail";
+			result.data = "Vtt 파일변환이 실패하였습니다.";
 			result.object = null;
 
 			e.printStackTrace();
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 
 			return response;
 		}

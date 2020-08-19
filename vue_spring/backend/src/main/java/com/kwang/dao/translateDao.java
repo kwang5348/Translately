@@ -1,6 +1,7 @@
 package com.kwang.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kwang.dto.BuildTranslateResult;
 import com.kwang.dto.SubtitleFileInfo;
@@ -19,6 +20,7 @@ public interface translateDao {
 	public List<SubtitleFileInfo> findFilesByUseridAndKeyword(int userid, String keyword);
 	public List<Transcript> findSubtitleBySubid(int subid);
 	public SubtitleFileInfo findSubFileInfoBySubid(int subid);
+	public SubtitleFileInfo findSubFileInfoBySubid(Map <String, String> fileName);
 	public int modifyTranscript(List<Transcript> translist);
 	public BuildTranslateResult findSubtitleByYoutubeUrl(String youtubeUrl);
 	public int deleteSubtitleBySubid(int subid, int userid);
