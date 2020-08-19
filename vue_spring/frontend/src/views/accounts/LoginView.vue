@@ -90,10 +90,6 @@ export default {
 </script>
 
 <style scoped>
-/* .loginView {
-    text-align: left;
-    margin: 50px;
-} */
 
 .google-signin-button {
   background: url( "../../img/btn_google_signin.png") no-repeat;
@@ -120,33 +116,6 @@ export default {
   padding: 6px;
 }
 
-
-/* .whole {
-  background-image: url('../../img/bg-accounts.png');
-<<<<<<< HEAD
-  height: 100%;
-  width: 100%;
-  margin: 0;
-        -webkit-background-size: cover;
-=======
-  /* height: 100vh; */
-  /* width: 100vh; */
-  /* margin: 0; */
-}
->>>>>>> feature/faq_d
-
-      -moz-background-size: cover;
-
-      -o-background-size: cover;
-
-      background-size: cover;
-
-} */
-
-/* .container {
-  margin: 0;
-  padding: 0;
-} */
 
 .font {
   font-family: 'InfinitySans-RegularA1'
