@@ -182,10 +182,13 @@ export default {
       this.uploadData = ud
       delete this.uploadData.option1
       delete this.uploadData.option2
+      console.log("이게 파일분할전 객체")
       console.log(this.uploadData)
       if (this.$cookies.isKey("auth-token")) {
         axios.post(`${SERVER_URL}/api/wav/analysis`, this.uploadData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
         .then(response => {
+          console.log(response) 
+          console.log("시작된거?")
           console.log(response)
           const translateCount = parseInt(response.data.data.replace("개의 파일분할이 가능합니다.", ""))
           this.subTranslateData.finalBuild = translateCount - 1
@@ -194,6 +197,7 @@ export default {
         })
         .catch(response => {
           console.log(response)
+          console.log("에러뜬거임?")
           this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
           this.translateBusy = false
           this.$router.push('/contents/createcaption')
@@ -216,7 +220,12 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+.container-fluid {
+   /* background-image: url('img/bg-accounts.png'); */
+   height: 100%;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

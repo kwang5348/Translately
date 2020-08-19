@@ -1,5 +1,5 @@
 <template>
-  <div class="container whole">
+  <div class="container whole" style="width: 100%; margin: auto;">
     <!-- <div class="login"> -->
       <!-- <h1>Login</h1>
       username : <input type="text" v-model="loginData.username"><br>
@@ -9,10 +9,10 @@
     <div>
       <b-card
         tag="article"
-        style="max-width: 500px; margin-top: 100px;"
+        style="max-width: 500px; margin-top: 50px;"
         class="mx-auto"
       >
-        <img src='../../../src/img/logo-head.png' class="mt-4" alt="로고" height="40"/>
+        <a href="/"><img src='../../../src/img/logo-letter2.png' href="/" class="mt-4" alt="로고" height="40"/></a>
         <h3><b>Member Login</b></h3>
         <br>
         <div style="width: 400px;" class="mx-auto">
@@ -27,7 +27,7 @@
             <small class="form-text text-muted">비밀번호를 작성해주세요</small>
           </div>
           <div class="d-flex justify-content-right">
-            <button type="submit" class="btn btn-lg btn-block btn-primary" id="login" @click="login"><b>로그인</b></button>
+            <button type="submit" class="login_button btn btn-lg btn-block btn-primary" @click="login"><b>로그인</b></button>
           </div>
           <div class="d-flex justify-content-between mt-3">
             <h4 class="mt-2"><b>SNS로 로그인</b></h4>
@@ -37,7 +37,10 @@
           <!-- <div class="d-flex justify-content-between"> -->
           <div class="d-flex justify-content-between">
             <p class="signintext mt-1" style="font-size: 13px">&#128505; 회원가입으로 다양하고 특별한 혜택을 즐겨보세요.</p>
-            <b-col><b-button class="text-white" size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
+            <b-col><b-button class="login_button text-white" size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
+          </div>
+          <div>
+            <b-col class="p-0"><b-button size="sm" variant="primary" @click="goBack"><b>뒤로</b></b-button></b-col>
           </div>
         </div>
       </b-card>
@@ -68,6 +71,9 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    },
     login() {
       this.$emit('submit-login-data', this.loginData)
     },
@@ -84,10 +90,6 @@ export default {
 </script>
 
 <style scoped>
-/* .loginView {
-    text-align: left;
-    margin: 50px;
-} */
 
 .google-signin-button {
   background: url( "../../img/btn_google_signin.png") no-repeat;
@@ -105,7 +107,7 @@ export default {
   margin: 0;
 }
 
-#login {
+.login_button {
   color: white;
   background-color: rgb(89, 94, 158);
   border-style: none;
@@ -114,16 +116,6 @@ export default {
   padding: 6px;
 }
 
-.whole {
-  background-image: url('../../img/bg-accounts.png');
-  /* height: 800px; */
-  /* margin: 0; */
-}
-
-.container {
-  /* margin: 0; */
-  /* padding: 0; */
-}
 
 .font {
   font-family: 'InfinitySans-RegularA1'
