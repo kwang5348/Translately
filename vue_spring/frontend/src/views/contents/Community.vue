@@ -124,6 +124,9 @@ export default {
         console.log(this.subtitles)
       })
     },
+    // delete_data() {
+    //   axios.get(`${SERVER_URL}/api/subtitle/delete?subid=${this.subtitles[index].subid})
+    // }
   },
   created() {
     this.find_count()

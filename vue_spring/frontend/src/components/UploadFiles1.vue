@@ -39,23 +39,16 @@
         </div>
         <div class="d-flex justify-content-around font">
           <!-- 링크 연결된 upload 버튼 -->
-          <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
+          <b-button v-if="busy" block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">
+            <b-spinner small type="grow"></b-spinner>
+            Loading...
+          </b-button>
+          <b-button v-else block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
           <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-youtube')">취소</b-button> -->
         </div>
+        
         <hr>
         <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
-        <!-- <div v-if="currentFile" class="progress">
-          <div
-            class="progress-bar progress-bar-info progress-bar-striped"
-            role="progressbar"
-            :aria-valuenow="progress"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            :style="{ width: progress + '%' }"
-          >
-            {{ progress }}%
-          </div>
-        </div> -->
       </b-modal>
     </div>
 </template>
@@ -75,7 +68,7 @@ export default {
   data() {
     return {
       fileLink:'',
-
+      busy: false,
       uploadData: {
         video_name: null,
         thumbnail: null,
@@ -106,6 +99,7 @@ export default {
       console.log("start")
       console.log("유튜브 영상 파일 다운로드를 시작합니다.")
       if(this.LinkState){
+        this.busy = true
         this.$emit('upload-file', this.fileLink.replace("https://www.youtube.com/watch?v=", ""))
         axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
           headers: {
