@@ -1,9 +1,9 @@
 <template>
   <div class="container whole">
     <div>
-      <b-card tag="article" style="max-width: 500px; margin-top: 90px;" 
+      <b-card tag="article" style="max-width: 500px; margin-top: 7px;" 
       class="mx-auto">
-      <img src='../../../src/img/logo-head.png' class="mt-4" alt="로고" height="40"/>
+      <a href="/"><img src='../../../src/img/logo-letter2.png' class="mt-4" alt="로고" height="40"/></a>
       <h4 class="mt-1" style="color: black;"><b>회원가입</b></h4>
       <p style="color: black; font-size: 12px;">회원가입하세요. 가입하면 게시판을 열람할 수 있습니다.</p>
         <div class="loginView">
@@ -42,7 +42,10 @@
               </p>
             </b-modal>
           </div>
-          <button @click="signup" class="mt-2 btn btn-primary btn-lg btn-block" id="signupbtn"><b>가입하기</b></button>
+          <button @click="signup" class="login_button mt-2 btn btn-primary btn-lg btn-block"><b>가입하기</b></button>
+          <div class="d-flex" align="center">
+            <b-col class="p-0 pt-2 ml-auto"><b-button size="sm" variant="primary" @click="gotoBack"><b>뒤로</b></b-button></b-col>
+          </div>
         </div>
       </b-card>
     </div>
@@ -53,6 +56,9 @@
 export default {
   name: 'SignupView',
   methods: {
+    gotoBack() {
+      this.$router.go(-1)
+    },
     signup() {
       // const idtext = /^[A-Za-z0-9+]{8,}$/;
       // if (idtext.test(this.signupData.email) == false) {
@@ -86,6 +92,15 @@ export default {
 </script>
 
 <style scoped>
+.login_button {
+  color: white;
+  background-color: rgb(89, 94, 158);
+  border-style: none;
+  border-radius: 0;
+  font-size: 1rem;
+  padding: 4px 6px;
+}
+
 .loginView {
     text-align: left;
     margin: 10px 40px;
@@ -95,21 +110,21 @@ export default {
   margin: 0px 0px 10px;
 }
 
-#signupbtn {
+/* #signupbtn {
   color: white;
   background-color: rgb(89, 94, 158);
   border-style: none;
   border-radius: 0;
   font-size: 1rem;
   padding: 6px;
-}
+} */
 
-.whole {
+/* .whole {
   background-image: url('../../img/bg-accounts.png');
   width: 100%;
-  /* height: 800px; */
-  /* margin: 0; */
-}
+  height: 800px;
+  margin: 0;
+} */
 
 .container {
   width: 100%;

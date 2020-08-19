@@ -105,7 +105,7 @@ import Navbar1 from "@/components/Navbar1.vue"
   }
 </script>
 
-<style>
+<style scoped>
 
 .whole {
   background-image: url('../img/bg-faq.png');

@@ -205,7 +205,12 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+.container-fluid {
+   /* background-image: url('img/bg-accounts.png'); */
+   height: 100%;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

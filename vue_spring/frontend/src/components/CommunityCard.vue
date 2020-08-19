@@ -11,8 +11,8 @@
         <b-badge pill style="font-size: 17px; margin: 0px 2px; background-color: #564892;">{{ data.target_sub_code }}</b-badge>
       </v-spacer>
       <div>
-        <v-btn icon><a :href="downloadUrl"><i class="fa fa-download" aria-hidden="true" style="font-size: 20px;"></i></a></v-btn>
-        <v-btn icon @click="delete_caption" class="ml-0"><i class="fa fa-trash" aria-hidden="true" style="color: black; font-size: 20px;"></i></v-btn>
+        <v-btn icon><a :href="downloadUrl"><i class="fa fa-download" aria-hidden="true" style="font-size: 20px; color: #696969;"></i></a></v-btn>
+        <v-btn icon @click="delete_caption" class="ml-0"><i class="fa fa-trash" aria-hidden="true" style="color: black; font-size: 20px; color: #696969;"></i></v-btn>
       </div>
     </v-card-actions>
     <div>
