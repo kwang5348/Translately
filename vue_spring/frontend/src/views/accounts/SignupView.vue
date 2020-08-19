@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container whole">
     <div>
       <b-card tag="article" style="max-width: 500px; margin-top: 90px;" 
       class="mx-auto">
@@ -102,6 +102,19 @@ export default {
   border-radius: 0;
   font-size: 1rem;
   padding: 6px;
+}
+
+.whole {
+  background-image: url('../../img/bg-accounts.png');
+  width: 100%;
+  /* height: 800px; */
+  /* margin: 0; */
+}
+
+.container {
+  width: 100%;
+  /* margin: 0; */
+  /* padding: 0; */
 }
 
 </style>

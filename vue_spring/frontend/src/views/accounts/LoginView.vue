@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container whole">
     <!-- <div class="login"> -->
       <!-- <h1>Login</h1>
       username : <input type="text" v-model="loginData.username"><br>
@@ -112,6 +112,21 @@ export default {
   border-radius: 0;
   font-size: 1rem;
   padding: 6px;
+}
+
+.whole {
+  background-image: url('../../img/bg-accounts.png');
+  /* height: 800px; */
+  /* margin: 0; */
+}
+
+.container {
+  /* margin: 0; */
+  /* padding: 0; */
+}
+
+.font {
+  font-family: 'InfinitySans-RegularA1'
 }
 
 </style>

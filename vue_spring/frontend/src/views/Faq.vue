@@ -2,7 +2,7 @@
   <div class="whole font">
   <Navbar1 />
   <!-- <p style="margin-top: 50px; font-size: 30px; color: white; font-weight: bolder">자주 묻는 질문</p> -->
-  <v-card max-width="1000" class="mx-auto" style="margin-top: 50px;" >
+  <v-card max-width="1000" class="mx-auto" style="margin-top: 60px;" >
     <v-toolbar color="deep-purple darken-1" dark>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
       <v-toolbar-title>자주 묻는 질문</v-toolbar-title>
@@ -108,8 +108,8 @@ import Navbar1 from "@/components/Navbar1.vue"
 <style>
 
 .whole {
-  background-image: url('../img/main-modal1.png');
-  height: 800px;
+  background-image: url('../img/bg-faq.png');
+  height: 850px;
 }
 
 .font {
