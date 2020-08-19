@@ -7,7 +7,11 @@
    <select id="showfiles_by_keyword" parameterType = "String" resultType="com.kwang.dto.SubtitleFileInfo">
       SELECT * from subtitle
 	  WHERE video_name like CONCAT('%', #{keyword}, '%')
+   </select>
 
+   <select id="showfiles_myproject_by_keyword" parameterType = "java.util.Map" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+	  WHERE userid = #{userid} and video_name like CONCAT('%', #{keyword}, '%')
    </select>
 
    <select id="showfiles_by_userid" parameterType = "int" resultType="com.kwang.dto.SubtitleFileInfo">
@@ -22,6 +26,11 @@
 
    <select id="find_subtitle_by_subid" parameterType = "Integer" resultType="com.kwang.dto.Transcript">
       SELECT * from subtitleque
+	  where subid = #{subid}
+   </select>
+
+   <select id="get_sub_fileinfo" parameterType = "Integer" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
 	  where subid = #{subid}
    </select>
 

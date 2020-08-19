@@ -27,5 +27,6 @@ public interface VideoTranslateService {
 	public int saveFileInfo(SubtitleFileInfo fileInfo);
 	public int saveTranscript(List<Transcript> translist, int subid);
 	public int reduceRemainTime(int userid);
+	public String buildVTTString(List<Transcript> translist);
 
 }

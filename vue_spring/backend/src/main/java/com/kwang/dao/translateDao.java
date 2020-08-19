@@ -16,10 +16,11 @@ public interface translateDao {
 	public List<SubtitleFileInfo> findAll();
 	public List<SubtitleFileInfo> findFilesByKeyword(String keyword);
 	public List<SubtitleFileInfo> findFilesByUserid(int userid);
+	public List<SubtitleFileInfo> findFilesByUseridAndKeyword(int userid, String keyword);
 	public List<Transcript> findSubtitleBySubid(int subid);
+	public SubtitleFileInfo findSubFileInfoBySubid(int subid);
 	public int modifyTranscript(List<Transcript> translist);
 	public BuildTranslateResult findSubtitleByYoutubeUrl(String youtubeUrl);
-
 	public int deleteSubtitleBySubid(int subid, int userid);
     public int countUser();
     public int countSubtitle();

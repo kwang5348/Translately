@@ -451,8 +451,10 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
 		if(result.getParsedResult() == null){
-			setSrt.append("WEBVTT\n\n00:00:00.000 --> 00:00:05.000\n이 자막은 Translately 에서 제공되는 자막입니다. \nhttp://i3a511.p.ssafy.io/ 에서 더 많은 정보를 얻어가세요!\n\n");
+			setSrt.append("WEBVTT\n\n");
 			setSrt.append("STYLE\n::cue {\nbackground-image: linear-gradient(to bottom, dimgray, lightgray)\n;color: papayawhip;\n}\n\n");
+			setSrt.append("00:00:00.000 --> 00:00:05.000\n<b>이 자막은 Translately 에서 제공되는 자막입니다.<b>\n\n");
+			
 		} else {
 			setSrt.append(result.getParsedResult());
 		}
@@ -640,6 +642,28 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	@Override
 	public int reduceRemainTime(int userid) {
 		return userDao.reduceRemainTime(userid);
+	}
+
+	@Override
+	public String buildVTTString(List<Transcript> translist) {
+		StringBuilder setVtt = new StringBuilder();
+		setVtt.append("WEBVTT\n\n");
+		setVtt.append("STYLE\n::cue {\nbackground-image: linear-gradient(to bottom, dimgray, lightgray)\n;color: papayawhip;\n}\n\n");
+		setVtt.append("00:00:00.000 --> 00:00:05.000\n<b>이 자막은 Translately 에서 제공되는 자막입니다.<b>\n\n");
+		int tranIndex = 0;
+		for (Transcript transcript : translist) {
+			tranIndex++;
+			setVtt.append(tranIndex);
+			setVtt.append("\n");
+			setVtt.append(convertToVTT_(transcript.getStartTime()));
+			setVtt.append(" --> ");
+			setVtt.append(convertToVTT_(transcript.getEndTime()));
+			setVtt.append("\n");
+			setVtt.append(transcript.getTargetsub());
+			setVtt.append("\n");
+			setVtt.append("\n");
+		}
+		return setVtt.toString();
 	}
 
 

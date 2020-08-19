@@ -123,5 +123,20 @@ public class translateDaoImpl implements translateDao {
 		return sqlSession.selectOne("transcript.count_subtitle");
 	}
 
+	@Override
+	public SubtitleFileInfo findSubFileInfoBySubid(int subid) {
+		
+		return sqlSession.selectOne("transcript.get_sub_fileinfo", subid);
+	}
+
+	@Override
+	public List<SubtitleFileInfo> findFilesByUseridAndKeyword(int userid, String keyword) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userid", userid);
+		map.put("keyword", keyword);
+		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.showfiles_myproject_by_keyword", map);
+		return result;
+	}
+
 
 }

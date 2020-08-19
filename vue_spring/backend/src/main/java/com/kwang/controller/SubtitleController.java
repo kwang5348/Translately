@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -112,6 +114,33 @@ public class SubtitleController {
 		return response;
 	}
 
+	@GetMapping("/api/subtitle/searchMypage")
+	@ApiOperation(value = "마이페이지에서 해당 단어를 제목에 포함하는 subtitle 정보 출력")
+	public Object selectMypageSubtitle(@RequestParam(required = true) final String keyword, HttpServletRequest req) {
+		final BasicResponse result = new BasicResponse();
+		ResponseEntity response = null;
+
+		int userid = (int) (long) jwtService.getUserInfo(req).get("userid");
+
+		List<SubtitleFileInfo> data = subtitleService.findFilesByUseridAndKeyword(userid, keyword);
+
+		if (data != null) {
+			System.out.println(data.size() + "data 출력 성공");
+			result.status = true;
+			result.data = data.size() + "개의 데이터 출력 성공";
+			result.object = data;
+
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+		} else {
+			result.status = false;
+			result.data = "출력이 실패하였습니다.";
+			result.object = null;
+			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			System.out.println("출력이 실패하였습니다.");
+		}
+		return response;
+	}
+
 	@GetMapping("/api/subtitle/mylist")
 	@ApiOperation(value = "해당 id를 제목에 포함하는 subtitle 정보 출력")
 	public Object selectMylist(HttpServletRequest req) {
@@ -144,18 +173,18 @@ public class SubtitleController {
 		final BasicResponse result = new BasicResponse();
 		ResponseEntity response = null;
 
-		List<Transcript> data = subtitleService.findSubtitleBySubid(subid);
-
+		SubtitleFileInfo fileInfo = subtitleService.findSubFileInfoBySubid(subid);
+		List<Transcript> translist = subtitleService.findSubtitleBySubid(subid);
+		BuildTranslateResult data = new BuildTranslateResult(translist, fileInfo);
 		if (data != null) {
-			System.out.println(data.size() + "data 출력 성공");
 			result.status = true;
-			result.data = data.size() + "개의 데이터 출력 성공";
+			result.data = "자막 리스트 출력 성공";
 			result.object = data;
 
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			result.status = false;
-			result.data = "번역결과를 불러오지 못했습니다.";
+			result.data = "자막 리스트를 불러오지 못했습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 			System.out.println("출력이 실패하였습니다.");
@@ -172,8 +201,12 @@ public class SubtitleController {
 		final String vttFile = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file() + "_" +
 		resultSet.getFileInfo().getStart_sub_code() + "_" + resultSet.getFileInfo().getTarget_sub_code() + VTT_EX;
 		System.out.println("수정된 vtt 파일 path : " + vttFile);
+		
+
+
 		try {
-			videoService.converToSrtFile_(resultSet.getVttResult(), vttFile);
+			String buildVttString = videoService.buildVTTString(resultSet.getTranscript());
+			videoService.converToSrtFile_(buildVttString, vttFile);
 		} catch (IOException e) {
 			result.status = false;
 			result.data = "자막 파일 저장에 실패하였습니다.";
@@ -229,19 +262,23 @@ public class SubtitleController {
 	@ApiOperation(value = "유저 수 출력")
 	public Object countUser(){
 		int userCount = subtitleService.countUser();
-		
+		int subtitleCount = subtitleService.countSubtitle();
+
+		Map <String, Integer> map = new HashMap<String, Integer>();
+		map.put("userCount", userCount);
+		map.put("subtitleCount", subtitleCount);
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
 
 		if(userCount != 0){
 			result.status = true;
 			result.data = "유저 수 출력에 성공하였습니다.";
-			result.object = userCount;
+			result.object = map;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 		} else {
 			result.status = false;
 			result.data = "유저 수 출력에 실패하였습니다.";
-			result.object = userCount;
+			result.object = map;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		}
 		return response;	

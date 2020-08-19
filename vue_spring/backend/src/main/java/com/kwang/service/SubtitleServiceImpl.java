@@ -66,5 +66,16 @@ public class SubtitleServiceImpl implements SubtitleService {
         return transDao.countSubtitle();
     }
 
+    @Override
+    public SubtitleFileInfo findSubFileInfoBySubid(int subid) {
+        return transDao.findSubFileInfoBySubid(subid);
+    }
+
+    @Override
+    public List<SubtitleFileInfo> findFilesByUseridAndKeyword(int userid, String keyword) {
+        
+        return transDao.findFilesByUseridAndKeyword(userid, keyword);
+    }
+
 
 }

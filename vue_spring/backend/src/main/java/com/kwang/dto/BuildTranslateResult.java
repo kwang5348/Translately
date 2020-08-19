@@ -9,6 +9,23 @@ public class BuildTranslateResult {
     private SubtitleFileInfo fileInfo;
     private String vttResult;
 
+    public BuildTranslateResult() {
+    }
+
+    public BuildTranslateResult(List<Transcript> transcript, SubtitleFileInfo fileInfo) {
+        this.transcript = transcript;
+        this.fileInfo = fileInfo;
+    }
+
+    public BuildTranslateResult(int buildId, int finalBuild, List<Transcript> transcript, SubtitleFileInfo fileInfo, String vttResult) {
+        this.buildId = buildId;
+        this.finalBuild = finalBuild;
+        this.transcript = transcript;
+        this.fileInfo = fileInfo;
+        this.vttResult = vttResult;
+    }
+
+
     public int getBuildId() {
         return this.buildId;
     }
