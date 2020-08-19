@@ -2,16 +2,22 @@
   <v-card>
     <v-img :src="thumbnailUrl"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="250px">
-      <v-btn icon @click="delete_caption" class="ml-3">delete</v-btn>
     </v-img>
     <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-card-title v-text="this.data.video_name"></v-card-title>
-      <b-badge pill variant="primary" style="font-size: 17px; margin: 0px 2px;">{{ data.start_sub_code }}</b-badge>
-      <b-badge pill variant="warning" style="font-size: 17px; margin: 0px 2px;">{{ data.target_sub_code }}</b-badge>
-      
-      <v-btn icon><a :href="downloadUrl"><v-icon>mdi-open-in-new</v-icon></a></v-btn>
+      <v-spacer style="text-align: left;">
+        <!-- <b-badge pill style="font-size: 17px; margin: 0px 2px; background-color: #8274BA;">{{ data.start_sub_code }}</b-badge> -->
+        <b-badge pill variant="warning" style="font-size: 17px; margin: 0px 2px;">{{ data.start_sub_code }}</b-badge>
+        <i class="fas fa-long-arrow-alt-right" style="font-size: 15px;"></i>
+        <b-badge pill style="font-size: 17px; margin: 0px 2px; background-color: #564892;">{{ data.target_sub_code }}</b-badge>
+      </v-spacer>
+      <div>
+        <v-btn icon><a :href="downloadUrl"><i class="fa fa-download" aria-hidden="true" style="font-size: 20px;"></i></a></v-btn>
+        <v-btn icon @click="delete_caption" class="ml-0"><i class="fa fa-trash" aria-hidden="true" style="color: black; font-size: 20px;"></i></v-btn>
+      </div>
     </v-card-actions>
+    <div>
+      <v-card-title v-text="this.data.video_name"></v-card-title>
+    </div>
   </v-card>
 </template>
 

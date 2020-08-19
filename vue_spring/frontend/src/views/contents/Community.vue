@@ -9,18 +9,22 @@
       </v-toolbar>
 
       <div class="row mt-5 mb-5">
-        <div class="col-2"></div>
-        <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.contents }}</p>
+        <div class="col-3"></div>
+        <div class="col-3"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.contents }}</p>
           <p>오늘까지 만들어진 자막</p>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.users }}</p>
           <p>사용 중인 유저</p>
         </div>
-        <div class="col-2 row align-items-end">
-          <p style="margin-bottom: 0; font-weight: bolder; color: gray">언어</p>
-          <b-badge pill variant="primary" style="font-size: 16px; margin: 0px 2px 0px 4px;">음성</b-badge>
-          <b-badge pill variant="warning" style="font-size: 16px; margin: 0px 2px;">자막</b-badge>  
+        <div class="col-3 row align-items-end mb-3" style="text-align: right; justify-content: center;">
+          <!-- <p style="margin-bottom: 0; font-weight: bolder; color: gray">언어</p> -->
+          <b-badge pill variant="warning" style="font-size: 16px; margin: 0px 2px 0px 4px;">
+            음성 언어
+            </b-badge>
+            <i class="fas fa-long-arrow-alt-right" style="font-size: 20px;"></i>
+          <!-- <i class="fas fa-long-arrow-alt-right"></i> -->
+          <b-badge pill style="font-size: 16px; margin: 0px 2px; background-color: #564892;">자막 언어</b-badge>  
         </div>
       </div>
       <v-tabs centered>
