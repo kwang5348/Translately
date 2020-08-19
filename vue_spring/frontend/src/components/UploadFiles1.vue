@@ -115,7 +115,7 @@ export default {
           this.message = response.data.message;
           this.$emit('submit-upload-option', this.uploadData)
           this.$router.push('/contents/createcaption')
-        })
+        })        
       }
     }
   },    

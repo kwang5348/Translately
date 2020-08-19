@@ -19,7 +19,7 @@
             <p><a class="text-black" href="/contents/tutorial" style="text-decoration: none;">튜토리얼</a></p>
             <p><a class="text-black" href="/contents/translate" style="text-decoration: none;">자막 변환</a></p>
             <p><a class="text-black" href="/contents/community" style="text-decoration: none;">커뮤니티</a></p>
-            <p><a class="text-black" href="/contents/mypage" style="text-decoration: none;">마이 페이지</a></p>
+            <p><a class="text-black" href="/faq" style="text-decoration: none;">공지사항</a></p>
           </div>
 
           <hr class="w-100 clearfix d-md-none">          
