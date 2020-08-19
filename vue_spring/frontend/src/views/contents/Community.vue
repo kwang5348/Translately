@@ -46,7 +46,7 @@
                   <b-badge pill variant="primary" style="font-size: 17px; margin: 0px 2px;">{{ subtitle.start_sub_code }}</b-badge>
                   <b-badge pill variant="warning" style="font-size: 17px; margin: 0px 2px;">{{ subtitle.target_sub_code }}</b-badge>
                   <!-- <v-btn icon><v-icon>mdi-bookmark</v-icon></v-btn> -->
-                  <v-btn icon><v-icon>mdi-open-in-new</v-icon></v-btn>
+                  <v-btn icon><v-icon large>mdi-arrow-up-bold-box</v-icon></v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>

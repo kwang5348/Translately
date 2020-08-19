@@ -9,8 +9,8 @@
     <div>
       <b-card
         tag="article"
-        style="max-width: 500px;"
-        class="mt-5 mx-auto"
+        style="max-width: 500px; margin-top: 100px;"
+        class="mx-auto"
       >
         <img src='../../../src/img/logo-head.png' class="mt-4" alt="로고" height="40"/>
         <h3><b>Member Login</b></h3>
