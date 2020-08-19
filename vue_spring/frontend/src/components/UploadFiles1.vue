@@ -39,17 +39,16 @@
         </div>
         <div class="d-flex justify-content-around font">
           <!-- 링크 연결된 upload 버튼 -->
-          <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
+          <b-button v-if="busy" block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">
+            <b-spinner small type="grow"></b-spinner>
+            Loading...
+          </b-button>
+          <b-button v-else block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
           <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-youtube')">취소</b-button> -->
         </div>
         
         <hr>
         <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
-        <v-progress-linear
-              indeterminate
-              color="cyan"
-        ></v-progress-linear>
-        
       </b-modal>
     </div>
 </template>
