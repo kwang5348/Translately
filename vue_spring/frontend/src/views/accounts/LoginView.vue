@@ -116,7 +116,8 @@ export default {
 
 .whole {
   background-image: url('../../img/bg-accounts.png');
-  /* height: 800px; */
+  /* height: 100vh; */
+  /* width: 100vh; */
   /* margin: 0; */
 }
 

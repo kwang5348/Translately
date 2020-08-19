@@ -50,7 +50,7 @@ import Navbar1 from "@/components/Navbar1.vue"
       return {
         items: [
           {
-            action: '상품/상품평',
+            action: '',
             title: '판매자에게 연락하고 싶어요.',
             active: true,
             items: [
@@ -58,21 +58,21 @@ import Navbar1 from "@/components/Navbar1.vue"
             ],
           },
           {
-            action: 'restaurant',
-            title: 'Dining',
+            action: '[코인]',
+            title: '충전 안내사항',
             items: [
-              { title: 'Breakfast & brunch' },
+              { title: '추후 제공하겠습니다. 회원가입 시 600코인 으로 서비스를 즐겨보세요.' },
             ],
           },
           {
-            action: 'school',
-            title: 'Education',
+            action: '[코인]',
+            title: '이용안내',
             items: [
-              { title: 'List Item' },
+              { title: '코인이 부족하면 자막을 제공받으실 수 없습니다.' },
             ],
           },
           {
-            action: 'directions_run',
+            action: '[서비스]',
             title: 'Family',
             items: [
               { title: 'List Item' },
@@ -105,7 +105,7 @@ import Navbar1 from "@/components/Navbar1.vue"
   }
 </script>
 
-<style>
+<style scoped>
 
 .whole {
   background-image: url('../img/bg-faq.png');

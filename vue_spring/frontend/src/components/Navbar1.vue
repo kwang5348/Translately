@@ -22,7 +22,7 @@
         <img src='../img/extension.png' width="450px"/>
       </b-modal>
       <li class="nav-item ml-2" style="color: black; font-size: 19px;">
-        <a class="nav-link" href="/faq">FAQ<span class="sr-only"></span></a>
+        <a class="nav-link" href="/faq">공지사항<span class="sr-only"></span></a>
       </li>
     </ul>
     <ul class="navbar-nav">  
