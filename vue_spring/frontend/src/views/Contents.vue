@@ -31,6 +31,7 @@
           @upload-file="uploadFile" 
           @submit-upload-option="uploadOption"
           @destroy-create-caption="destroyCreateCaption"
+          @submit-complete-translate="submitCompleteTranslate"
           :video="video"
           :isLogin="isLogin"
           :subtitles="subtitles"
@@ -71,6 +72,9 @@ export default {
     },
     destroyCreateCaption() {
       this.$emit('destroy-create-caption')
+    },
+    submitCompleteTranslate(subtitles) {
+      this.$emit('submit-complete-translate', subtitles)
     }
   },
 }

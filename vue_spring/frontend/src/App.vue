@@ -12,7 +12,8 @@
       @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
       @logout="logout"
-      @destroy-create-caption="destroyCreateCaption" />
+      @destroy-create-caption="destroyCreateCaption"
+      @submit-complete-translate="submitCompleteTranslate" />
     </div>
   
   </v-app>
@@ -55,9 +56,19 @@ export default {
     }
   },
   methods: {
+    submitCompleteTranslate(subtitleData) {
+      console.log(subtitleData)
+      this.subtitles = subtitleData.subtitles
+      this.translateProgress =  100
+      this.translateBusy = false
+      this.downloadUrl = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + subtitleData.subtitleName + "_" + subtitleData.start_sub_code + "_" + subtitleData.target_sub_code
+      this.$router.push('/contents/createcaption')
+    },
     translate(i) {
       console.log(`${i}번째 번역을 시작합니다.`)
       this.subTranslateData.buildId = i
+      console.log('이건 보내는 데이터')
+      console.log(this.subTranslateData)
       axios.post(`${SERVER_URL}/api/wav/subTranslate`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
       .then(response => {
         console.log(response)

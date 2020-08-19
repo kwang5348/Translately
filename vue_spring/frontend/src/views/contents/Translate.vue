@@ -4,7 +4,7 @@
       <div class="col-6 section1">
         <p style="font-size: 20px; margin-bottom: 5px;"><b>유튜브 영상 URL로 번역</b></p>
         <p style="font-size: 18px; margin-bottom: 30px;">번역하고 싶은 영상의 유튜브 URL을 입력하세요.</p>
-        <upload-files1 @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files1>
+        <upload-files1 @submit-complete-translate="submitCompleteTranslate" @upload-file="uploadFile" @submit-upload-option="uploadOption"></upload-files1>
       </div>
       <div class="col-6 section2">
         <p style="font-size: 20px; margin-bottom: 5px;"><b>내 컴퓨터에 있는 영상 번역</b></p>
@@ -37,6 +37,9 @@ export default {
     uploadOption(uploadData) {
       this.$emit('submit-upload-option', uploadData)
     },
+    submitCompleteTranslate(subtitles) {
+      this.$emit('submit-complete-translate', subtitles)
+    }
   },
 }
 </script>

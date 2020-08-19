@@ -67,8 +67,15 @@ export default {
   },
   data() {
     return {
-      fileLink:'',
+      subtitleData: {
+        subtitles: [],
+        subtitleName: "",
+        start_sub_code: "",
+        target_sub_code: "",
+      },
+      fileLink: '',
       busy: false,
+      flag: true,
       uploadData: {
         video_name: null,
         thumbnail: null,
@@ -97,25 +104,42 @@ export default {
   methods: {
     uploadOption() {
       console.log("start")
-      console.log("유튜브 영상 파일 다운로드를 시작합니다.")
       if(this.LinkState){
         this.busy = true
-        this.$emit('upload-file', this.fileLink.replace("https://www.youtube.com/watch?v=", ""))
-        axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
-          headers: {
-            "jwt-auth-token": this.$cookies.get("auth-token")
-          }
-        })
+        const fileName = this.fileLink.replace("https://www.youtube.com/watch?v=","")
+        this.$emit('upload-file', fileName, "")
+        axios.get(`${SERVER_URL}/api/wav/youtubeCheck?fileName=${fileName}&start_sub_code=${this.uploadData.start_sub_code}&target_sub_code=${this.uploadData.target_sub_code}`, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
         .then(response => {
-          console.log("유튜브 영상 다운로드가 완료되었습니다.")
           console.log(response)
-          this.uploadData.video_name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-          this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-          this.uploadData.youtube_url = this.fileLink
-          this.message = response.data.message;
-          this.$emit('submit-upload-option', this.uploadData)
-          this.$router.push('/contents/createcaption')
+          if(response.data.status) {
+            console.log(response)
+            this.subtitleData.subtitles = response.data.object.transcript
+            this.subtitleData.subtitleName = fileName
+            this.subtitleData.start_sub_code = this.uploadData.start_sub_code
+            this.subtitleData.target_sub_code = this.uploadData.target_sub_code
+            this.$emit('submit-complete-translate', this.subtitleData)
+          } else {
+            console.log("유튜브 영상 파일 다운로드를 시작합니다.")
+            console.log(fileName)
+            axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
+              headers: {
+                "jwt-auth-token": this.$cookies.get("auth-token")
+              }
+            })
+            .then(response => {
+              console.log("유튜브 영상 다운로드가 완료되었습니다.")
+              console.log(response)
+              this.uploadData.video_name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+              this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+              this.uploadData.youtube_url = this.fileLink
+              this.$emit('submit-upload-option', this.uploadData)
+              this.$router.push('/contents/createcaption')
+            })
+          }
+        }).catch(err => {
+          console.log(err)
         })
+        
       }
     }
   },    
