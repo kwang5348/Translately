@@ -13,7 +13,11 @@
             <img src="../img/main-modal1.png" class="d-block w-100" alt="모달 이미지1">
             <div class="carousel-caption d-none d-md-block">
               <!-- <h5>First slide label</h5> -->
-              <b-button class="start-button" href="/contents/translate" 
+              <b-button class="start-button" v-if="isLogin" href="/contents/translate" 
+                style="background: transparent; border:3px solid white; border-radius: 0px; font-weight: bold; font-size: 25px;">
+                  자막 변환 시작하기
+                </b-button>
+              <b-button class="start-button" v-else href="/accounts/login" 
                 style="background: transparent; border:3px solid white; border-radius: 0px; font-weight: bold; font-size: 25px;">
                   자막 변환 시작하기
                 </b-button>
@@ -21,14 +25,22 @@
           </div>
           <div class="carousel-item">
             <img src="../img/main-modal2.png" class="d-block w-100" alt="모달 이미지2" style="margin: 0px auto">
-            <b-button variant="primary" class="start-button" href="/contents/translate" 
+            <b-button variant="primary" class="start-button" v-if="isLogin" href="/contents/translate" 
+                style="font-weight: bold; font-size: 25px;">
+                  자막 변환 시작하기
+                </b-button>
+            <b-button variant="primary" class="start-button" v-else href="/accounts/login" 
                 style="font-weight: bold; font-size: 25px;">
                   자막 변환 시작하기
                 </b-button>
           </div>
           <div class="carousel-item">
             <img src="../img/main-modal3.png" class="d-block w-100" alt="모달 이미지3">
-            <b-button variant="primary" class="start-button" href="/contents/translate" 
+            <b-button variant="primary" class="start-button" v-if="isLogin" href="/contents/translate" 
+                style="font-weight: bold; font-size: 25px;">
+                  자막 변환 시작하기
+                </b-button>
+            <b-button variant="primary" class="start-button" v-else href="/accounts/login" 
                 style="font-weight: bold; font-size: 25px;">
                   자막 변환 시작하기
                 </b-button>
