@@ -15,13 +15,14 @@
         <a class="nav-link" v-else href="/accounts/login">자막 변환<span class="sr-only"></span></a>
       </li>
       <li class="nav-item ml-2" style="color: black; font-size: 19px;">
-        <a class="nav-link" v-b-modal.modal-1 ><router-link to="#">다운로드</router-link><span class="sr-only"></span></a>
-      </li>
-      <b-modal id="modal-1">
-        <p class="my-3">준비중입니다.</p>
+        <a class="nav-link" v-b-modal.modal-1 ><router-link to="#">크롬 다운로드</router-link><span class="sr-only"></span></a>
+      </li>  
+      <b-modal class="navbar" id="modal-1" title="크롬 익스텐션 기능을 준비 중입니다." ok-only>
+        <p class="my-3 navbar">빠른 시일 내에 찾아뵐게요.</p>
+        <img src='../img/extension.png' width="450px"/>
       </b-modal>
       <li class="nav-item ml-2" style="color: black; font-size: 19px;">
-        <a class="nav-link" v-b-modal.modal-1><router-link to="#">FAQ</router-link><span class="sr-only"></span></a>
+        <a class="nav-link" href="/faq">FAQ<span class="sr-only"></span></a>
       </li>
     </ul>
     <ul class="navbar-nav">  
@@ -69,6 +70,12 @@ export default {
 
 .v-application a {
     color: black;
+}
+
+#modal-1 {
+  font-family: 'InfinitySans-RegularA1';
+  width: 800px;
+
 }
 
 </style>

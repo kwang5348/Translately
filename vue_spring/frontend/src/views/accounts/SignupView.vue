@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="container whole">
     <div>
-      <b-card tag="article" style="max-width: 500px;" class="mt-5 mx-auto">
+      <b-card tag="article" style="max-width: 500px; margin-top: 90px;" 
+      class="mx-auto">
       <img src='../../../src/img/logo-head.png' class="mt-4" alt="로고" height="40"/>
       <h4 class="mt-1" style="color: black;"><b>회원가입</b></h4>
       <p style="color: black; font-size: 12px;">회원가입하세요. 가입하면 게시판을 열람할 수 있습니다.</p>
@@ -33,7 +34,7 @@
               <span> 약관에 동의합니다</span>
             </label>
             <b-button squared variant="primary" size="sm" v-b-modal.modal-scrollable class="go-term"><b>약관 보기</b></b-button>
-            <b-modal id="modal-scrollable" scrollable>
+            <b-modal id="modal-scrollable" scrollable ok-only>
               <p class="my-2">
               <b>Translately 회원가입 약관</b><br>
               제1조 (목적) 이 약관은 Translately를 이용함에 있어 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
@@ -101,6 +102,19 @@ export default {
   border-radius: 0;
   font-size: 1rem;
   padding: 6px;
+}
+
+.whole {
+  background-image: url('../../img/bg-accounts.png');
+  width: 100%;
+  /* height: 800px; */
+  /* margin: 0; */
+}
+
+.container {
+  width: 100%;
+  /* margin: 0; */
+  /* padding: 0; */
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container whole">
     <!-- <div class="login"> -->
       <!-- <h1>Login</h1>
       username : <input type="text" v-model="loginData.username"><br>
@@ -9,8 +9,8 @@
     <div>
       <b-card
         tag="article"
-        style="max-width: 500px;"
-        class="mt-5 mx-auto"
+        style="max-width: 500px; margin-top: 100px;"
+        class="mx-auto"
       >
         <img src='../../../src/img/logo-head.png' class="mt-4" alt="로고" height="40"/>
         <h3><b>Member Login</b></h3>
@@ -112,6 +112,21 @@ export default {
   border-radius: 0;
   font-size: 1rem;
   padding: 6px;
+}
+
+.whole {
+  background-image: url('../../img/bg-accounts.png');
+  /* height: 800px; */
+  /* margin: 0; */
+}
+
+.container {
+  /* margin: 0; */
+  /* padding: 0; */
+}
+
+.font {
+  font-family: 'InfinitySans-RegularA1'
 }
 
 </style>
