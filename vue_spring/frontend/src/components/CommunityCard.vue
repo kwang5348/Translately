@@ -6,7 +6,7 @@
     </v-img>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-card-title v-text="this.data.video_name"></v-card-title>
+      <v-card-title >{{ vi_name }}</v-card-title>
       <b-badge pill variant="primary" style="font-size: 17px; margin: 0px 2px;">{{ data.start_sub_code }}</b-badge>
       <b-badge pill variant="warning" style="font-size: 17px; margin: 0px 2px;">{{ data.target_sub_code }}</b-badge>
       
@@ -28,13 +28,14 @@ export default {
   methods: {
     delete_caption() {
       console.log("data를 찍어보자")
-      console.log(this.data.subid)     
+      console.log(this.data.subid)
+      console.log(this.data.subtitle_file)
       axios.get(`${SERVER_URL}/api/subtitle/delete?subid=${this.data.subid}`, {
         headers: {
           "jwt-auth-token": this.$cookies.get("auth-token")
         }
       })
-      .then(this.$router.go())
+      // .then(this.$router.go())
     }
   },
   computed: {
@@ -43,6 +44,15 @@ export default {
     },
     downloadUrl() {
       return `${SERVER_URL}/api/vtt/download?fileLink=${this.data.subtitle_file}_${this.data.start_sub_code}_${this.data.target_sub_code}`
+    },
+    vi_name() {
+      if (this.data.subtitle_file.length > 8) {
+        const v_name = this.data.subtitle_file.substring(0,7) + '...'
+        return v_name
+      } else {
+        const v_name = this.data.subtitle_file
+        return v_name
+      }
     }
   }
 }
