@@ -50,32 +50,13 @@ import Navbar1 from "@/components/Navbar1.vue"
       return {
         items: [
           {
-            title: '[문의사항]  문희는 호박고구마가 먹고싶어요',
+            title: '[서비스]   서비스 안내사항',
             items: [
-              { title: '호박고구마!!!!!!!!!!!!!!!!!' },
+              { title: '로그인 후 코인이 존재하는 유저에게만 번역 서비스를 제공하고 있습니다.' },
             ],
           },
           {
-            title: '[문의사항]  판매자에게 연락하고 싶어요.',
-            active: true,
-            items: [
-              { title: '판매자와 전화연결이 되지 않는다면 상품 상세페이지에서 판매자에게 문의하기로 글을 남겨 주세요.'},
-            ],
-          },
-          {
-            title: '[코인]  충전 안내사항',
-            items: [
-              { title: '추후 제공하겠습니다. 회원가입 시 제공하는 600코인 으로 서비스를 즐겨보세요.' },
-            ],
-          },
-          {
-            title: '[코인]  이용안내',
-            items: [
-              { title: '코인이 부족하면 자막을 제공받으실 수 없습니다.' },
-            ],
-          },
-          {
-            title: '[서비스]  YOUTUBE 영상 번역',
+            title: '[서비스]   YOUTUBE 영상 번역,자막 이용방법',
             items: [
               { title: '1. 올바른 YOUTUBE 영상 링크를 입력하세요.' },
               { title: '2. 영상언어와 자막언어를 선택 후, 영상업로드 버튼을 누르세요.' },
@@ -84,7 +65,7 @@ import Navbar1 from "@/components/Navbar1.vue"
             ],
           },
           {
-            title: '[서비스]  LOCAL 영상 번역',
+            title: '[서비스]   LOCAL 영상 번역,자막 이용방법',
             items: [
               { title: '1. 파일 선택방식 또는 마우스로 파일을 끌어서 번역하실 파일을 선택하세요.' },
               { title: '2. 영상언어와 자막언어를 선택 후, 영상업로드 버튼을 누르세요.' },
@@ -94,9 +75,34 @@ import Navbar1 from "@/components/Navbar1.vue"
           },
           {
             // action: 'local_offer',
-            title: 'Promotions',
+            title: '[서비스]   크롬 익스텐션 이용안내',
             items: [
-              { title: 'List Item' },
+              { title: '빠른 시일 내에 서비스 제공 예정입니다. 기다려주세요.' },
+            ],
+          },
+          {
+            title: '[코인]   코인충전 안내사항',
+            items: [
+              { title: '추후 제공하겠습니다. 회원가입 시 제공하는 600코인 으로 서비스를 즐겨보세요.' },
+            ],
+          },
+          {
+            title: '[코인]   코인이용안내',
+            items: [
+              { title: '코인이 부족하면 자막을 제공받으실 수 없습니다.' },
+            ],
+          },
+          {
+            title: '[문의사항]   900MB 동영상 업로드가 안돼요.',
+            items: [
+              { title: '동영상 업로드 시 최대 500MB의 영상까지만 제공하고 있습니다.' },
+            ],
+          },
+          {
+            title: '[문의사항]   Translately 서비스 이용 시 문의사항은 이렇게 이용하세요.',
+            active: true,
+            items: [
+              { title: '홈페이지 하단에 연락처 혹은 이메일로 문의해주시면 친절하게 답변해드리겠습니다.'},
             ],
           },
         ],
@@ -113,6 +119,10 @@ import Navbar1 from "@/components/Navbar1.vue"
 }
 
 .font {
+  font-family: 'InfinitySans-RegularA1'
+}
+
+.v-icon {
   font-family: 'InfinitySans-RegularA1'
 }
 
