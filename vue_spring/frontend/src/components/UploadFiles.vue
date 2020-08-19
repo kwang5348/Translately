@@ -187,6 +187,10 @@ export default {
   border-color: transparent;
 }
 
+.uploadbtn:hover {
+  background-color: #443872;
+}
+
 b-button {
   font-weight: bold;
 }
