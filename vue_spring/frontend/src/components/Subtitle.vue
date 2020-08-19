@@ -9,7 +9,7 @@
     <div class="col-8" style="padding: 0px; text-align: left;">
       <p style="color: grey; font-size: 13px; margin:0px">{{ subtitle.startsub }}</p>
       <!-- <p style="color: black; font-weight: bold; font-size: 13px;">{{ subtitle.targetsub }}</p> -->
-      <v-text-field style="color: black; font-weight: bold; font-size: 13px; padding: 0;" v-model="subtitle_input"></v-text-field>
+      <!-- <v-text-field style="color: black; font-weight: bold; font-size: 13px; padding: 0;" v-model="subtitleInput"></v-text-field> -->
       <v-row>
       <v-col cols="6" md="12">
         <v-textarea
@@ -18,7 +18,7 @@
           row-height="20"
           rows="2"
           name="input-7-4"
-          :value="subtitle_input"
+          v-model="subtitleInput"
         ></v-textarea>
       </v-col>
       </v-row>
@@ -46,8 +46,14 @@ export default {
   },
   data() {
     return {
-      subtitle_input: this.subtitle.targetsub,
+      subtitleInput: "",
     }
+  },
+  methods: {
+    
+  },
+  created() {
+    this.subtitleInput = this.subtitle.targetsub
   },
   computed: {
     start() {
@@ -55,6 +61,15 @@ export default {
     },
     end() {
       return this.subtitle.endTime.toFixed(2)
+    }
+  },
+  watch: {
+    subtitleInput() {
+      const subtitleData = {
+        "subtitleInput": this.subtitleInput,
+        "index": this.index
+      }
+      this.$emit('submit-subtitle-input', subtitleData)
     }
   }
 

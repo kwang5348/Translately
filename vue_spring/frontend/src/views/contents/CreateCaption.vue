@@ -47,7 +47,8 @@
                   v-for="(subtitle, index) in subtitles" 
                   :key="index" 
                   :subtitle="subtitle"
-                  :index="index" />
+                  :index="index"
+                  @submit-subtitle-input="changeSubtitle" />
                 <hr>
                 <b-overlay
                   :show="translateBusy"
@@ -62,7 +63,7 @@
                 </v-responsive>
               <!-- </div> -->
                <!-- variant="outline-primary" -->
-              <b-button @click="change_subtitle" style="background-color: #564892;">Button</b-button>
+              <b-button @click="subQueChange" style="background-color: #564892;">Button</b-button>
             </div>
           </div>
       </div>
@@ -86,7 +87,8 @@
     },
     data() {
       return {
-        timeout: null
+        timeout: null,
+        pushData: Object,
       }
     },
     beforeDestroy() {
@@ -123,6 +125,25 @@
           callback()
         }, 5000)
       },
+      changeSubtitle(subtitleData) {
+        this.subtitles[subtitleData.index].targetsub = subtitleData.subtitleInput
+      },
+      subQueChange() {
+        console.log(this.subtitles[0].subid)
+        axios.get(`http://i3a511.p.ssafy.io/api/subtitle/showtrans?subid=${this.subtitles[0].subid}`, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
+        .then(response => {
+          this.pushData = response.data.object
+          this.subtitles.forEach((element, index) => {
+            this.pushData.transcript[index].targetsub = element.targetsub
+          })
+        })
+        .then(()=>{
+          axios.post("http://i3a511.p.ssafy.io/api/subtitle/modify", this.pushData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
+          .then(res => {
+            console.log(res)
+          })
+        })
+      }
       // onHidden() {
       //   // Return focus to the button once hidden
       //   this.$refs.button.focus()
