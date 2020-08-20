@@ -138,13 +138,17 @@ export default {
                     }
                   })
                   .then(response => {
-                    console.log("유튜브 영상 다운로드가 완료되었습니다.")
-                    console.log(response)
-                    this.uploadData.video_name = video_name
-                    this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-                    this.uploadData.youtube_url = this.fileLink
-                    this.$emit('submit-upload-option', this.uploadData)
-                    this.$router.push('/contents/createcaption')
+                    if(response.data.status) {
+                      console.log("유튜브 영상 다운로드가 완료되었습니다.")
+                      console.log(response)
+                      this.uploadData.video_name = video_name
+                      this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+                      this.uploadData.youtube_url = this.fileLink
+                      this.$emit('submit-upload-option', this.uploadData)
+                      this.$router.push('/contents/createcaption')
+                    } else {
+                      alert(reponse.data.data)
+                    }
                   })
                 }
               }).catch(err => {
