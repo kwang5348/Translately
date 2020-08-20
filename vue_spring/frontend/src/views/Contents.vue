@@ -10,7 +10,7 @@
           <b-list-group-item href="/contents/translate" class="text-white " style="background-color:#564892; height:70px; ">자막 변환</b-list-group-item>
           <!-- <b-list-group-item href="/contents/myproject" class="text-white " style="background-color:#564892; height:70px; ">내 프로젝트</b-list-group-item> -->
           <b-list-group-item href="/contents/community" class="text-white " style="background-color:#564892; height:70px; ">커뮤니티</b-list-group-item>
-          <b-list-group-item href="/contents/mypage" class="text-white " style="background-color:#564892; height:70px;">마이 페이지</b-list-group-item>
+          <b-list-group-item href="/contents/mypage" class="text-white " style="background-color:#564892; height:70px;">내 정보</b-list-group-item>
           <!-- <b-list-group-item style="background-color:#564892; height:70px;">
             <a href="https://github.com/eppy7819/projects/files/5048206/Translately.Tutorial.pdf"
             class="list-group-item2download">튜토리얼 다운로드</a>
