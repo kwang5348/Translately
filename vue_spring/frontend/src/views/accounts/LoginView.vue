@@ -121,28 +121,6 @@ export default {
 }
 
 
-/* .whole {
-  background-image: url('../../img/bg-accounts.png');
-<<<<<<< HEAD
-  height: 100%;
-  width: 100%;
-  margin: 0;
-        -webkit-background-size: cover;
-=======
-  /* height: 100vh; */
-  /* width: 100vh; */
-  /* margin: 0; */
-}
->>>>>>> feature/faq_d
-
-      -moz-background-size: cover;
-
-      -o-background-size: cover;
-
-      background-size: cover;
-
-} */
-
 /* .container {
   margin: 0;
   padding: 0;

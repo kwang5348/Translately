@@ -96,26 +96,31 @@ export default {
   },
   methods: {
     uploadOption() {
-      console.log("start")
-      console.log("유튜브 영상 파일 다운로드를 시작합니다.")
-      if(this.LinkState){
-        this.busy = true
-        this.$emit('upload-file', this.fileLink.replace("https://www.youtube.com/watch?v=", ""))
-        axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
-          headers: {
-            "jwt-auth-token": this.$cookies.get("auth-token")
-          }
-        })
-        .then(response => {
-          console.log("유튜브 영상 다운로드가 완료되었습니다.")
-          console.log(response)
-          this.uploadData.video_name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-          this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-          this.uploadData.youtube_url = this.fileLink
-          this.message = response.data.message;
-          this.$emit('submit-upload-option', this.uploadData)
-          this.$router.push('/contents/createcaption')
-        })        
+      if ((this.uploadData.start_sub_code!='ko')&&(this.uploadData.target_sub_code!='ko')){
+        // console.log(this.uploadData.option1.value)
+        alert("음성언어나 번역언어 중 하나를 한국어로 지정해주세요.")
+      } else {
+        console.log("start")
+        console.log("유튜브 영상 파일 다운로드를 시작합니다.")
+        if(this.LinkState){
+          this.busy = true
+          this.$emit('upload-file', this.fileLink.replace("https://www.youtube.com/watch?v=", ""))
+          axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
+            headers: {
+              "jwt-auth-token": this.$cookies.get("auth-token")
+            }
+          })
+          .then(response => {
+            console.log("유튜브 영상 다운로드가 완료되었습니다.")
+            console.log(response)
+            this.uploadData.video_name = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+            this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+            this.uploadData.youtube_url = this.fileLink
+            this.message = response.data.message;
+            this.$emit('submit-upload-option', this.uploadData)
+            this.$router.push('/contents/createcaption')
+          })        
+        }
       }
     }
   },    
