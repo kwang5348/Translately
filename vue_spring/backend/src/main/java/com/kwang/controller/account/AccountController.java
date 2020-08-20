@@ -245,7 +245,7 @@ public class AccountController {
 		result.status = true;
 		result.data = "잔여시간 출력에 성공하였습니다.";
 		result.object = remainTime;
-		response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+		response = new ResponseEntity<>(result, HttpStatus.OK);
 			
 		return response;
 	}

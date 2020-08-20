@@ -508,7 +508,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		StringBuffer setSrt = new StringBuffer();
 		if(result.getParsedResult() == null){
 			setSrt.append("WEBVTT\n\n");
-			setSrt.append("STYLE\n::cue {\nbackground-image: linear-gradient(to bottom, dimgray, lightgray)\n;color: papayawhip;\n}\n\n");
+			setSrt.append("STYLE\n::cue {\nbackground-image: black;\n}\n\n");
 			setSrt.append("00:00:00.000 --> 00:00:05.000\n<b>이 자막은 Translately 에서 제공되는 자막입니다.<b>\n\n");
 			
 		} else {
@@ -704,7 +704,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	public String buildVTTString(List<Transcript> translist) {
 		StringBuilder setVtt = new StringBuilder();
 		setVtt.append("WEBVTT\n\n");
-		setVtt.append("STYLE\n::cue {\nbackground-image: linear-gradient(to bottom, dimgray, lightgray)\n;color: papayawhip;\n}\n\n");
+		setVtt.append("STYLE\n::cue {\nbackground-image: black;\n}\n\n");
 		setVtt.append("00:00:00.000 --> 00:00:05.000\n<b>이 자막은 Translately 에서 제공되는 자막입니다.<b>\n\n");
 		//int tranIndex = 0;
 		for (Transcript transcript : translist) {

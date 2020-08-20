@@ -72,8 +72,10 @@ public class DivideController {
 	@Autowired
 	private SubtitleService subtitleService;
 
+	static boolean semapore;
+
 	@GetMapping("api/wav/youtubeAble")
-	@ApiOperation(value = "유튜브 중복체크")
+	@ApiOperation(value = "유튜브 유효성 체크")
 	public Object youtubeCheck(@RequestParam(required = true) final String fileLink) {
 		final BasicResponse result = new BasicResponse();
 		ResponseEntity response = null;
@@ -109,35 +111,7 @@ public class DivideController {
 
 	}
 
-	@GetMapping("api/wav/youtubeCheck")
-	@ApiOperation(value = "유튜브 중복체크")
-	public Object youtubeCheck(@RequestParam(required = true) final String fileName, @RequestParam(required = true) final String start_sub_code, @RequestParam(required = true) final String target_sub_code){
-		final BasicResponse result = new BasicResponse();
-		ResponseEntity response = null;
 
-		
-		Map <String, String> map = new HashMap<String, String>();
-		map.put("subtitle_file", fileName);
-		map.put("start_sub_code", start_sub_code);
-		map.put("target_sub_code", target_sub_code);
-
-		SubtitleFileInfo fileInfo = subtitleService.findSubFileInfoBySubid(map);
-
-		if(fileInfo == null){
-			result.status = false;
-			result.data = "해당 유튜브를 찾을 수 없습니다.";
-			result.object = null;
-		} else {
-			List<Transcript> translist = subtitleService.findSubtitleBySubid(fileInfo.getSubid());
-			BuildTranslateResult resultSet = new BuildTranslateResult(0, fileInfo.getDuration()/30, translist, fileInfo, null);
-			result.status = true;
-			result.data = "해당 유튜브를 찾았습니다.";
-			result.object = resultSet;
-		}
-		
-		return new ResponseEntity<>(result, HttpStatus.OK);
-
-	}
 	@PostMapping("/api/wav/analysis")
 	@ApiOperation(value = "요청 영상 분석")
 	public Object selectSubtitle(@Valid @RequestBody SubtitleFileInfo fileInfo, HttpServletRequest req) {
@@ -339,13 +313,13 @@ public class DivideController {
 						e.printStackTrace();
 					}
 				} else {
-					try {
-						videoService.getYoutubeName(resultSet.getFileInfo().getYoutube_url(),
-						resultSet.getFileInfo().getSubid());
-					} catch (Exception e) {
-						System.out.println("유튜브 이름 불러오기에 실패하였습니다.");
-						e.printStackTrace();
-					}
+					// try {
+					// 	videoService.getYoutubeName(resultSet.getFileInfo().getYoutube_url(),
+					// 	resultSet.getFileInfo().getSubid());
+					// } catch (Exception e) {
+					// 	System.out.println("유튜브 이름 불러오기에 실패하였습니다.");
+					// 	e.printStackTrace();
+					// }
 				}
 				System.out.println(queCount + " 개의 번역큐가 입력되었습니다.");
 				videoService.converToSrtFile_(parsedResult.getParsedResult(), vttFilePath);

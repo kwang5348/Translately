@@ -108,7 +108,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "출력이 실패하였습니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
@@ -135,7 +135,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "출력이 실패하였습니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
@@ -161,7 +161,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "출력이 실패하였습니다. 토큰정보가 없거나 삭제된 유저일 가능성이 있습니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
@@ -186,7 +186,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "자막 리스트를 불러오지 못했습니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
@@ -227,7 +227,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "자막 수정이 실패하였습니다. 혹은 변경사항이 없습니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			System.out.println("자막 수정이 실패하였습니다. 혹은 변경사항이 없습니다.");
         }
         return response;
@@ -253,7 +253,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "자막 삭제에 실패하였습니다.";
 			result.object = subid;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;	
 	}
@@ -279,7 +279,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "유저 수 출력에 실패하였습니다.";
 			result.object = map;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;	
 	}
@@ -303,7 +303,7 @@ public class SubtitleController {
 			result.status = false;
 			result.data = "자막 수 출력에 실패하였습니다.";
 			result.object = subtitleCount;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		return response;	
 	}
