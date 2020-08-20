@@ -147,7 +147,7 @@ export default {
                       this.$emit('submit-upload-option', this.uploadData)
                       this.$router.push('/contents/createcaption')
                     } else {
-                      alert(reponse.data.data)
+                      alert(response.data.data)
                     }
                   })
                 }
