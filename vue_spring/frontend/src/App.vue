@@ -57,7 +57,6 @@ export default {
     } else {
       this.isLogin = false
     }
-    this.getRemaintime()
   },
   methods: {
     submitCompleteTranslate(subtitleData) {
