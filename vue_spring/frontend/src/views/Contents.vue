@@ -9,7 +9,7 @@
           <b-list-group-item href="/contents/tutorial" class="text-white " style="background-color:#564892; height:70px; ">튜토리얼</b-list-group-item>
           <b-list-group-item href="/contents/translate" class="text-white " style="background-color:#564892; height:70px; ">자막 변환</b-list-group-item>
           <b-list-group-item href="/contents/community" class="text-white " style="background-color:#564892; height:70px; ">커뮤니티</b-list-group-item>
-          <b-list-group-item href="/contents/mypage" class="text-white " style="background-color:#564892; height:70px;">내 정보</b-list-group-item>
+          <b-list-group-item href="/contents/mypage" class="text-white " style="background-color:#564892; height:70px;">마이 페이지</b-list-group-item>
           <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" style="background-color: rgb(162, 151, 204); border-color: transparent; border-radius: 0px">
             메인으로 돌아가기
           </b-button></a></b-list-group-item>
