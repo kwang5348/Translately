@@ -138,6 +138,7 @@ export default {
                       this.$emit('submit-upload-option', this.uploadData)
                     } else {
                       alert(response.data.data)
+                      this.busy = false
                     }
                   })
                 }

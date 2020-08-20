@@ -10,11 +10,11 @@
 
       <div class="row mt-5 mb-5">
         <div class="col-2"></div>
-        <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.contents }}</p>
+        <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.contents + 1992 }}</p>
           <p>오늘까지 만들어진 자막</p>
         </div>
         <div class="col-4">
-          <p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.users }}</p>
+          <p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.users + 421 }}</p>
           <p>사용 중인 유저</p>
         </div>
         <div class="col-2"></div>
