@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-KwangApplication<SpringBoot>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.kwang.KwangApplication",
+            "projectName": "SpringBoot",
+            "args": ""
+        }
+    ]
+}
