@@ -15,7 +15,7 @@
           <div class="row">
             <div class="col-5" style="border:1px solid transparent;">
               <!-- <p>영상</p> -->
-              <video-player-vue :downloadUrl="downloadUrl" :video=video ></video-player-vue>\
+              <video-player-vue :downloadUrl="downloadUrl" :video=video ></video-player-vue>
               <b-card v-if="translateBusy" title="자막 생성중.." class="mb-2 mt-5">
                 <div
                   class="progress-bar progress-bar-success progress-bar-striped mt-5"
