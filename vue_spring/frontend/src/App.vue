@@ -2,9 +2,11 @@
   <v-app id="app">
     <div class="container-fluid m-0 p-0"><router-view 
       @upload-file="uploadFile" 
+      @create-navbar="createNavbar"
       :isLogin="isLogin" 
       :video="video" 
       :subtitles="subtitles"
+      :remainTime="remainTime"
       :translateBusy="translateBusy"
       :translateProgress="translateProgress"
       :downloadUrl="downloadUrl"
@@ -31,6 +33,7 @@ export default {
   },
   data() {
     return {
+      remainTime: 0,
       isLogin: false,
       navbar : true,
       subtitles: undefined,
@@ -54,6 +57,7 @@ export default {
     } else {
       this.isLogin = false
     }
+    this.getRemaintime()
   },
   methods: {
     submitCompleteTranslate(subtitleData) {
@@ -90,11 +94,13 @@ export default {
             "fileInfo": undefined,
             "vttResult": null
           }
+          this.getRemaintime()
           this.translateBusy = false
           return
         } else {
           console.log(this.subTranslateData.buildId)
           this.translate(i+1)
+          this.getRemaintime()
         }
       })
       .catch(response => {
@@ -104,15 +110,21 @@ export default {
         console.log("에러를 감지 하였습니다.")
       })
     },
-    // getRemaintime() {
-    //     axios.get(`${SERVER_URL}/api/account/remainTime`, {
-    //       headers: {"jwt-auth-token": this.$cookies.get("auth-token")}
-    //     })
-    //     .then(response => {
-    //       console.log("잔여시간 갱신")
-          
-    //     })
-    // },
+    getRemaintime() {
+      axios.get(`${SERVER_URL}/api/account/remainTime`, {
+        headers: {"jwt-auth-token": this.$cookies.get("auth-token")}
+      })
+      .then(response => {
+        if (response.data.status) {
+          console.log(response)
+          console.log("남은시간은 : " + response.data.object)
+          this.remainTime = response.data.object
+          return response.data.object
+        } else {
+          alert("잔여시간 정보를 가져오는데 실패했습니다.")
+        }
+      })
+    },
     setCookie(key) {
       this.$cookies.set('auth-token', key, "30MIN")
     },
@@ -195,13 +207,16 @@ export default {
       if (this.$cookies.isKey("auth-token")) {
         axios.post(`${SERVER_URL}/api/wav/analysis`, this.uploadData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
         .then(response => {
+          this.getRemaintime()
           console.log(response) 
-          console.log("시작된거?")
-          console.log(response)
-          const translateCount = parseInt(response.data.data.replace("개의 파일분할이 가능합니다.", ""))
-          this.subTranslateData.finalBuild = translateCount - 1
-          this.subTranslateData.fileInfo = response.data.object
-          this.translate(0)
+          if (this.remainTime >= response.data.object.duration) {
+            const translateCount = parseInt(response.data.data.replace("개의 파일분할이 가능합니다.", ""))
+            this.subTranslateData.finalBuild = translateCount - 1
+            this.subTranslateData.fileInfo = response.data.object
+            this.translate(0)
+          } else {
+            alert("잔여시간이 부족합니다.")
+          }
         })
         .catch(response => {
           console.log(response)
@@ -218,6 +233,9 @@ export default {
       this.subtitles = undefined
       this.downloadUrl = ""
       this.translateProgress = 0
+    },
+    createNavbar() {
+      this.getRemaintime()
     }
   },
   watch: {

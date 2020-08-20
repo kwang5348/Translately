@@ -26,12 +26,13 @@
         </b-list-group>
       </div>
       <div class="col-10" style="margin: 0; padding: 0;">
-        <Navbar2/>
+        <Navbar2 :remainTime="remainTime"/>
         <router-view 
           @upload-file="uploadFile" 
           @submit-upload-option="uploadOption"
           @destroy-create-caption="destroyCreateCaption"
           @submit-complete-translate="submitCompleteTranslate"
+          @create-navbar="createNavbar"
           :video="video"
           :isLogin="isLogin"
           :subtitles="subtitles"
@@ -53,12 +54,25 @@ export default {
     Navbar2,
   },
   props: {
-    isLogin: {},
+    remainTime: {
+      type: Number
+    },
+    isLogin: {
+      type: Boolean
+    },
     video: {},
-    subtitles: {},
-    translateBusy: {},
-    translateProgress: {},
-    downloadUrl: {},
+    subtitles: {
+      type: Array
+    },
+    translateBusy: {
+      type: Boolean
+    },
+    translateProgress: {
+      type: Number
+    },
+    downloadUrl: {
+      type: String
+    },
   },
   methods: {
     logout() {
@@ -75,6 +89,9 @@ export default {
     },
     submitCompleteTranslate(subtitles) {
       this.$emit('submit-complete-translate', subtitles)
+    },
+    createNavbar() {
+      this.$emit('create-navbar')
     }
   },
 }
