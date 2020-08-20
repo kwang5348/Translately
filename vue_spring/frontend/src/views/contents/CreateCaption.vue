@@ -80,7 +80,7 @@
                 >
                 </b-overlay>
                 </v-responsive>
-              <b-button @click="subQueChange" style="background-color: #564892;">자막 저장</b-button>
+              <b-button @click="subQueChange" style="border-color: transparent; background-color: #564892;">자막 저장</b-button>
             </div>
           </div>
       </div>

@@ -4,6 +4,7 @@
       {{ index + 1 }}
     </div>
     <div class="col-8" style="padding: 0px; text-align: left;">
+      <p style="color: grey; font-size: 13px; margin:0px">{{ subtitle.startsub }}</p>
       <v-row>
       <v-col cols="6" md="12">
         <v-textarea
@@ -17,9 +18,9 @@
       </v-col>
       </v-row>
     </div>
-    <div class="col-1" style="padding: 0px;">
+    <div class="col-1 mt-5" style="padding: 0px;">
       <p style="font-size: 13px; margin:0px">{{ start }} ~</p>
-      <p style="font-size: 13px; margin:0px">{{ end }}</p>
+      <p class="mt-1" style="font-size: 13px; margin:0px">{{ end }}</p>
     </div>
   </div>
 </template>

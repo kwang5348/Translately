@@ -9,7 +9,7 @@
             <a href="/" class="d-flex justify-content-center"><img src='../../../src/img/logo-letter2.png' href="/" class="mt-4" alt="로고" height="40"/></a>
         </div>
         <div class="d-flex justify-content-right col-3 pr-0 mt-1">
-          <b-button class="login_button mt-4 mr-0 ml-auto" size="sm" variant="primary" @click="goBack"><b>뒤로</b></b-button>
+          <b-button class="login_button mt-4 mr-0 ml-auto" size="sm" variant="primary" @click="gotoBack"><b>뒤로</b></b-button>
         </div>
       </div>
       <h4 class="mt-1" style="color: black;"><b>회원가입</b></h4>
@@ -41,7 +41,7 @@
               <input v-model="signupData.isTerm" type="checkbox" id="term"/>
               <span> 약관에 동의합니다</span>
             </label>
-            <b-button squared variant="primary" size="sm" v-b-modal.modal-scrollable class="login_button go-term"><b>약관 보기</b></b-button>
+            <b-button squared variant="primary" size="sm" v-b-modal.modal-scrollable class="go-term"><b>약관 보기</b></b-button>
             <b-modal id="modal-scrollable" scrollable ok-only>
               <p class="my-2">
               <b>Translately 회원가입 약관</b><br>

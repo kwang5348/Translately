@@ -36,12 +36,12 @@
           <hr class="w-100 clearfix d-md-none">          
           <hr class="w-100 clearfix d-md-none">
 
-          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3 p-0">
             <h5 class="text-uppercase mb-4 font-weight-bold text-white">연락처</h5>
             <p id="button-1"><i class="fa fa-home mr-3"></i>  SSAFY, 서울 5반, B1A4</p>
             <b-tooltip target="button-1" variant="dark" title="미녀와 개미 네마리"></b-tooltip>
             <p><i class="fa fa-envelope mr-3"></i><a href="mailto:hdp0545@gmail.com" class="text-black"> qna@translately.com </a></p>
-            <p><i class="fa fa-phone mr-3"></i> 대표: 홍두표</p>
+            <p><b-icon class="mr-3" icon="person-fill"></b-icon> 홍두표, 김광남, 김도연, 이진석, 홍지선</p>
           </div>
         </div>
         <div class="row text-center text-md-left mt-1 pb-5">
