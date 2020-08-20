@@ -103,52 +103,59 @@ export default {
   },
   methods: {
     uploadOption() {
-      console.log("start")
-      axios.get(`${SERVER_URL}/api/wav/youtubeAble?fileLink=${this.fileLink}`, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
-      .then(res => {
-        if(res.data.status) {
-          console.log(res)
-          const video_name = res.data.object.fileName
-          if(this.LinkState){
-            this.busy = true
-            const fileName = this.fileLink.replace("https://www.youtube.com/watch?v=","")
-            this.$emit('upload-file', fileName, "")
-            axios.get(`${SERVER_URL}/api/wav/youtubeCheck?fileName=${fileName}&start_sub_code=${this.uploadData.start_sub_code}&target_sub_code=${this.uploadData.target_sub_code}`, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
-            .then(response => {
-              console.log(response)
-              if(response.data.status) {
+      if ((this.uploadData.start_sub_code != 'ko')&&(this.uploadData.target_sub_code != 'ko')){
+        // console.log(this.uploadData.option1.value)
+        alert("음성언어나 번역언어 중 하나를 한국어로 지정해주세요.")
+      } else if ((this.uploadData.start_sub_code === 'ko')&&(this.uploadData.target_sub_code === 'ko')) {
+        alert("다른 언어를 선택해주세요.")
+      } else {
+        console.log("start")
+        axios.get(`${SERVER_URL}/api/wav/youtubeAble?fileLink=${this.fileLink}`, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
+        .then(res => {
+          if(res.data.status) {
+            console.log(res)
+            const video_name = res.data.object.fileName
+            if(this.LinkState){
+              this.busy = true
+              const fileName = this.fileLink.replace("https://www.youtube.com/watch?v=","")
+              this.$emit('upload-file', fileName, "")
+              axios.get(`${SERVER_URL}/api/wav/youtubeCheck?fileName=${fileName}&start_sub_code=${this.uploadData.start_sub_code}&target_sub_code=${this.uploadData.target_sub_code}`, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
+              .then(response => {
                 console.log(response)
-                this.subtitleData.subtitles = response.data.object.transcript
-                this.subtitleData.subtitleName = fileName
-                this.subtitleData.start_sub_code = this.uploadData.start_sub_code
-                this.subtitleData.target_sub_code = this.uploadData.target_sub_code
-                this.$emit('submit-complete-translate', this.subtitleData)
-              } else {
-                console.log("유튜브 영상 파일 다운로드를 시작합니다.")
-                console.log(fileName)
-                axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
-                  headers: {
-                    "jwt-auth-token": this.$cookies.get("auth-token")
-                  }
-                })
-                .then(response => {
-                  console.log("유튜브 영상 다운로드가 완료되었습니다.")
+                if(response.data.status) {
                   console.log(response)
-                  this.uploadData.video_name = video_name
-                  this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
-                  this.uploadData.youtube_url = this.fileLink
-                  this.$emit('submit-upload-option', this.uploadData)
-                  this.$router.push('/contents/createcaption')
-                })
-              }
-            }).catch(err => {
-              console.log(err)
-            }) 
+                  this.subtitleData.subtitles = response.data.object.transcript
+                  this.subtitleData.subtitleName = fileName
+                  this.subtitleData.start_sub_code = this.uploadData.start_sub_code
+                  this.subtitleData.target_sub_code = this.uploadData.target_sub_code
+                  this.$emit('submit-complete-translate', this.subtitleData)
+                } else {
+                  console.log("유튜브 영상 파일 다운로드를 시작합니다.")
+                  console.log(fileName)
+                  axios.get(`${SERVER_URL}/api/youtube/upload?fileLink=${this.fileLink}`, {
+                    headers: {
+                      "jwt-auth-token": this.$cookies.get("auth-token")
+                    }
+                  })
+                  .then(response => {
+                    console.log("유튜브 영상 다운로드가 완료되었습니다.")
+                    console.log(response)
+                    this.uploadData.video_name = video_name
+                    this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
+                    this.uploadData.youtube_url = this.fileLink
+                    this.$emit('submit-upload-option', this.uploadData)
+                    this.$router.push('/contents/createcaption')
+                  })
+                }
+              }).catch(err => {
+                console.log(err)
+              }) 
+            }
+          } else {
+            alert(res.data.data)
           }
-        } else {
-          alert(res.data.data)
-        }
-      })
+        })
+      }
     }
   },    
 }

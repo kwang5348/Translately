@@ -136,26 +136,34 @@ export default {
 
     },
     uploadOption() {
-      console.log("start")
-      this.progress = 0;
-      this.currentFile = this.selectedFiles.item(0);
-      this.$emit('upload-file', this.currentFile)
-      this.upload(this.currentFile, event => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
-      })
-        .then(response => {
-          this.uploadData.video_name = this.selectedFiles.item(0).name.replace(".mp4", "")
-          this.uploadData.subtitle_file= this.selectedFiles.item(0).name.replace(".mp4", "")
-          this.message = response.data.message;
-          this.$emit('submit-upload-option', this.uploadData)
-          this.$router.push('/contents/createcaption')
-          // return UploadService.getFiles();
+      if ((this.uploadData.start_sub_code!='ko')&&(this.uploadData.target_sub_code!='ko')){
+        // console.log(this.uploadData.option1.value)
+        alert("음성언어나 번역언어 중 하나를 한국어로 지정해주세요.")
+      } else if ((this.uploadData.start_sub_code === 'ko')&&(this.uploadData.target_sub_code === 'ko')) {
+        alert("서로 다른 언어를 선택해주세요.")
+      } else {
+        console.log("start")
+        this.progress = 0;
+        this.currentFile = this.selectedFiles.item(0);
+        this.$emit('upload-file', this.currentFile)
+        this.upload(this.currentFile, event => {
+          this.progress = Math.round((100 * event.loaded) / event.total);
         })
-        .catch(() => {
-          this.progress = 0;
-          this.message = "Could not upload the file!";
-          this.currentFile = undefined;
-        });
+          .then(response => {
+            this.uploadData.video_name = this.selectedFiles.item(0).name.replace(".mp4", "")
+            this.uploadData.subtitle_file= this.selectedFiles.item(0).name.replace(".mp4", "")
+            this.message = response.data.message;
+            this.$emit('submit-upload-option', this.uploadData)
+            this.$router.push('/contents/createcaption')
+            // return UploadService.getFiles();
+          })
+          .catch(() => {
+            this.progress = 0;
+            this.message = "Could not upload the file!";
+            this.currentFile = undefined;
+          });
+
+      }
     }
   },
   // mounted() {

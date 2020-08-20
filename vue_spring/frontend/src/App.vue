@@ -104,7 +104,15 @@ export default {
         console.log("에러를 감지 하였습니다.")
       })
     },
-
+    // getRemaintime() {
+    //     axios.get(`${SERVER_URL}/api/account/remainTime`, {
+    //       headers: {"jwt-auth-token": this.$cookies.get("auth-token")}
+    //     })
+    //     .then(response => {
+    //       console.log("잔여시간 갱신")
+          
+    //     })
+    // },
     setCookie(key) {
       this.$cookies.set('auth-token', key, "30MIN")
     },

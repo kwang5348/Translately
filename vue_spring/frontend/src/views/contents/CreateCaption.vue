@@ -91,7 +91,7 @@
                 </v-responsive>
               <!-- </div> -->
                <!-- variant="outline-primary" -->
-              <b-button @click="subQueChange" style="background-color: #564892;">자막수정</b-button>
+              <b-button @click="subQueChange" style="background-color: #564892;">자막 저장</b-button>
             </div>
           </div>
       </div>
