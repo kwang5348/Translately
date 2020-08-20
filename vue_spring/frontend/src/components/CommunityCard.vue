@@ -41,7 +41,7 @@ export default {
           "jwt-auth-token": this.$cookies.get("auth-token")
         }
       })
-      .then(this.$router.go())
+      // .then(this.$router.go())
     }
   },
   computed: {
@@ -52,8 +52,8 @@ export default {
       return `${SERVER_URL}/api/vtt/download?fileLink=${this.data.subtitle_file}_${this.data.start_sub_code}_${this.data.target_sub_code}`
     },
     vi_name() {
-      if (this.data.video_name.length > 16) {
-        const v_name = this.data.video_name.substring(0,15) + '...'
+      if (this.data.video_name.length > 22) {
+        const v_name = this.data.video_name.substring(0,21) + '...'
         return v_name
       } else {
         const v_name = this.data.video_name

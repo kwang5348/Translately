@@ -16,10 +16,21 @@
 
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
             <h5 class="text-uppercase mb-4 font-weight-bold text-white">사이트 링크</h5>
-            <p><a class="text-black" href="/contents/tutorial" style="text-decoration: none;">튜토리얼</a></p>
-            <p><a class="text-black" href="/contents/translate" style="text-decoration: none;">자막 변환</a></p>
-            <p><a class="text-black" href="/contents/community" style="text-decoration: none;">커뮤니티</a></p>
-            <p><a class="text-black" href="/faq" style="text-decoration: none;">공지사항</a></p>
+            <div class="mt-5"> 
+            <a class="text-black" v-if="isLogin" href="/contents/tutorial" style="text-decoration: none;">튜토리얼</a>
+            <a class="text-black" v-else href="/accounts/login" style="text-decoration: none;">튜토리얼</a>
+            </div>
+            <div class="mt-5">
+            <a class="text-black" v-if="isLogin" href="/contents/translate" style="text-decoration: none;">자막 변환</a>
+            <a class="text-black" v-else href="/accounts/login" style="text-decoration: none;">자막 변환</a>
+            </div>
+            <div class="mt-5">
+            <a class="text-black" v-if="isLogin" href="/contents/community" style="text-decoration: none;">커뮤니티</a>
+            <a class="text-black" v-else href="/accounts/login" style="text-decoration: none;">커뮤니티</a>
+            </div>
+            <div class="mt-5">
+            <a class="text-black" href="/faq" style="text-decoration: none;">공지사항</a>
+            </div>
           </div>
 
           <hr class="w-100 clearfix d-md-none">          
