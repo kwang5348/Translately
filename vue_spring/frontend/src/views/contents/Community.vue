@@ -46,8 +46,8 @@
           <v-pagination
             v-model="curPageNum"
             :length="numOfPages"
-            prev-icon="mdi-menu-left"
-            next-icon="mdi-menu-right"
+            :total-visible="7"
+            circle
           ></v-pagination>
         </div>
       </v-card>
