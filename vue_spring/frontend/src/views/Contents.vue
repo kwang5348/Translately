@@ -39,6 +39,7 @@
           :translateBusy="translateBusy"
           :translateProgress="translateProgress"
           :downloadUrl="downloadUrl"
+          :remainTime="remainTime"
         />
       </div>
     </div>
