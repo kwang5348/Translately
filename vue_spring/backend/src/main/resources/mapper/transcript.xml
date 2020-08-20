@@ -7,7 +7,11 @@
    <select id="showfiles_by_keyword" parameterType = "String" resultType="com.kwang.dto.SubtitleFileInfo">
       SELECT * from subtitle
 	  WHERE video_name like CONCAT('%', #{keyword}, '%')
+   </select>
 
+   <select id="showfiles_myproject_by_keyword" parameterType = "java.util.Map" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+	  WHERE userid = #{userid} and video_name like CONCAT('%', #{keyword}, '%')
    </select>
 
    <select id="showfiles_by_userid" parameterType = "int" resultType="com.kwang.dto.SubtitleFileInfo">
@@ -25,6 +29,17 @@
 	  where subid = #{subid}
    </select>
 
+   <select id="get_sub_fileinfo" parameterType = "Integer" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+	  where subid = #{subid}
+   </select>
+
+  <select id="get_sub_fileinfo_by_filename" parameterType = "java.util.Map" resultType="com.kwang.dto.SubtitleFileInfo">
+      SELECT * from subtitle
+	  where subtitle_file = #{subtitle_file}
+	  and start_sub_code = #{start_sub_code}
+	  and target_sub_code = #{target_sub_code}
+   </select>
 
    	<insert id="subtitlefileinfo" parameterType="com.kwang.dto.SubtitleFileInfo">
 		insert into ssafydb.subtitle (userid, video_name, thumbnail, subtitle_file, youtube_url, start_sub_code, target_sub_code, duration)
@@ -46,4 +61,20 @@
         , targetsub = #{targetsub}
 		where subqueid = #{subqueid}
 	</update>
+
+	<delete id="delete" parameterType="java.util.Map">
+		DELETE from ssafydb.subtitle
+		WHERE subid = #{subid} and
+		userid = #{userid}
+
+	</delete>
+	
+	<select id="count_user" resultType = "Integer">
+		select userid from userinfo order by userid desc limit 1
+	</select>
+	
+	<select id="count_subtitle" resultType = "Integer" >
+		select subid from subtitle order by subid desc limit 1
+	</select>
+
 </mapper>

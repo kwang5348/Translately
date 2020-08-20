@@ -54,6 +54,7 @@ public class JwtService {
             Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("사용가능한 토큰이 아닙니다.");
         }
     }
 

@@ -113,12 +113,19 @@ public class AccountController {
 
 	@GetMapping("/api/account/delete")
 	@ApiOperation(value = "회원탈퇴")
-	public Object signOut(@RequestParam(required = true) final String email){
+	public Object signOut(@RequestParam(required = true) final String email, HttpServletRequest req){
 		System.out.println("email:" + email);
-		int successCnt = userService.deleteUserByEmail(email);
-		
+		String userEmail = (String) jwtService.getUserInfo(req).get("email");
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
+		if(!userEmail.equals(email)){
+			result.status = false;
+			result.data = "다른 회원의 아이디는 삭제할 수 없습니다.";
+			result.object = email;
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+		}
+		int successCnt = userService.deleteUserByEmail(email);
+		
 		if(email.equals("admin@translately.com")){
 			result.status = false;
 			result.data = "admin 계정은 삭제 불가능합니다.";
@@ -212,6 +219,35 @@ public class AccountController {
 		
 
         return response;
+	}
+
+	@GetMapping("/api/account/remainTime")
+	@ApiOperation(value = "현재 잔여시간 출력")
+	public Object selectMypageSubtitle(HttpServletRequest req) {
+		final BasicResponse result = new BasicResponse();
+		ResponseEntity response = null;
+
+		int userid = (int) (long) jwtService.getUserInfo(req).get("userid");
+		int remainTime = -1;
+		
+		try {
+			remainTime = userService.getRemainTime(userid);
+		} catch (Exception e) {
+			result.status = false;
+			result.data = "유저정보를 통해 잔여시간을 찾는데 실패하였습니다.";
+			result.object = null;
+
+			response = new ResponseEntity<>(result, HttpStatus.OK);
+			return response;
+		}
+
+		
+		result.status = true;
+		result.data = "잔여시간 출력에 성공하였습니다.";
+		result.object = remainTime;
+		response = new ResponseEntity<>(result, HttpStatus.OK);
+			
+		return response;
 	}
 	
 }

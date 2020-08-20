@@ -13,7 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.catalina.startup.HomesUserDatabase;
@@ -74,6 +76,60 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	static final int parseTimeLength = 30;
 
 	@Override
+	public Map<String, Object> checkYoutubeInfo(String fileLink) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+		Map<String, Object> result = new HashMap<String, Object>();
+		long time = System.currentTimeMillis();
+
+		final String command = "python3.7 check.py " + fileLink;
+		System.out.println("command : " + command);
+		Process proc = null;
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				if(line.indexOf("fileName= ") == 0){
+					result.put("fileName", line.replace("fileName= ", ""));
+				} else if (line.indexOf("fileLength= ") == 0){
+					result.put("fileLength", line.replace("fileLength= ", ""));
+				}
+				System.out.println(line);
+			}
+
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(60, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
+		}
+		result.put("exit", proc.exitValue());
+		return result;
+
+	}
+
+	@Override
 	public boolean convertToSubAudio(String fileName, int startPart, int parseTime, String languageTag) throws Exception {
 		
 		final Runtime run = Runtime.getRuntime();
@@ -81,7 +137,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		long time = System.currentTimeMillis();
 
 		final String command = "ffmpeg -y -i " + SERVER_LOCATION + WAV_DIR + fileName + languageTag + WAV_EX + 
-								" -ss " + startPart*50 + " -t " + parseTime +  " -ar 16000 -ac 1 " + SERVER_LOCATION + TEMP_WAV_DIR + fileName + languageTag + startPart + WAV_EX;
+								" -ss " + startPart*parseTimeLength + " -t " + parseTime +  " -ar 16000 -ac 1 " + SERVER_LOCATION + TEMP_WAV_DIR + fileName + languageTag + startPart + WAV_EX;
 		System.out.println("command : " + command);
 		Process proc = null;
 		try {
@@ -129,7 +185,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		
 		long time = System.currentTimeMillis();
 
-		final String command = "ffmpeg -y -i " + SERVER_LOCATION + MP4_DIR + fileName + MP4_EX + " -t 160 -ar 16000 -ac 1 " + SERVER_LOCATION + WAV_DIR + fileName + languageTag + WAV_EX;
+		final String command = "ffmpeg -y -i " + SERVER_LOCATION + MP4_DIR + fileName + MP4_EX + " -t 300 -ar 16000 -ac 1 " + SERVER_LOCATION + WAV_DIR + fileName + languageTag + WAV_EX;
 		System.out.println("command : " + command);
 		Process proc = null;
 		try {
@@ -289,6 +345,55 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 
 	}
 
+
+	@Override
+	public boolean getYoutubeName(String youtubeLink, int subid) throws Exception {
+		final Runtime run = Runtime.getRuntime();
+
+		long time = System.currentTimeMillis();
+
+		final String command = "python3.7 youtubeName.py " + youtubeLink + " " + subid;
+		System.out.println("command : " + command);
+		Process proc = null;
+		try {
+			//run.exec("cmd.exe chcp 65001"); // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+			proc= run.exec(command);
+			InputStream is = proc.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			while((line = reader.readLine()) != null){
+				System.out.println(line);
+			}
+
+			InputStream standardError = proc.getErrorStream();
+			InputStreamReader ow = new InputStreamReader(standardError);
+			BufferedReader errorReader = new BufferedReader(ow);
+			StringBuffer stderr = new StringBuffer();
+			String lineErr = null;
+			while((lineErr = errorReader.readLine()) != null){
+				stderr.append(lineErr).append("\n");
+			}
+
+			System.out.println(stderr.toString());
+
+			if(!proc.waitFor(60, TimeUnit.SECONDS)){
+				proc.destroy();
+			}
+
+		} catch (IOException e) {
+			System.out.println("error : " + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e){
+			System.err.println("Failed to execute: " + e.getMessage());
+		} finally {
+			if(proc != null)
+				proc.destroy();
+			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
+		}
+
+		return false;
+	}
+
 	@Override
 	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception {
 		final Recognize rec = new Recognize();
@@ -399,11 +504,13 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		if(result.getParsedResult() == null){
 			subTranList = new ArrayList<Transcript>();
 		}
-		int tranIndex = 0;
+		// int tranIndex = 0;
 		StringBuffer setSrt = new StringBuffer();
 		if(result.getParsedResult() == null){
-			setSrt.append("WEBVTT\n\n00:00:00.000 --> 00:00:05.000\n이 자막은 Translately 에서 제공되는 자막입니다. \nhttp://i3a511.p.ssafy.io/ 에서 더 많은 정보를 얻어가세요!\n\n");
-			setSrt.append("STYLE\n::cue {\nbackground-image: linear-gradient(to bottom, dimgray, lightgray)\n;color: papayawhip;\n}\n\n");
+			setSrt.append("WEBVTT\n\n");
+			setSrt.append("STYLE\n::cue {\nbackground-image: black;\n}\n\n");
+			setSrt.append("00:00:00.000 --> 00:00:05.000\n<b>이 자막은 Translately 에서 제공되는 자막입니다.<b>\n\n");
+			
 		} else {
 			setSrt.append(result.getParsedResult());
 		}
@@ -461,9 +568,9 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 					System.out.println(parsedTran.toString());
 					{
 						// srt 양식 맞추는 과정
-						tranIndex++;
-						setSrt.append(tranIndex);
-						setSrt.append("\n");
+						// tranIndex++;
+						// setSrt.append(tranIndex);
+						// setSrt.append("\n");
 						setSrt.append(convertToVTT_(phraseStartTime + parseTimeLength * buildId));
 						setSrt.append(" --> ");
 						setSrt.append(convertToVTT_(phraseEndTime + parseTimeLength * buildId));
@@ -487,9 +594,9 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 				System.out.println(parsedTran.toString());
 				{
 					// srt 양식 맞추는 과정
-					tranIndex++;
-					setSrt.append(tranIndex);
-					setSrt.append("\n");
+					// tranIndex++;
+					// setSrt.append(tranIndex);
+					// setSrt.append("\n");
 					setSrt.append(convertToVTT_(startTime + parseTimeLength * buildId));
 					setSrt.append(" --> ");
 					setSrt.append(convertToVTT_(endTime + parseTimeLength * buildId));
@@ -589,9 +696,34 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public int reduceRemainTime(int userid) {
-		return userDao.reduceRemainTime(userid);
+	public int reduceRemainTime(int userid, int parseTime) {
+		return userDao.reduceRemainTime(userid, parseTime);
 	}
+
+	@Override
+	public String buildVTTString(List<Transcript> translist) {
+		StringBuilder setVtt = new StringBuilder();
+		setVtt.append("WEBVTT\n\n");
+		setVtt.append("STYLE\n::cue {\nbackground-image: black;\n}\n\n");
+		setVtt.append("00:00:00.000 --> 00:00:05.000\n<b>이 자막은 Translately 에서 제공되는 자막입니다.<b>\n\n");
+		//int tranIndex = 0;
+		for (Transcript transcript : translist) {
+			// tranIndex++;
+			// setVtt.append(tranIndex);
+			//setVtt.append("\n");
+			setVtt.append(convertToVTT_(transcript.getStartTime()));
+			setVtt.append(" --> ");
+			setVtt.append(convertToVTT_(transcript.getEndTime()));
+			setVtt.append("\n");
+			setVtt.append(transcript.getTargetsub());
+			setVtt.append("\n");
+			setVtt.append("\n");
+		}
+		return setVtt.toString();
+	}
+
+
+
 
 
 

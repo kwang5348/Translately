@@ -1,6 +1,8 @@
 package com.kwang.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.kwang.dto.UserData;
 
@@ -64,8 +66,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int reduceRemainTime(int userid) {
-		int successCount = sqlSession.update("userinfo.reduce_remain", userid);
+	public int reduceRemainTime(int userid, int parseTime) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("userid", userid);
+		map.put("reduce_time", parseTime);
+		int successCount = sqlSession.update("userinfo.reduce_remain", map);
 		return successCount;
 	}
 

@@ -9,7 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,12 +51,14 @@ import com.google.cloud.storage.StorageOptions;
 import com.google.common.collect.Lists;
 import com.kwang.dao.translateDao;
 import com.kwang.dto.BasicResponse;
+import com.kwang.dto.BuildTranslateResult;
 import com.kwang.dto.ParseResultSet;
 import com.kwang.dto.RecInfo;
 import com.kwang.dto.SubtitleFileInfo;
 import com.kwang.dto.Transcript;
 import com.kwang.jwt.service.JwtService;
 import com.kwang.papago.APIExamTranslate;
+import com.kwang.service.SubtitleService;
 import com.kwang.service.VideoTranslateService;
 import com.kwang.stt.InfiniteStreamRecognize;
 import com.kwang.stt.Recognize;
@@ -65,14 +69,29 @@ import com.kwang.stt.Recognize;
 @RestController
 public class VideoController {
 
-	private static final String EXTENSION = ".vtt";
-    private static final String SERVER_LOCATION = "/home/ubuntu/resources";
 
+	private static final String SERVER_LOCATION = "/home/ubuntu/resources";
+	// private static final String SERVER_LOCATION = "src/main/resources";
+	private static final String VTT_DIR = "/vtt/";
+	private static final String TEMP_VTT_DIR = "/vtt/temp/";
+	private static final String JPG_DIR = "/jpg/";
+	private static final String WAV_DIR = "/wav/";
+	private static final String TEMP_WAV_DIR = "/wav/temp/";
+	private static final String MP4_DIR = "/mp4/";
+
+	private static final String VTT_EX = ".vtt";
+	private static final String JPG_EX = ".jpg";
+	private static final String WAV_EX = ".wav";
+	private static final String MP4_EX = ".mp4";
+	
 	static boolean semaFlag = false;
 
 	@Autowired
 	VideoTranslateService service;
 	
+	@Autowired
+	SubtitleService subtitleService;
+
 	@Autowired
 	translateDao transDao;
 
@@ -187,12 +206,50 @@ public class VideoController {
 // 		return response;
 // 	}
 
+	@GetMapping("api/wav/youtubeCheck")
+	@ApiOperation(value = "유튜브 중복체크")
+	public Object youtubeCheck(@RequestParam(required = true) final String fileName, @RequestParam(required = true) final String start_sub_code, @RequestParam(required = true) final String target_sub_code){
+		final BasicResponse result = new BasicResponse();
+		ResponseEntity response = null;
+		
+		
+		Map <String, String> map = new HashMap<String, String>();
+		map.put("subtitle_file", fileName);
+		map.put("start_sub_code", start_sub_code);
+		map.put("target_sub_code", target_sub_code);
+
+		SubtitleFileInfo fileInfo = subtitleService.findSubFileInfoBySubid(map);
+
+		if(fileInfo == null){
+			result.status = false;
+			result.data = "해당 유튜브를 찾을 수 없습니다.";
+			result.object = null;
+		} else {
+			List<Transcript> translist = subtitleService.findSubtitleBySubid(fileInfo.getSubid());
+			BuildTranslateResult resultSet = new BuildTranslateResult(0, fileInfo.getDuration()/30, translist, fileInfo, null);
+			result.status = true;
+			result.data = "해당 유튜브를 찾았습니다.";
+			result.object = resultSet;
+		}
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+
+	}
+
 	@GetMapping(value = "/api/youtube/upload")
 	public Object youTubeUploadToLocalFileSystem(@RequestParam(required = true) final String fileLink) {
 		final BasicResponse result = new BasicResponse();
 		ResponseEntity response = null;
 		String filePath = "/home/ubuntu/resources/mp4/";
-
+		if(semaFlag){
+			result.status = false;
+			result.data = "유튜브 다운로드 대기열이 가득 찼습니다.\n 잠시 후 다시 이용해주세요";
+			result.object = null;
+			System.out.println(semaFlag);
+			System.out.println(result.data);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		}
+		semaFlag = true;
 		try {
 			System.out.println("youtube 다운로드가 시작됩니다.");
 			
@@ -203,22 +260,25 @@ public class VideoController {
 			service.downLoadYoutube(fileLink, epicLink);
 
 			System.out.println("youtube 다운로드가 종료되었습니다.");
+
+			result.status = true;
+			result.data = "유튜브 파일 업로드에 성공했습니다.";
+			result.object = fileLink;
 		} catch (Exception e) {
 			result.status = false;
 			result.data = "Youtube DownLoad Fail";
 			result.object = null;
 
 			e.printStackTrace();
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 
 			return response;
 		}
 
 
-		result.status = true;
-		result.data = "유튜브 파일 업로드에 성공했습니다.";
-		result.object = fileLink;
+		
 		response = new ResponseEntity<>(result, HttpStatus.OK);
+		semaFlag = false;
 		return response;
 	}
 
@@ -233,7 +293,7 @@ public class VideoController {
 			result.status = false;
 			result.data = "지원하지 않는 파일 형식입니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
 		String fileBasePath = "/home/ubuntu/resources/mp4/";
@@ -256,7 +316,7 @@ public class VideoController {
 			result.status = false;
 			result.data = "업로드가 성공하지 못했습니다.";
 			result.object = null;
-			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
 
@@ -269,7 +329,7 @@ public class VideoController {
 
     @GetMapping(value = "/api/vtt/download")
     public ResponseEntity<Resource> download(@RequestParam(required = true) final String fileLink) throws IOException {
-        File file = new File(SERVER_LOCATION + "/vtt/" + fileLink + EXTENSION);
+        File file = new File(SERVER_LOCATION + "/vtt/" + fileLink + VTT_EX);
 
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=subtitle.vtt");
@@ -307,6 +367,25 @@ public class VideoController {
                 .body(resource);
     }
 
+	@GetMapping(value = "/api/jpg/download")
+    public ResponseEntity<Resource> jpgDownload(@RequestParam(required = true) final String fileLink) throws IOException {
+        File file = new File(SERVER_LOCATION + JPG_DIR + fileLink + JPG_EX);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=temp.jpg");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
+	}
 }
 
 
