@@ -1,6 +1,6 @@
 <template>
   <body>
-    <Navbar1 :isLogin="isLogin" @logout="logout" />
+    <Navbar1 class="m-0" :isLogin="isLogin" @logout="logout" />
     <div class="home">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
