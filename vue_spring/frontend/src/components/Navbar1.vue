@@ -1,6 +1,6 @@
 <template>
   <div> 
-  <nav class="navbar navbar-expand-lg navbar-white bg-white" id="whole-navbar">
+  <nav class="navbar navbar-expand-lg navbar-white bg-white m-0" id="whole-navbar">
     <a class="navbar-brand ml-5" href="/">
       <img src='../img/logo-letter2.png' alt="서비스 로고" width="180"/>
     </a>
