@@ -57,25 +57,25 @@ public class AccountController {
         
 		final BasicResponse result = new BasicResponse();
         if (user != null) {
-			System.out.println("로그인 성공");
+			// System.out.println("로그인 성공");
 			String token = jwtService.create(user);
 			user.setToken(token);
 			res.setHeader("jwt-auth-token", token);
             result.status = true;
             result.data = "login success";
 			result.object = user;
-			System.out.println(user.toString());
-            System.out.println(user.getEmail() + " 로그인에 성공하였습니다.");
+			// System.out.println(user.toString());
+            // System.out.println(user.getEmail() + " 로그인에 성공하였습니다.");
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
 			result.status = false;
 			result.data = "login fail";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-			System.out.println("로그인에 실패하였습니다.");
+			// System.out.println("로그인에 실패하였습니다.");
         }
 
-        System.out.println("로그인 프로세스 완료");
+        // System.out.println("로그인 프로세스 완료");
         return response;
 	}
 
@@ -114,7 +114,7 @@ public class AccountController {
 	@GetMapping("/api/account/delete")
 	@ApiOperation(value = "회원탈퇴")
 	public Object signOut(@RequestParam(required = true) final String email, HttpServletRequest req){
-		System.out.println("email:" + email);
+		// System.out.println("email:" + email);
 		String userEmail = (String) jwtService.getUserInfo(req).get("email");
 		ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
@@ -176,7 +176,7 @@ public class AccountController {
 	@GetMapping("/api/account/findByEmail")
 	@ApiOperation(value = "회원정보 조회")
 	public Object findByEmail(@RequestParam(required = true) final String email){
-		System.out.println("email:" + email);
+		// System.out.println("email:" + email);
 		UserData user = userService.findUserByEmail(email);
 
 		ResponseEntity response = null;
@@ -203,7 +203,7 @@ public class AccountController {
         ResponseEntity response = null;
 		final BasicResponse result = new BasicResponse();
 
-		System.out.println(jwtService.get(req.getHeader("jwt-auth-token")).get("UserData"));
+		// System.out.println(jwtService.get(req.getHeader("jwt-auth-token")).get("UserData"));
 		try{
 			result.object = jwtService.get(req.getHeader("jwt-auth-token")).get("UserData");
 			result.status = true;

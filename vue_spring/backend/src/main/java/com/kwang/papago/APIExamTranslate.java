@@ -23,8 +23,8 @@ public class APIExamTranslate {
 		return result;
 	}
     public static String EngToKoR (String inputString, String startLanguage, String targetLanguage) {
-        String clientId = "f9p9dh0gy0";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "hEF5eQKH90DyfMcJtu0zzm4LwxWRIq9XlYLQvYe8";//애플리케이션 클라이언트 시크릿값";
+        String clientId = "";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "";//애플리케이션 클라이언트 시크릿값";
 
         try {
             String text = URLEncoder.encode(inputString, "UTF-8");

@@ -12,7 +12,7 @@ import io.jsonwebtoken.MalformedJwtException;
 
 @RestControllerAdvice
 public class GlobalRestExceptionHandler {
-    @ExceptionHandler(value = {RuntimeException.class, MalformedJwtException.class})
+    @ExceptionHandler(value = {RuntimeException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Object internalServerError(Exception e){
         ResponseEntity response = null;
@@ -20,7 +20,22 @@ public class GlobalRestExceptionHandler {
 
 		
         result.status = false;
-        result.data = "토큰정보 확인이 필요합니다.";
+        result.data = "인증 토큰에 문제가 있습니다.";
+        result.object = e.getMessage();
+        response = new ResponseEntity<>(result, HttpStatus.OK);
+	
+		return response;	
+    }
+
+    @ExceptionHandler(value = {MalformedJwtException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Object loginTimeOutError(Exception e){
+        ResponseEntity response = null;
+		final BasicResponse result = new BasicResponse();
+
+		
+        result.status = false;
+        result.data = "로그인 시간이 만료되었습니다\n 다시 로그인해주세요";
         result.object = e.getMessage();
         response = new ResponseEntity<>(result, HttpStatus.OK);
 	

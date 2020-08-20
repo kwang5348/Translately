@@ -73,7 +73,7 @@ public class SubtitleController {
 		List<SubtitleFileInfo> data = subtitleService.findAll();
 
 		if (data != null) {
-			System.out.println(data.size() + "data 출력 성공");
+			// System.out.println(data.size() + "data 출력 성공");
 			result.status = true;
 			result.data = data.size() + "개의 데이터 출력 성공";
 			result.object = data;
@@ -84,7 +84,7 @@ public class SubtitleController {
 			result.data = "관리자 번호를 입력했지만 출력이 실패하였습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-			System.out.println("관리자 번호를 입력했지만 출력이 실패하였습니다.");
+			// System.out.println("관리자 번호를 입력했지만 출력이 실패하였습니다.");
 		}
 		return response;
 	}
@@ -98,7 +98,7 @@ public class SubtitleController {
 		List<SubtitleFileInfo> data = subtitleService.findFilesByKeyword(keyword);
 
 		if (data != null) {
-			System.out.println(data.size() + "data 출력 성공");
+			// System.out.println(data.size() + "data 출력 성공");
 			result.status = true;
 			result.data = data.size() + "개의 데이터 출력 성공";
 			result.object = data;
@@ -109,7 +109,7 @@ public class SubtitleController {
 			result.data = "출력이 실패하였습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
-			System.out.println("출력이 실패하였습니다.");
+			// System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
 	}
@@ -125,7 +125,7 @@ public class SubtitleController {
 		List<SubtitleFileInfo> data = subtitleService.findFilesByUseridAndKeyword(userid, keyword);
 
 		if (data != null) {
-			System.out.println(data.size() + "data 출력 성공");
+			// System.out.println(data.size() + "data 출력 성공");
 			result.status = true;
 			result.data = data.size() + "개의 데이터 출력 성공";
 			result.object = data;
@@ -136,7 +136,7 @@ public class SubtitleController {
 			result.data = "출력이 실패하였습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
-			System.out.println("출력이 실패하였습니다.");
+			// System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
 	}
@@ -151,7 +151,7 @@ public class SubtitleController {
 		List<SubtitleFileInfo> data = subtitleService.findFilesByUserid(userid);
 
 		if (data != null) {
-			System.out.println(data.size() + "data 출력 성공");
+			// System.out.println(data.size() + "data 출력 성공");
 			result.status = true;
 			result.data = data.size() + "개의 데이터 출력 성공";
 			result.object = data;
@@ -162,7 +162,7 @@ public class SubtitleController {
 			result.data = "출력이 실패하였습니다. 토큰정보가 없거나 삭제된 유저일 가능성이 있습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
-			System.out.println("출력이 실패하였습니다.");
+			// System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
 	}
@@ -187,7 +187,7 @@ public class SubtitleController {
 			result.data = "자막 리스트를 불러오지 못했습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
-			System.out.println("출력이 실패하였습니다.");
+			// System.out.println("출력이 실패하였습니다.");
 		}
 		return response;
 	}
@@ -200,7 +200,7 @@ public class SubtitleController {
 		int data = subtitleService.modifyTranscript(resultSet.getTranscript());
 		final String vttFile = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file() + "_" +
 		resultSet.getFileInfo().getStart_sub_code() + "_" + resultSet.getFileInfo().getTarget_sub_code() + VTT_EX;
-		System.out.println("수정된 vtt 파일 path : " + vttFile);
+		// System.out.println("수정된 vtt 파일 path : " + vttFile);
 		
 
 
@@ -212,12 +212,12 @@ public class SubtitleController {
 			result.data = "자막 파일 저장에 실패하였습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-			System.out.println("자막 파일 저장에 실패하였습니다.");
+			// System.out.println("자막 파일 저장에 실패하였습니다.");
 			return response;
 		}
 
         if (data != 0) {
-            System.out.println(data + "data 출력 성공");
+            // System.out.println(data + "data 출력 성공");
             result.status = true;
             result.data = data + "개의 데이터 출력 성공";
 			result.object = data;
@@ -228,7 +228,7 @@ public class SubtitleController {
 			result.data = "자막 수정이 실패하였습니다. 혹은 변경사항이 없습니다.";
 			result.object = null;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
-			System.out.println("자막 수정이 실패하였습니다. 혹은 변경사항이 없습니다.");
+			// System.out.println("자막 수정이 실패하였습니다. 혹은 변경사항이 없습니다.");
         }
         return response;
 	}
@@ -237,7 +237,7 @@ public class SubtitleController {
 	@ApiOperation(value = "자막 삭제")
 	public Object signOut(@RequestParam(required = true) final int subid, HttpServletRequest req){
 		int userid = (int) (long) jwtService.getUserInfo(req).get("userid");
-		System.out.println("email:" + subid + " " + userid);
+		// System.out.println("email:" + subid + " " + userid);
 
 		int successCnt = subtitleService.deleteSubtitleBySubid(subid, userid);
 		

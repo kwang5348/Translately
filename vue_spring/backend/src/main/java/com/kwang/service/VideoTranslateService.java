@@ -13,11 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoTranslateService {
 	public boolean getCapture(String fileName) throws Exception;
-	public String convertToAudio(String fileName, String languageTag) throws Exception;
+	public int convertToAudio(String fileName, String languageTag) throws Exception;
 	public int getDurationFromMp4(String fileName) throws Exception;
-	public boolean convertToSubAudio(String fileName, int startTime, int duration, String languageTag) throws Exception;
+	public int convertToSubAudio(String fileName, int startTime, int duration, String languageTag) throws Exception;
 	public Map<String, Object>  checkYoutubeInfo(String fileLink) throws Exception;
-	public String downLoadYoutube(String fileLink, String epicLink) throws Exception;
+	public int downLoadYoutube(String fileLink, String epicLink) throws Exception;
 	public boolean getYoutubeName(String youtubeLink, int subid) throws Exception;
 	public List<Transcript> translateLocalFile(final String filepath, String start, String target) throws Exception;
 	public String convertToSrt_(double time);
