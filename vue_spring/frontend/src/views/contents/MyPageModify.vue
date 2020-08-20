@@ -228,6 +228,10 @@ export default {
 </script>
 
 <style>
+.MyPage_container {
+  margin-left: 20vh !important;
+  width: 70% !important;
+}
 .font-ment {
   font-family: 'InfinitySans-RegularA1';
 }

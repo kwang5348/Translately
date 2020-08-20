@@ -4,7 +4,7 @@
     <div class="img mb-5 font-ment" style="margin-top: 50px;">
       <p class="mb-5" style="font-size: 20px; font-weight: bold;">다른 사람들이 만든 자막을 키워드로 검색해보세요.</p>
       <v-toolbar color="transparent" dark class="mx-auto" max-width="1200">
-      <v-text-field class="mx-4" flat hide-details label="Search" v-model="searchdata" solo-inverted></v-text-field>
+      <v-text-field @keypress.Enter="getsearch" class="mx-4" flat hide-details label="Search" v-model="searchdata" solo-inverted></v-text-field>
       <v-btn icon color="grey darken-3" @click="getsearch"><v-icon>mdi-magnify</v-icon></v-btn>
       </v-toolbar>
 

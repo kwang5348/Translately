@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <h3><b>Member Login</b></h3>
+        <h3><b>로그인</b></h3>
         <br>
         <div style="width: 400px;" class="mx-auto">
           <div class="form-group text-left">
@@ -38,8 +38,8 @@
           </div> -->
           <hr>
           <div class="d-flex justify-content-between">
-            <p class="signintext mt-1" style="font-size: 13px">&#128505; 회원가입으로 다양하고 특별한 혜택을 즐겨보세요.</p>
-            <b-col><b-button class="login_button text-white" size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
+            <p class="signintext mt-3 font" style="font-size: 15px">&#128505; 회원가입으로 더 다양한 혜택을 즐겨보세요.</p>
+            <b-col><b-button class="text-white" style="border-color: transparent; background-color:grey;" size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
           </div>
           <div>
             <!-- <b-col class="p-0"><b-button class="login_button" size="sm" variant="primary" @click="goBack"><b>뒤로</b></b-button></b-col> -->

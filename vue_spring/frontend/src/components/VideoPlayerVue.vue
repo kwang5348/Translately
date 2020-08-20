@@ -4,10 +4,8 @@
       <source :src="objectUrl" type="video/mp4">
       <track label="korean" kind="subtitles" srclang="ko" :src="downloadUrl" default>
       <track label="english" kind="subtitles" srclang="en" :src="downloadUrl">
-      <track label="english1" kind="subtitles" srclang="ko" :src=downloadUrl>
-      <track label="english2" kind="subtitles" srclang="en" :src=downloadUrl>
     </video>
-    <b-button style="background-color: #564892;"><a class="text-white" :href="downloadUrl"> 자막 다운로드 </a></b-button>
+    <b-button style="border-color: transparent; background-color: #564892;"><a class="text-white" :href="downloadUrl"> 자막 다운로드 </a></b-button>
   </div>
 </template>
 
