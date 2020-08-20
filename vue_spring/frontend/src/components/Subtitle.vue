@@ -4,7 +4,6 @@
       {{ index + 1 }}
     </div>
     <div class="col-8" style="padding: 0px; text-align: left;">
-      <p style="color: grey; font-size: 13px; margin:0px">{{ subtitle.startsub }}</p>
       <v-row>
       <v-col cols="6" md="12">
         <v-textarea
@@ -19,7 +18,6 @@
       </v-row>
     </div>
     <div class="col-1" style="padding: 0px;">
-      <p style="font-size: 13px; margin:0px">{{ subtitle.endTime }}</p> -->
       <p style="font-size: 13px; margin:0px">{{ start }} ~</p>
       <p style="font-size: 13px; margin:0px">{{ end }}</p>
     </div>
