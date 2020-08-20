@@ -9,15 +9,25 @@
       </v-toolbar>
 
       <div class="row mt-5 mb-5">
-        <div class="col-3"></div>
-        <div class="col-3"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.contents }}</p>
+        <div class="col-2"></div>
+        <div class="col-4"><p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.contents }}</p>
           <p>오늘까지 만들어진 자막</p>
         </div>
-        <div class="col-3">
+        <div class="col-4">
           <p style="font-weight: bolder; font-size: 60px; margin-bottom: 2px">{{ this.users }}</p>
           <p>사용 중인 유저</p>
         </div>
-        <div class="col-3 row align-items-end mb-3" style="text-align: right; justify-content: center;">
+        <div class="col-2"></div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <v-tabs centered>
+            <v-tab @click="getSub" style="font-size: 17px">전체보기</v-tab>
+            <v-tab @click="getMy" style="font-size: 17px">내 자막 보기</v-tab>
+          </v-tabs>
+        </div>
+        <div class="col-3 row align-items-end mb-2" style="text-align: right; justify-content: center;">
           <!-- <p style="margin-bottom: 0; font-weight: bolder; color: gray">언어</p> -->
           <b-badge pill variant="warning" style="font-size: 16px; margin: 0px 2px 0px 4px;">
             음성 언어
@@ -27,10 +37,6 @@
           <b-badge pill style="font-size: 16px; margin: 0px 2px; background-color: #564892;">자막 언어</b-badge>  
         </div>
       </div>
-      <v-tabs centered>
-        <v-tab @click="getSub" style="font-size: 17px">전체보기</v-tab>
-        <v-tab @click="getMy" style="font-size: 17px">내 자막 보기</v-tab>
-      </v-tabs>
       <!-- 카드 -->
       <v-card class="mx-auto" max-width="1150">
         <div class="text-center">
@@ -134,6 +140,7 @@ export default {
   },
   created() {
     this.find_count()
+    this.getSub()
   },
   computed: {
     startOffset() {
