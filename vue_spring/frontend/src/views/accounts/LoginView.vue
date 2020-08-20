@@ -6,7 +6,16 @@
         style="max-width: 500px; margin-top: 50px;"
         class="mx-auto"
       >
-        <a href="/"><img src='../../../src/img/logo-letter2.png' href="/" class="mt-4" alt="로고" height="40"/></a>
+        <div style="width: 400px;" class="row mx-auto">
+          <div class="col-3"></div>
+          <div class="col-6">
+              <a href="/" class="d-flex justify-content-center"><img src='../../../src/img/logo-letter2.png' href="/" class="mt-4" alt="로고" height="40"/></a>
+          </div>
+          <div class="d-flex justify-content-right col-3 pr-0 mt-1">
+            <b-button class="login_button mt-4 mr-0 ml-auto" size="sm" variant="primary" @click="goBack"><b>뒤로</b></b-button>
+          </div>
+        </div>
+
         <h3><b>Member Login</b></h3>
         <br>
         <div style="width: 400px;" class="mx-auto">
@@ -33,7 +42,7 @@
             <b-col><b-button class="login_button text-white" size="sm" squared variant="dark" href="/accounts/signup"><b>회원가입</b></b-button></b-col>
           </div>
           <div>
-            <b-col class="p-0"><b-button size="sm" variant="primary" @click="goBack"><b>뒤로</b></b-button></b-col>
+            <!-- <b-col class="p-0"><b-button class="login_button" size="sm" variant="primary" @click="goBack"><b>뒤로</b></b-button></b-col> -->
           </div>
         </div>
       </b-card>

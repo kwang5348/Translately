@@ -3,7 +3,15 @@
     <div>
       <b-card tag="article" style="max-width: 500px; margin-top: 7px;" 
       class="mx-auto">
-      <a href="/"><img src='../../../src/img/logo-letter2.png' class="mt-4" alt="로고" height="40"/></a>
+      <div style="width: 400px;" class="row mx-auto">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <a href="/" class="d-flex justify-content-center"><img src='../../../src/img/logo-letter2.png' href="/" class="mt-4" alt="로고" height="40"/></a>
+        </div>
+        <div class="d-flex justify-content-right col-3 pr-0 mt-1">
+          <b-button class="login_button mt-4 mr-0 ml-auto" size="sm" variant="primary" @click="goBack"><b>뒤로</b></b-button>
+        </div>
+      </div>
       <h4 class="mt-1" style="color: black;"><b>회원가입</b></h4>
       <p style="color: black; font-size: 12px;">회원가입하세요. 가입하면 게시판을 열람할 수 있습니다.</p>
         <div class="loginView">
@@ -33,7 +41,7 @@
               <input v-model="signupData.isTerm" type="checkbox" id="term"/>
               <span> 약관에 동의합니다</span>
             </label>
-            <b-button squared variant="primary" size="sm" v-b-modal.modal-scrollable class="go-term"><b>약관 보기</b></b-button>
+            <b-button squared variant="primary" size="sm" v-b-modal.modal-scrollable class="login_button go-term"><b>약관 보기</b></b-button>
             <b-modal id="modal-scrollable" scrollable ok-only>
               <p class="my-2">
               <b>Translately 회원가입 약관</b><br>
@@ -43,9 +51,9 @@
             </b-modal>
           </div>
           <button @click="signup" class="login_button mt-2 btn btn-primary btn-lg btn-block"><b>가입하기</b></button>
-          <div class="d-flex" align="center">
-            <b-col class="p-0 pt-2 ml-auto"><b-button size="sm" variant="primary" @click="gotoBack"><b>뒤로</b></b-button></b-col>
-          </div>
+          <!-- <div class="d-flex" align="center"> -->
+            <!-- <b-col class="p-0 pt-2 ml-auto"><b-button size="sm" variant="primary" @click="gotoBack"><b>뒤로</b></b-button></b-col> -->
+          <!-- </div> -->
         </div>
       </b-card>
     </div>
