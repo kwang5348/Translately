@@ -5,7 +5,7 @@
         <img src='../../../src/img/tutorial-head.png' alt="튜토리얼 헤드" class="tutorial-head"/>
       </div>
       <b-col>
-        <b-button variant="warning" class="start-button" href="/contents/translate" style="font-weight: bold; font-size: 21px;">
+        <b-button variant="warning" class="start-button text-dark" href="/contents/translate" style="font-weight: bold; font-size: 21px;">
           지금 시작하기
         </b-button>
       </b-col>
@@ -14,7 +14,7 @@
         <img src='../../../src/img/tutorial-exp2.png' alt="튜토리얼 바디" class="tutorial-body"/>
       </b-col>
       <b-col>
-        <b-button variant="warning" class="mb-5" href="/contents/translate" style="font-weight: bold; font-size: 21px;">
+        <b-button variant="warning" class="mb-5 text-dark" href="/contents/translate" style="font-weight: bold; font-size: 21px;">
           지금 시작하기
         </b-button>
       </b-col>
