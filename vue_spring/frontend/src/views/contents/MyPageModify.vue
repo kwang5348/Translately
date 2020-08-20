@@ -168,7 +168,7 @@ export default {
       this.$router.push('/contents/mypage')
     },
     setCookie(key) {
-    this.$cookies.set('auth-token', key, "30MIN")
+    this.$cookies.set('auth-token', key, "180MIN")
     },
     mypage() {
         axios.get(`${SERVER_URL}/api/account/info`, {

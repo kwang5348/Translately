@@ -117,7 +117,7 @@ export default {
       })
     },
     setCookie(key) {
-      this.$cookies.set('auth-token', key, "30MIN")
+      this.$cookies.set('auth-token', key, "180MIN")
     },
     socialLogin(){
       this.isLogin = true
