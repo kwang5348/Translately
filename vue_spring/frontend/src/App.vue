@@ -61,7 +61,7 @@ export default {
       this.subtitles = subtitleData.subtitles
       this.translateProgress =  100
       this.translateBusy = false
-      this.downloadUrl = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=" + subtitleData.subtitleName + "_" + subtitleData.start_sub_code + "_" + subtitleData.target_sub_code
+      this.downloadUrl = "http://i3a511.p.ssafy.io/api/vtt/download?fileLink=temp/" + subtitleData.subtitleName + "_" + subtitleData.start_sub_code + "_" + subtitleData.target_sub_code
       this.$router.push('/contents/createcaption')
     },
     translate(i) {
@@ -209,6 +209,7 @@ export default {
     destroyCreateCaption() {
       this.subtitles = undefined
       this.downloadUrl = ""
+      this.translateProgress = 0
     }
   },
   watch: {
