@@ -17,7 +17,6 @@ export default {
   data() {
     return {
       userdata: [],
-      // email: null
     }
   },
   props: {
@@ -33,18 +32,9 @@ export default {
         }
       })
       .then(response => {
-          console.log(response)
           this.userdata = response.data.object
       })
     },
-    // userstatus() {
-    //   axios.get(`${SERVER_URL}/api/account/findByEmail`, this.email, {
-    //     headers: {
-    //       "jwt-auth-token": this.$cookies.get("auth-token")
-    //     }
-    //   })
-    // }
-      
   },
   created() {
     this.navbar()

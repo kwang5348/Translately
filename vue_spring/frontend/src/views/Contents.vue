@@ -8,13 +8,8 @@
           </b-list-group-item>
           <b-list-group-item href="/contents/tutorial" class="text-white " style="background-color:#564892; height:70px; ">튜토리얼</b-list-group-item>
           <b-list-group-item href="/contents/translate" class="text-white " style="background-color:#564892; height:70px; ">자막 변환</b-list-group-item>
-          <!-- <b-list-group-item href="/contents/myproject" class="text-white " style="background-color:#564892; height:70px; ">내 프로젝트</b-list-group-item> -->
           <b-list-group-item href="/contents/community" class="text-white " style="background-color:#564892; height:70px; ">커뮤니티</b-list-group-item>
           <b-list-group-item href="/contents/mypage" class="text-white " style="background-color:#564892; height:70px;">내 정보</b-list-group-item>
-          <!-- <b-list-group-item style="background-color:#564892; height:70px;">
-            <a href="https://github.com/eppy7819/projects/files/5048206/Translately.Tutorial.pdf"
-            class="list-group-item2download">튜토리얼 다운로드</a>
-          </b-list-group-item> -->
           <b-list-group-item><a href="/" style="height:70px;"><b-button class="list-group-item2 mt-2" style="background-color: rgb(162, 151, 204); border-color: transparent; border-radius: 0px">
             메인으로 돌아가기
           </b-button></a></b-list-group-item>
@@ -26,13 +21,12 @@
         </b-list-group>
       </div>
       <div class="col-10" style="margin: 0; padding: 0;">
-        <Navbar2 :remainTime="remainTime"/>
+        <Navbar2 @create-navbar="createNavbar" :remainTime="remainTime"/>
         <router-view 
           @upload-file="uploadFile" 
           @submit-upload-option="uploadOption"
           @destroy-create-caption="destroyCreateCaption"
           @submit-complete-translate="submitCompleteTranslate"
-          @create-navbar="createNavbar"
           :video="video"
           :isLogin="isLogin"
           :subtitles="subtitles"
@@ -100,9 +94,6 @@ export default {
 </script>
 
 <style scoped>
-/* .list-group-item {
-  boder-style: none;
-} */
 .list-group-item:first-child{
   border-top-left-radius:0rem;
   border-top-right-radius:0rem;
@@ -123,6 +114,5 @@ export default {
 
 .list-group-item2 {
   font-weight: bold;
-  /* background-color: black; */
 }
 </style>

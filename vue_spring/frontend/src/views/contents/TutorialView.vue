@@ -18,8 +18,6 @@
           지금 시작하기
         </b-button>
       </b-col>
-      <!-- <div class="img mb-5" style="margin-top: 210px; margin-left: -580px; width: 100px;">
-      </div> -->
     </div>
 
 </template>

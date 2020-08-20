@@ -5,12 +5,10 @@
     </div>
     <div class="upload-content">
       <label class="selectbtn btn btn-default font" style="position: absolute; margin: 15px 0px 0px -220px;">
-        <!-- <input type="file"  /> -->
         <input type="text" :value="fileName" id="fileName" class="file_input_textbox" readonly="readonly">
         <input type="button" value="파일 선택" class="file_input_button font-weight-bold"/>
         <input type="file" ref="file" @change="selectFile" class="file_input_hidden" onchange="javascript:document.getElementById('fileName').value = this.value.split('\\')[this.value.split('\\').length-1]">
       </label>
-      <!-- :disabled="!selectedFiles" -->
       <div class="formodal">
         <b-button v-b-modal.show-btn class="uploadbtn btn font" 
         @click="$bvModal.show('bv-modal-example')" style="margin: 70px 0px 0px -70px">
@@ -39,10 +37,8 @@
           <div class="d-flex justify-content-around font">
             <!-- 링크 연결된 upload 버튼 -->
             <b-button block squared variant="primary" class="mt-3" @click="uploadOption" style="font-weight: bolder; font-size: 17px">영상 업로드</b-button>
-            <!-- <b-button squared class="mt-3" @click="$bvModal.hide('bv-modal-example')">취소</b-button> -->
           </div>
           <hr>
-          <!-- <p class="text-center" style="color: black;">영상을 번역하고 있습니다.</p> -->
           <div v-if="currentFile" class="progress">
             <div
               class="progress-bar progress-bar-info progress-bar-striped"
@@ -127,7 +123,6 @@ export default {
       })
     },
     selectFile() {
-      console.log("exex")
       this.selectedFiles = this.$refs.file.files
     },
     addFile(e) {
@@ -137,12 +132,10 @@ export default {
     },
     uploadOption() {
       if ((this.uploadData.start_sub_code!='ko')&&(this.uploadData.target_sub_code!='ko')){
-        // console.log(this.uploadData.option1.value)
         alert("음성언어나 번역언어 중 하나를 한국어로 지정해주세요.")
       } else if ((this.uploadData.start_sub_code === 'ko')&&(this.uploadData.target_sub_code === 'ko')) {
         alert("서로 다른 언어를 선택해주세요.")
       } else {
-        console.log("start")
         this.progress = 0;
         this.currentFile = this.selectedFiles.item(0);
         this.$emit('upload-file', this.currentFile)
@@ -154,8 +147,6 @@ export default {
             this.uploadData.subtitle_file= this.selectedFiles.item(0).name.replace(".mp4", "")
             this.message = response.data.message;
             this.$emit('submit-upload-option', this.uploadData)
-            
-            // return UploadService.getFiles();
           })
           .catch(() => {
             this.progress = 0;
@@ -166,11 +157,6 @@ export default {
       }
     }
   },
-  // mounted() {
-  //   UploadService.getFiles().then(response => {
-  //     this.fileInfos = response.data;
-  //   });
-  // }
 }
 </script>
 
@@ -217,11 +203,6 @@ filter:alpha(opacity=0);
 .upload-box {
   max-width: 500px 
 }
-
-/* .upload-content {
-  margin-top: 500px;
-  margin-left: -1100px;
-} */
 
 .font {
   margin-bottom: 0px;

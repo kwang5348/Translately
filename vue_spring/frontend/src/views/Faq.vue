@@ -1,15 +1,11 @@
 <template>
   <div class="whole font">
-  <Navbar1 />
-  <!-- <p style="margin-top: 50px; font-size: 30px; color: white; font-weight: bolder">자주 묻는 질문</p> -->
+  <Navbar1 @logout="logout" :isLogin="isLogin" />
   <v-card max-width="1000" class="mx-auto" style="margin-top: 60px;" >
     <v-toolbar color="deep-purple darken-1" dark>
-      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
       <v-toolbar-title>공지사항</v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- <v-btn icon><v-icon>mdi-dots-vertical</v-icon></v-btn> -->
     </v-toolbar>
-
     <v-list>
       <v-list-group
         v-for="item in items"
@@ -23,7 +19,6 @@
             <v-list-item-title v-text="item.title"></v-list-item-title>
           </v-list-item-content>
         </template>
-
         <v-list-item
           v-for="subItem in item.items"
           :key="subItem.title"
@@ -46,8 +41,21 @@ import Navbar1 from "@/components/Navbar1.vue"
     components: {
       Navbar1,
     },
+    created() {
+      if (this.$cookies.isKey('auth-token')) {
+        this.isLogin = true
+      } else {
+        this.isLogin = false
+      }
+    },
+    methods: {
+      logout() {
+        this.$emit('logout')
+      }
+    },
     data () {
       return {
+        isLogin: false,
         items: [
           {
             title: '[서비스]   서비스 안내사항',
@@ -74,7 +82,6 @@ import Navbar1 from "@/components/Navbar1.vue"
             ],
           },
           {
-            // action: 'local_offer',
             title: '[서비스]   크롬 익스텐션 이용안내',
             items: [
               { title: '빠른 시일 내에 서비스 제공 예정입니다. 기다려주세요.' },

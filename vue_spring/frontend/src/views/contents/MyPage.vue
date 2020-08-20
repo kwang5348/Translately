@@ -52,7 +52,6 @@
         </b-col>
         <b-col sm="4"></b-col>
       </b-row>
-    <!-- </b-col> -->
       </b-container>
     </div>
 
@@ -87,7 +86,6 @@ export default {
     this.$cookies.set('auth-token', key, "30MIN")
     },
     mypage() {
-        console.log("start")
         axios.get(`${SERVER_URL}/api/account/info`, {
           headers: {
               "jwt-auth-token": this.$cookies.get("auth-token")

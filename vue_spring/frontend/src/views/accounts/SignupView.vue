@@ -60,11 +60,6 @@ export default {
       this.$router.go(-1)
     },
     signup() {
-      // const idtext = /^[A-Za-z0-9+]{8,}$/;
-      // if (idtext.test(this.signupData.email) == false) {
-      //   alert("아이디를 8자 이상 작성해주세요.")
-      //   return
-      // }
       if(this.signupData.password1 !== this.signupData.password2) {
         alert("비밀번호가 일치하지 않습니다.")
         return
@@ -110,26 +105,8 @@ export default {
   margin: 0px 0px 10px;
 }
 
-/* #signupbtn {
-  color: white;
-  background-color: rgb(89, 94, 158);
-  border-style: none;
-  border-radius: 0;
-  font-size: 1rem;
-  padding: 6px;
-} */
-
-/* .whole {
-  background-image: url('../../img/bg-accounts.png');
-  width: 100%;
-  height: 800px;
-  margin: 0;
-} */
-
 .container {
   width: 100%;
-  /* margin: 0; */
-  /* padding: 0; */
 }
 
 </style>

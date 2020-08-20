@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     submitCompleteTranslate(subtitleData) {
-      console.log(subtitleData)
       this.subtitles = subtitleData.subtitles
       this.translateProgress =  100
       this.translateBusy = false
@@ -70,11 +69,8 @@ export default {
     translate(i) {
       console.log(`${i}번째 번역을 시작합니다.`)
       this.subTranslateData.buildId = i
-      console.log('이건 보내는 데이터')
-      console.log(this.subTranslateData)
       axios.post(`${SERVER_URL}/api/wav/subTranslate`, this.subTranslateData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
       .then(response => {
-        console.log(response)
         console.log(`${i} 번째 번역이 끝났습니다.`)
         const resSubtitles = response.data.object.transcript
         this.subtitles = resSubtitles
@@ -97,16 +93,14 @@ export default {
           this.translateBusy = false
           return
         } else {
-          console.log(this.subTranslateData.buildId)
           this.translate(i+1)
           this.getRemaintime()
         }
       })
-      .catch(response => {
-        console.log(response)
+      .catch(err => {
+        console.log(err)
         this.subtitles = [{"startsub":"ERROR ", "targetsub":"XXXXXXXXXXXXXXXXXXXXXXXerrXXXXXXXXXXXXXXXXXXXXXXX", "startTime":0 , "endTime":0}]
         this.translateBusy = false
-        console.log("에러를 감지 하였습니다.")
       })
     },
     getRemaintime() {
@@ -115,12 +109,10 @@ export default {
       })
       .then(response => {
         if (response.data.status) {
-          console.log(response)
-          console.log("남은시간은 : " + response.data.object)
           this.remainTime = response.data.object
           return response.data.object
         } else {
-          alert("잔여시간 정보를 가져오는데 실패했습니다.")
+          alert("로그인 시간이 만료되었습니다. 다시 로그인 해 주세요!")
         }
       })
     },
@@ -138,15 +130,13 @@ export default {
         "password": loginData.password
       }
       axios.post(`${SERVER_URL}/api/account/login`, data)
-      // .then(res => {console.log(res)})
       .then(response => {
         this.setCookie(response.data.object.token)
         this.isLogin = true
         this.navbar = false
         this.$router.push('/')
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
         alert('이메일과 비밀번호를 확인해 주세요!')
       })
     },
@@ -155,25 +145,6 @@ export default {
       this.isLogin = false
       this.navbar = true
       this.$router.push({name: "Home"})
-      // if (this.$cookies.isKey('auth-token')) {
-      //   const requestHeader = {
-      //     headers: {
-      //       Authorization: `Token ${this.$cookies.get('auth-token')}`
-      //     }
-      //   }
-      //   axios.post(`${SERVER_URL}/rest-auth/logout/`, null, requestHeader)
-      //   .then(() => {
-      //     this.$cookies.remove('auth-token')
-      //     this.isLogin = false
-      //     this.navbar = true
-      //     this.$router.push('/')
-      //   })
-      // } else {
-        // const auth2 = gapi.auth2.getAuthInstance();
-        // auth2.signOut().then(function () {
-        //   console.log('User signed out.');
-        // });
-      // }
     },
     signup(signupData) {
       const data = {
@@ -181,12 +152,9 @@ export default {
         password: signupData.password1,
         name: signupData.name,
       }
-      console.log(data)
       axios.post(`${SERVER_URL}/api/account/join`, data)
-      .then(response => {
-        console.log(response)
+      .then(() => {
         delete data.name
-        console.log(data)
         this.login(data)
         })
       .catch(err => {console.log(err)})
@@ -201,13 +169,10 @@ export default {
       this.uploadData = ud
       delete this.uploadData.option1
       delete this.uploadData.option2
-      console.log("이게 파일분할전 객체")
-      console.log(this.uploadData)
       if (this.$cookies.isKey("auth-token")) {
         axios.post(`${SERVER_URL}/api/wav/analysis`, this.uploadData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
         .then(response => {
           this.getRemaintime()
-          console.log(response) 
           if (this.remainTime >= response.data.object.duration) {
             this.$router.push('/contents/createcaption')
             const translateCount = parseInt(response.data.data.replace("개의 파일분할이 가능합니다.", ""))
@@ -218,9 +183,7 @@ export default {
             alert("잔여시간이 부족합니다.")
           }
         })
-        .catch(response => {
-          console.log(response)
-          console.log("에러뜬거임?")
+        .catch(() => {
           this.subtitles = [{"eng":"ERROR ", "kor":"에러", "startTime":0 , "endTime":0}]
           this.translateBusy = false
           this.$router.push('/contents/createcaption')
@@ -238,18 +201,12 @@ export default {
       this.getRemaintime()
     }
   },
-  watch: {
-    index() {
-      console.log("watch" + this.index)
-    }
-  }
 }
 
 </script>
 
 <style scoped>
 .container-fluid {
-   /* background-image: url('img/bg-accounts.png'); */
    height: 100%;
 }
 
@@ -298,7 +255,6 @@ export default {
 
 #lan {
   padding: 10px;
-  /* margin: 10px; */
 }
 
 @font-face {

@@ -5,7 +5,6 @@
     </v-img>
     <v-card-actions>
       <v-spacer style="text-align: left;">
-        <!-- <b-badge pill style="font-size: 17px; margin: 0px 2px; background-color: #8274BA;">{{ data.start_sub_code }}</b-badge> -->
         <b-badge pill variant="warning" style="font-size: 17px; margin: 0px 2px;">{{ data.start_sub_code }}</b-badge>
         <i class="fas fa-long-arrow-alt-right" style="font-size: 15px;"></i>
         <b-badge pill style="font-size: 17px; margin: 0px 2px; background-color: #564892;">{{ data.target_sub_code }}</b-badge>
@@ -33,9 +32,6 @@ export default {
   },
   methods: {
     delete_caption() {
-      console.log("data를 찍어보자")
-      console.log(this.data.subid)
-      console.log(this.data.subtitle_file)
       axios.get(`${SERVER_URL}/api/subtitle/delete?subid=${this.data.subid}`, {
         headers: {
           "jwt-auth-token": this.$cookies.get("auth-token")

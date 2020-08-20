@@ -30,12 +30,10 @@
           </v-tabs>
         </div>
         <div class="col-3 row align-items-end mb-2" style="text-align: right; justify-content: center;">
-          <!-- <p style="margin-bottom: 0; font-weight: bolder; color: gray">언어</p> -->
           <b-badge pill variant="warning" style="font-size: 16px; margin: 0px 2px 0px 4px;">
             음성 언어
             </b-badge>
             <i class="fas fa-long-arrow-alt-right" style="font-size: 20px;"></i>
-          <!-- <i class="fas fa-long-arrow-alt-right"></i> -->
           <b-badge pill style="font-size: 16px; margin: 0px 2px; background-color: #564892;">자막 언어</b-badge>  
         </div>
       </div>
@@ -85,9 +83,6 @@ export default {
         }
       })
       .then(response => {
-        console.log("인원수 체크용")
-        console.log(response)
-        console.log(response.data)
         this.contents = response.data.object.subtitleCount
         this.users = response.data.object.userCount
       })
@@ -101,7 +96,6 @@ export default {
       .then(res => {
         this.subtitles = res.data.object
         this.listData = this.subtitles
-        console.log(this.subtitles)
       })
     }, 
     getSub() {
@@ -111,15 +105,9 @@ export default {
         }
       })
       .then(response => {
-        console.log(response)
         this.subtitles = response.data.object
         this.thumbnailUrl = "http://i3a511.p.ssafy.io/api/jpg/download?fileLink=" + response.data.object.subtitle_file
-        console.log("이제 할 수 있ㄸ으")
-        console.log(this.subtitles)
-        console.log(this.subtitles.subtitle_file)
-        console.log(this.thumbnailUrl)
         this.listData = this.subtitles
-        // console.log(this.subtitles)
       })
     },
     getMy() {
@@ -131,12 +119,8 @@ export default {
       .then(res => {
         this.subtitles = res.data.object
         this.listData = this.subtitles
-        console.log(this.subtitles)
       })
     },
-    // delete_data() {
-    //   axios.get(`${SERVER_URL}/api/subtitle/delete?subid=${this.subtitles[index].subid})
-    // }
   },
   created() {
     this.find_count()

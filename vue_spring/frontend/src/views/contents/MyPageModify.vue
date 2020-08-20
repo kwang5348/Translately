@@ -129,10 +129,7 @@
         <b-button @click="go_to_mypage" variant="outline-dark">뒤로</b-button>
         </b-col>
         <b-col sm="6"></b-col>
-      <!-- style="background-color:#564892;" -->
       </b-row>
-
-    <!-- </b-col> -->
       </b-container>
     </div>
 
@@ -174,7 +171,6 @@ export default {
     this.$cookies.set('auth-token', key, "30MIN")
     },
     mypage() {
-        console.log("start")
         axios.get(`${SERVER_URL}/api/account/info`, {
             headers: {
                 "jwt-auth-token": this.$cookies.get("auth-token")
@@ -203,12 +199,10 @@ export default {
               "jwt-auth-token": this.$cookies.get("auth-token")
           }
           })
-          .then(response => {
-            console.log(response)
+          .then(() => {
             console.log("비밀번호 변경 성공")
             this.userdata.password = this.pw_input2
             this.$cookies.remove('auth-token')
-          
             axios.post(`${SERVER_URL}/api/account/login`, login_data)
             .then(response => {
               this.setCookie(response.data.object.token)

@@ -1,6 +1,5 @@
 <template>
   <div> 
-  <!-- Image and text  이미지에 글자 -->
   <nav class="navbar navbar-expand-lg navbar-white bg-white" id="whole-navbar">
     <a class="navbar-brand ml-5" href="/">
       <img src='../img/logo-letter2.png' alt="서비스 로고" width="180"/>
@@ -35,12 +34,7 @@
           <a>/</a>
           <a class="mr-3"><router-link to="/accounts/signup">
             회원가입</router-link></a>
-          <!-- <a class="ml-3"><router-link to="/accounts/signup">Sign up</router-link></a> -->
         </a>
-        <!-- <div id="lan">
-          <b-link class="mx-1 font-weight-bolder" href="#">KOR</b-link>
-          <b-link class="mx-1 font-weight-bolder text-muted" href="#">ENG</b-link>
-        </div> -->
       </li>
     </ul>
   </nav>

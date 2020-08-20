@@ -11,13 +11,11 @@
           <div class="col-7">
             <p class="font-weight-bolder" style="font-size: 25px; color: black;">자막 편집 창</p>
           </div>
-          <!-- <div class="col-1"></div> -->
         </div>
           <div class="row">
             <div class="col-5" style="border:1px solid transparent;">
               <!-- <p>영상</p> -->
-              <video-player-vue :downloadUrl="downloadUrl" :video=video ></video-player-vue>
-
+              <video-player-vue :downloadUrl="downloadUrl" :video=video ></video-player-vue>\
               <b-card v-if="translateBusy" title="자막 생성중.." class="mb-2 mt-5">
                 <div
                   class="progress-bar progress-bar-success progress-bar-striped mt-5"
@@ -60,17 +58,11 @@
                   </div>
                 </div>
               </b-alert>
-              <!-- <div style="height: 550px; overflow-y: scroll;"> -->
                 <v-responsive
                   class="overflow-y-auto"
                   min-height="400"
                   max-height="400"
                 >
-              <!-- <v-virtual-scroll
-              :items="items"
-              :item-height="50"
-              height="300"
-              > -->
                 <subtitle-vue 
                   v-for="(subtitle, index) in subtitles" 
                   :key="index" 
@@ -87,10 +79,7 @@
                   class="d-inline-block"
                 >
                 </b-overlay>
-              <!-- </v-virtual-scroll> -->
                 </v-responsive>
-              <!-- </div> -->
-               <!-- variant="outline-primary" -->
               <b-button @click="subQueChange" style="background-color: #564892;">자막 저장</b-button>
             </div>
           </div>
@@ -159,7 +148,6 @@
         this.subtitles[subtitleData.index].targetsub = subtitleData.subtitleInput
       },
       subQueChange() {
-        console.log(this.subtitles[0].subid)
         axios.get(`http://i3a511.p.ssafy.io/api/subtitle/showtrans?subid=${this.subtitles[0].subid}`, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
         .then(response => {
           this.pushData = response.data.object
@@ -169,15 +157,10 @@
         })
         .then(()=>{
           axios.post("http://i3a511.p.ssafy.io/api/subtitle/modify", this.pushData, {headers: {"jwt-auth-token": this.$cookies.get("auth-token")}})
-          .then(res => {
-            console.log(res)
+          .then(() => {
           })
         })
       }
-      // onHidden() {
-      //   // Return focus to the button once hidden
-      //   this.$refs.button.focus()
-      // },
     },
   }
 
@@ -203,7 +186,6 @@
 
 .list-group-item2 {
   font-weight: bold;
-  /* background-color: black; */
 }
 
 .b-progress-bar {
