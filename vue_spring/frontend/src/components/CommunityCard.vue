@@ -16,7 +16,7 @@
       </div>
     </v-card-actions>
     <div>
-      <v-card-title>{{ vi_name }}</v-card-title>
+      <v-card-title v-b-popover.hover.bottom="" :title="data.video_name">{{ vi_name }}</v-card-title>
     </div>
   </v-card>
 </template>
@@ -41,8 +41,8 @@ export default {
           "jwt-auth-token": this.$cookies.get("auth-token")
         }
       })
-      // .then(this.$router.go())
-    }
+      .then(this.$router.go())
+    },
   },
   computed: {
     thumbnailUrl() {
@@ -59,7 +59,7 @@ export default {
         const v_name = this.data.video_name
         return v_name
       }
-    }
+    },
   }
 }
 </script>
