@@ -245,21 +245,28 @@ public class VideoController {
 			result.status = false;
 			result.data = "유튜브 다운로드 대기열이 가득 찼습니다.\n 잠시 후 다시 이용해주세요";
 			result.object = null;
-			System.out.println(semaFlag);
-			System.out.println(result.data);
+			// System.out.println(semaFlag);
+			// System.out.println(result.data);
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		semaFlag = true;
 		try {
-			System.out.println("youtube 다운로드가 시작됩니다.");
+			// System.out.println("youtube 다운로드가 시작됩니다.");
 			
 			String epicLink = fileLink.replace("https://", "");
 			epicLink = epicLink.replace("www.youtube.com/", "");
 			epicLink = epicLink.replace("watch?v=", "");
-			System.out.println(epicLink);
-			service.downLoadYoutube(fileLink, epicLink);
+			// System.out.println(epicLink);
+			int exit = service.downLoadYoutube(fileLink, epicLink);
+			if(exit != 0){
+				result.status = false;
+				result.data = "다운로드가 불가능한 유튜브 링크입니다.";
+				result.object = fileLink;	
+				response = new ResponseEntity<>(result, HttpStatus.OK);
 
-			System.out.println("youtube 다운로드가 종료되었습니다.");
+				return response;
+			}
+			// System.out.println("youtube 다운로드가 종료되었습니다.");
 
 			result.status = true;
 			result.data = "유튜브 파일 업로드에 성공했습니다.";
@@ -302,7 +309,7 @@ public class VideoController {
 		try {
 			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			uploadFlag = true;
-			System.out.println("file upload success");
+			// System.out.println("file upload success");
 		} catch (IOException e) {
 			uploadFlag = false;
 			e.printStackTrace();

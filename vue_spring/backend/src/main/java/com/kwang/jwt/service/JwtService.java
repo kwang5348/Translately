@@ -54,7 +54,7 @@ public class JwtService {
             Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("사용가능한 토큰이 아닙니다.");
+            throw new RuntimeException("로그인 시간이 만료되었습니다\n다시 로그인해주세요");
         }
     }
 

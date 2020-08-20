@@ -130,7 +130,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public boolean convertToSubAudio(String fileName, int startPart, int parseTime, String languageTag) throws Exception {
+	public int convertToSubAudio(String fileName, int startPart, int parseTime, String languageTag) throws Exception {
 		
 		final Runtime run = Runtime.getRuntime();
 		
@@ -176,11 +176,11 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
-		return false;
+		return proc.exitValue();
 	}
 
 	@Override
-	public String convertToAudio(String fileName, String languageTag) throws Exception {
+	public int convertToAudio(String fileName, String languageTag) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 		
 		long time = System.currentTimeMillis();
@@ -224,7 +224,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
-		return "success to convert";
+		return proc.exitValue();
 
 	}
 
@@ -296,7 +296,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public String downLoadYoutube(String fileLink, String epicLink) throws Exception {
+	public int downLoadYoutube(String fileLink, String epicLink) throws Exception {
 		final Runtime run = Runtime.getRuntime();
 		String filePath = "/home/ubuntu/resources/mp4/";
 
@@ -341,7 +341,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 			System.out.println("경과시간 : " + (System.currentTimeMillis() - time) + "ms");
 		}
 
-		return fileLink;
+		return proc.exitValue();
 
 	}
 

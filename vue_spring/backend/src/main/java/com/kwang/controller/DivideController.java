@@ -132,26 +132,26 @@ public class DivideController {
 		// return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
 		// }
 
-		System.out.println("translateStart");
-		System.out.println("변환 전 파일 경로 " + SERVER_LOCATION + MP4_DIR + fileInfo.getSubtitle_file() + MP4_EX);
+		// System.out.println("translateStart");
+		// System.out.println("변환 전 파일 경로 " + SERVER_LOCATION + MP4_DIR + fileInfo.getSubtitle_file() + MP4_EX);
 		try {
 			videoService.convertToAudio(fileInfo.getSubtitle_file(), languageTag);
 		} catch (Exception e1) {
 			e1.printStackTrace();
-			System.out.println("ffmpeg 변환이 실패하였습니다.");
+			// System.out.println("ffmpeg 변환이 실패하였습니다.");
 			result.status = false;
 			result.data = "ffmpeg 변환이 실패하였습니다.";
 			result.object = fileInfo;
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}
-		System.out.println(
-				"변환 후 파일 경로 " + SERVER_LOCATION + WAV_DIR + fileInfo.getSubtitle_file() + languageTag + WAV_EX);
-		System.out.println("ffmpeg 작업 종료");
+		// System.out.println(
+		// 		"변환 후 파일 경로 " + SERVER_LOCATION + WAV_DIR + fileInfo.getSubtitle_file() + languageTag + WAV_EX);
+		// System.out.println("ffmpeg 작업 종료");
 
 		try {
 			duration = videoService.getDurationFromMp4(fileInfo.getSubtitle_file() + languageTag);
 			fileInfo.setDuration(duration);
-			System.out.println(duration);
+			// System.out.println(duration);
 			if (userRemainTime < duration) {
 				System.out.println("잔여시간이 부족합니다.");
 				result.status = false;
@@ -209,14 +209,14 @@ public class DivideController {
 				+ languageTag + resultSet.getBuildId() + WAV_EX;
 		final String vttFilePath = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag
 				+ VTT_EX;
-		final String tempVttFilePath = SERVER_LOCATION + TEMP_VTT_DIR + resultSet.getFileInfo().getSubtitle_file()
+		final String tempVttFilePath = SERVER_LOCATION + VTT_DIR + resultSet.getFileInfo().getSubtitle_file()
 				+ languageTag + VTT_EX;
 		final String wavFilePath = SERVER_LOCATION + WAV_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag
 				+ WAV_EX;
 		final String jpgFilePath = SERVER_LOCATION + JPG_DIR + resultSet.getFileInfo().getSubtitle_file() + languageTag
 				+ JPG_EX;
 		List<Transcript> tranList = null;
-		System.out.println(resultSet);
+		// System.out.println(resultSet);
 		int parseTime = 30;
 		if (resultSet.getFinalBuild() == resultSet.getBuildId()) {
 			parseTime = resultSet.getFileInfo().getDuration() % parseTime;
@@ -230,29 +230,29 @@ public class DivideController {
 			return response;
 		}
 
-		System.out.println(userRemainTime + " 에서 " + parseTime + "만큼의 시간이 차감됩니다.");
-		System.out.println("변경후 userRemainTime : " + userService.getRemainTime(userid));
+		// System.out.println(userRemainTime + " 에서 " + parseTime + "만큼의 시간이 차감됩니다.");
+		// System.out.println("변경후 userRemainTime : " + userService.getRemainTime(userid));
 		if (userRemainTime < parseTime) {
 			result.status = false;
 			result.data = "잔여시간이 부족합니다.";
 			result.object = null;
-			System.out.println("잔여시간이 부족합니다.");
+			// System.out.println("잔여시간이 부족합니다.");
 			response = new ResponseEntity<>(result, HttpStatus.OK);
 			return response;
 		}
 		videoService.reduceRemainTime(userid, parseTime);
 
-		System.out.println("변환 전 파일 경로 " + wavFilePath);
+		// System.out.println("변환 전 파일 경로 " + wavFilePath);
 		try {
-			System.out.println("translateStart");
+			// System.out.println("translateStart");
 			videoService.convertToSubAudio(resultSet.getFileInfo().getSubtitle_file(), resultSet.getBuildId(),
 					parseTime, languageTag);
 
-			System.out.println("ffmpeg 작업 종료");
+			// System.out.println("ffmpeg 작업 종료");
 
 			tranList = videoService.translateLocalFile(subFilePath, resultSet.getFileInfo().getStart_sub_code(),
 					resultSet.getFileInfo().getTarget_sub_code());
-			System.out.println("translateEnd");
+			// System.out.println("translateEnd");
 		} catch (Exception e) {
 			result.status = false;
 			result.data = "번역이 실패하였습니다.";
@@ -263,10 +263,10 @@ public class DivideController {
 			return response;
 		}
 		try {
-			System.out.println("papago translate start");
+			// System.out.println("papago translate start");
 			tranList = videoService.papagoTranslate(tranList, resultSet.getFileInfo().getStart_sub_code(),
 					resultSet.getFileInfo().getTarget_sub_code());
-			System.out.println("papago translate end");
+			// System.out.println("papago translate end");
 		} catch (Exception e) {
 			result.status = false;
 			result.data = "파파고 api 호출에 실패하였습니다.";
@@ -281,10 +281,10 @@ public class DivideController {
 		boolean vttSuccess = false;
 		try {
 			vttSuccess = true;
-			System.out.println("parse Start");
+			// System.out.println("parse Start");
 			parsedResult = videoService.parseTranslateResult(parsedResult, tranList, subFilePath,
 					resultSet.getBuildId());
-			System.out.println("parse End");
+			// System.out.println("parse End");
 		} catch (Exception e) {
 			result.status = false;
 			result.data = "번역문 파싱에 실패하였습니다.";
@@ -296,9 +296,9 @@ public class DivideController {
 			return response;
 		}
 
-		System.out.println("vttFilePath : " + tempVttFilePath);
+		// System.out.println("vttFilePath : " + tempVttFilePath);
 		try {
-			System.out.println("ConverToSrt Start");
+			// System.out.println("ConverToSrt Start");
 			videoService.converToSrtFile_(parsedResult.getParsedResult(), tempVttFilePath);
 			if (resultSet.getBuildId() == resultSet.getFinalBuild()) {
 				
@@ -321,11 +321,11 @@ public class DivideController {
 					// 	e.printStackTrace();
 					// }
 				}
-				System.out.println(queCount + " 개의 번역큐가 입력되었습니다.");
+				// System.out.println(queCount + " 개의 번역큐가 입력되었습니다.");
 				videoService.converToSrtFile_(parsedResult.getParsedResult(), vttFilePath);
-				System.out.println("최종파일 번역 완료 path : " + vttFilePath);
+				// System.out.println("최종파일 번역 완료 path : " + vttFilePath);
 			}
-			System.out.println("ConverToSrt End");
+			// System.out.println("ConverToSrt End");
 			vttSuccess = true;
 		} catch (IOException e) {
 			result.status = false;

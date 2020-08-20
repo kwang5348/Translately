@@ -21,21 +21,21 @@ public class translateDaoImpl implements translateDao {
 
 	@Override
 	public List<SubtitleFileInfo> findFilesByKeyword(String keyword) {
-		System.out.println("dao 진입 성공");
+		// System.out.println("dao 진입 성공");
 		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.showfiles_by_keyword", keyword);
 		return result;
 	}
 
 	@Override
 	public List<SubtitleFileInfo> findFilesByUserid(int userid) {
-		System.out.println("유저 id로 자막 찾기 dao 진입 성공");
+		// System.out.println("유저 id로 자막 찾기 dao 진입 성공");
 		List<SubtitleFileInfo> result = sqlSession.selectList("transcript.showfiles_by_userid", userid);
 		return result;
 	}
 
 	@Override
 	public List<Transcript> findSubtitleBySubid(int subid) {
-		System.out.println("유저 id로 자막 찾기 dao 진입 성공");
+		// System.out.println("유저 id로 자막 찾기 dao 진입 성공");
 		List<Transcript> result = sqlSession.selectList("transcript.find_subtitle_by_subid", subid);
 		return result;
 	}

@@ -5,7 +5,7 @@ import urllib.request
 import json
 
 from pytube import YouTube
-print("download Link : " + sys.argv[1])
+#print("download Link : " + sys.argv[1])
 
 yt = YouTube(sys.argv[1]) 
 path = '/home/ubuntu/resources/'
@@ -27,6 +27,6 @@ duration = float(result.stdout)
 
 resultFile = path + 'jpg/' + sys.argv[2] + '.jpg'
 
-print(resultFile)
+#print(resultFile)
 
 urllib.request.urlretrieve(yt.thumbnail_url, resultFile)
