@@ -145,7 +145,7 @@ export default {
                       this.uploadData.subtitle_file = this.fileLink.replace("https://www.youtube.com/watch?v=", "")
                       this.uploadData.youtube_url = this.fileLink
                       this.$emit('submit-upload-option', this.uploadData)
-                      this.$router.push('/contents/createcaption')
+                      // this.$router.push('/contents/createcaption')
                     } else {
                       alert(response.data.data)
                     }

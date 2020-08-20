@@ -210,6 +210,7 @@ export default {
           this.getRemaintime()
           console.log(response) 
           if (this.remainTime >= response.data.object.duration) {
+            this.$router.push('/contents/createcaption')
             const translateCount = parseInt(response.data.data.replace("개의 파일분할이 가능합니다.", ""))
             this.subTranslateData.finalBuild = translateCount - 1
             this.subTranslateData.fileInfo = response.data.object

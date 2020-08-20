@@ -154,7 +154,7 @@ export default {
             this.uploadData.subtitle_file= this.selectedFiles.item(0).name.replace(".mp4", "")
             this.message = response.data.message;
             this.$emit('submit-upload-option', this.uploadData)
-            this.$router.push('/contents/createcaption')
+            
             // return UploadService.getFiles();
           })
           .catch(() => {
