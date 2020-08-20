@@ -19,6 +19,8 @@
         </div>
         <div class="col-2"></div>
       </div>
+      <!-- 카드 -->
+      <v-card class="mx-auto" max-width="1150">
       <div class="row mt-5">
         <div class="col-3"></div>
         <div class="col-6">
@@ -37,8 +39,6 @@
           <b-badge pill style="font-size: 16px; margin: 0px 2px; background-color: #564892;">자막 언어</b-badge>  
         </div>
       </div>
-      <!-- 카드 -->
-      <v-card class="mx-auto" max-width="1150">
         <div class="text-center">
           <v-row dense>
             <community-card class="col-4" v-for="(data, index) in calData" :key="index" :data="data" :index="index" cols="4"></community-card>
