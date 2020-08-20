@@ -12,28 +12,33 @@
     <div>
       <b-container fluid>
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-default">이메일 주소</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <p>{{ userdata.email }}</p>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
         
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-default">잔여시간</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <p>{{ userdata.remaintime }} 초</p>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
             <label for="input-none">이름</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
             <b-form-input
               id="input-none" 
               :state="null"
@@ -41,13 +46,15 @@
               placeholder="닉네임을 입력하세요."
             ></b-form-input>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
         
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-live">기존 비밀번호</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <div role="group">
             <b-form-input
               id="input-live"
@@ -63,12 +70,15 @@
             </b-form-invalid-feedback>
           </div>
           </b-col>
+          <b-col sm="4">
+          </b-col>
         </b-row>
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-live">새 비밀번호</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <div role="group">
             <b-form-input
               id="input-live"
@@ -84,12 +94,14 @@
             </b-form-invalid-feedback>
           </div>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-live">새 비밀번호</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <div role="group">
             <b-form-input
               id="input-live"
@@ -105,13 +117,20 @@
             </b-form-invalid-feedback>
           </div>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
       <br>
-      <div>
-        <b-button @click="change_pw" variant="outline-primary">Button</b-button>
-        <b-button @click="go_to_mypage" variant="outline-primary">뒤로</b-button>
+      <b-row class="my-1">
+        <b-col sm="4"></b-col>
+        <b-col sm="1">
+        <b-button @click="change_pw" variant="outline-dark">저장</b-button>
+        </b-col>
+        <b-col sm="1">
+        <b-button @click="go_to_mypage" variant="outline-dark">뒤로</b-button>
+        </b-col>
+        <b-col sm="6"></b-col>
       <!-- style="background-color:#564892;" -->
-      </div>
+      </b-row>
 
     <!-- </b-col> -->
       </b-container>

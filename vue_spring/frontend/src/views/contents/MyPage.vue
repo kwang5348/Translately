@@ -12,37 +12,46 @@
     <div>
       <b-container fluid>
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-default">이메일 주소</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <p>{{ userdata.email }}</p>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
         
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-default">잔여시간</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <p>{{ userdata.remaintime }} 초</p>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
         <b-row class="my-1">
+          <b-col sm="2"></b-col>
           <b-col sm="3">
           <label for="input-default">닉네임</label>
           </b-col>
-          <b-col sm="5">
+          <b-col sm="3">
           <p>{{ userdata.name }}</p>
           </b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
       <br>
-      <div>
-        <b-button @click="modify" variant="outline-primary">개인정보 수정</b-button>
-      <!-- style="background-color:#564892;" -->
-      </div>
+      <b-row class="my-1">
+        <b-col sm="2"></b-col>
+        <b-col sm="6">
+        <b-button @click="modify" variant="outline-dark">개인정보 수정</b-button>
+        </b-col>
+        <b-col sm="4"></b-col>
+      </b-row>
     <!-- </b-col> -->
       </b-container>
     </div>
