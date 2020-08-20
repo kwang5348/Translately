@@ -28,7 +28,7 @@
           <label for="input-default">잔여시간</label>
           </b-col>
           <b-col sm="3">
-          <p>{{ userdata.remaintime }} 초</p>
+          <p>{{ remainTime }} 초</p>
           </b-col>
           <b-col sm="4"></b-col>
         </b-row>
@@ -72,6 +72,11 @@ export default {
       pw_input2:'',
       name_input: '',
       userdata: []
+    }
+  },
+  props: {
+    remainTime: {
+      type: Number
     }
   },
   methods: {
