@@ -1,49 +1,41 @@
 <template>
   <div> 
-  <!-- Image and text  이미지에 글자 -->
-  <nav class="navbar navbar-expand-lg navbar-white bg-white" id="whole-navbar">
-    <a class="navbar-brand" href="/">
-        <img src='../img/logo-color2.png' alt="서비스 로고" width="140"/>
+  <nav class="navbar navbar-expand-lg navbar-white bg-white m-0" id="whole-navbar">
+    <a class="navbar-brand ml-5" href="/">
+      <img src='../img/logo-letter2.png' alt="서비스 로고" width="180"/>
     </a>
-    <!-- 햄버거버튼 -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li> -->
-        <li class="nav-searchbar">
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="키워드 검색" aria-label="Search" id="search-blank">
-            <button class="btn btn-dark my-2 my-sm-0" type="submit" id="sub-button">자막 검색</button>
-          </form>
-        </li>
-        <li class="nav-item active ml-2" style="color: black; font-weight: bold; font-size: 19px;">
-          <a class="nav-link"><router-link to="/contents/tutorial">서비스 더보기 ▶</router-link><span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-      <ul class="navbar-nav">  
-        <li class="nav-item form-inline my-2 my-lg-0">
-          <b-link class="nav-link" v-if="isLogin" @click="logout">
-            Logout
-          </b-link>
-          <a v-else>
-            <a><router-link to="/accounts/login">
-              <button type="button" class="btn btn-primary mr-1 font-weight-bold" id="login-button">LOGIN</button>
-            </router-link></a>
-            <a class="mr-3 font-weight-bold" style="font-size:16px;">을 하면 즐거운 일이!</a>
-            <!-- <a class="ml-3"><router-link to="/accounts/signup">Sign up</router-link></a> -->
-          </a>
-          <div id="lan">
-            <b-link class="mx-1 font-weight-bolder" href="#">KOR</b-link>
-            <b-link class="mx-1 font-weight-bolder text-muted" href="#">ENG</b-link>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <ul class="navbar-nav mx-auto" style="margin: 0px; color: black;">
+      <li class="nav-item active ml-2" style="color: black; font-size: 19px;">
+        <a class="nav-link" href="/contents/tutorial">서비스 튜토리얼<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item ml-2" style="color: black; font-size: 19px;">
+        <a class="nav-link" v-if="isLogin" href="/contents/translate">자막 변환<span class="sr-only"></span></a>
+        <a class="nav-link" v-else href="/accounts/login">자막 변환<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item ml-2" style="color: black; font-size: 19px;">
+        <a class="nav-link" v-b-modal.modal-1 ><router-link to="#">크롬 다운로드</router-link><span class="sr-only"></span></a>
+      </li>  
+      <b-modal class="navbar" id="modal-1" title="크롬 익스텐션 기능을 준비 중입니다." ok-only>
+        <p class="my-3 navbar">빠른 시일 내에 찾아뵐게요.</p>
+        <img src='../img/extension.png' width="450px"/>
+      </b-modal>
+      <li class="nav-item ml-2" style="color: black; font-size: 19px;">
+        <a class="nav-link" href="/faq">공지사항<span class="sr-only"></span></a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">  
+      <li class="nav-item form-inline mr-5" style="font-size: 19px;">
+        <b-link class="nav-link" v-if="isLogin" @click="logout">
+          로그아웃</b-link>
+        <a v-else>
+          <a><router-link to="/accounts/login">
+            로그인 </router-link></a>
+          <a>/</a>
+          <a class="mr-3"><router-link to="/accounts/signup">
+            회원가입</router-link></a>
+        </a>
+      </li>
+    </ul>
   </nav>
   </div>
 </template>
@@ -64,6 +56,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.navbar {
+  font-family: 'InfinitySans-RegularA1';
+}
+
+.v-application a {
+    color: black;
+}
+
+#modal-1 {
+  font-family: 'InfinitySans-RegularA1';
+  width: 800px;
+
+}
 
 </style>

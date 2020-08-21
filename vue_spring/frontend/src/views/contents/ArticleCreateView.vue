@@ -34,10 +34,9 @@ export default {
           Authorization: `Token ${this.$cookies.get('auth-token')}`      
         }
       }
-      console.log(this.article)
       axios.post(SERVER_URL + '/articles/create/', this.article, config)
         .then(() => this.$router.push('/'))
-        .catch(err => console.log(err.response))
+        .catch(err => console.log(err))
     }
   }
 }

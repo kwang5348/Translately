@@ -1,9 +1,12 @@
 package com.kwang.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kwang.dao.translateDao;
+import com.kwang.dto.BuildTranslateResult;
 import com.kwang.dto.SubtitleFileInfo;
+import com.kwang.dto.Transcript;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,59 @@ public class SubtitleServiceImpl implements SubtitleService {
     public List<SubtitleFileInfo> findFilesByKeyword(String keyword) {
         
         return transDao.findFilesByKeyword(keyword);
+    }
+
+    @Override
+    public List<SubtitleFileInfo> findFilesByUserid(int userid) {
+        return transDao.findFilesByUserid(userid);
+    }
+
+    @Override
+    public List<Transcript> findSubtitleBySubid(int subid) {
+        
+        return transDao.findSubtitleBySubid(subid);
+    }
+
+    @Override
+    public int modifyTranscript(List<Transcript> translist) {
+        return transDao.modifyTranscript(translist);
+    }
+
+    @Override
+    public BuildTranslateResult findSubtitleByYoutubeUrl(String youtubeUrl) {
+        return transDao.findSubtitleByYoutubeUrl(youtubeUrl);
+    }
+
+    @Override
+    public int deleteSubtitleBySubid(int subid, int userid) {
+        System.out.println(subid + " " + userid);
+        return transDao.deleteSubtitleBySubid(subid, userid);
+    }
+
+    @Override
+    public int countUser() {
+        return transDao.countUser();
+    }
+
+    @Override
+    public int countSubtitle() {
+        return transDao.countSubtitle();
+    }
+
+    @Override
+    public SubtitleFileInfo findSubFileInfoBySubid(int subid) {
+        return transDao.findSubFileInfoBySubid(subid);
+    }
+
+    @Override
+    public List<SubtitleFileInfo> findFilesByUseridAndKeyword(int userid, String keyword) {
+        
+        return transDao.findFilesByUseridAndKeyword(userid, keyword);
+    }
+
+    @Override
+    public SubtitleFileInfo findSubFileInfoBySubid(Map <String, String> fileName) {
+        return transDao.findSubFileInfoBySubid(fileName);
     }
 
 

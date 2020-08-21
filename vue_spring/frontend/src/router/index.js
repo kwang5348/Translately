@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import FAQ from '../views/Faq.vue'
 import Contents from '../views/Contents.vue'
 // accounts
 import LoginView from '../views/accounts/LoginView.vue'
@@ -9,19 +10,24 @@ import CompleteView from '../views/accounts/CompleteView.vue'
 
 // contents
 import ArticleCreateView from '../views/contents/ArticleCreateView.vue'
-import Community from '../views/contents/Community.vue'
-import CreateCaption from '../views/contents/CreateCaption.vue'
-import MyPage from '../views/contents/MyPage.vue'
-import MyProject from '../views/contents/MyProject.vue'
 import TutorialView from '../views/contents/TutorialView.vue'
-import UserView from '../views/contents/UserView.vue'
+import MyPageModify from '../views/contents/MyPageModify.vue'
+import Community from '../views/contents/Community.vue'
+import MyPage from '../views/contents/MyPage.vue'
+import CreateCaption from '../views/contents/CreateCaption.vue'
+import Translate from '../views/contents/Translate.vue'
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+  },
+  {
+    path: '/faq',
+    name: 'FAQ',
+    component: FAQ,
   },
   {
     path: '/contents',
@@ -38,14 +44,24 @@ Vue.use(VueRouter)
       component: Community
     },
     {
-      path: 'myproject',
-      name: 'MyProject',
-      component: MyProject
+      path: 'modify',
+      name: 'MyPageModify',
+      component: MyPageModify
     },
     {
       path: 'mypage',
       name: 'MyPage',
-      component: MyPage
+      component: MyPage,
+    },
+    {
+      path: 'translate',
+      name: 'Translate',
+      component: Translate
+    },
+    {
+      path: 'createcaption',
+      name: 'CreateCaption',
+      component: CreateCaption
     },
   ]},
   {
@@ -74,17 +90,6 @@ Vue.use(VueRouter)
         next('/accounts/login')
       }
     }
-  },
-  
-  {
-    path: '/user',
-    name: 'UserView',
-    component: UserView
-  },
-  {
-    path: '/createcaption',
-    name: 'CreateCaption',
-    component: CreateCaption
   },
 ]
 

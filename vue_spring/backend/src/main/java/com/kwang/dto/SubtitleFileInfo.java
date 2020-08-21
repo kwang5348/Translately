@@ -9,9 +9,14 @@ public class SubtitleFileInfo {
     private String youtube_url;
     private String start_sub_code;
     private String target_sub_code;
+    private int duration;
 
 
-    public SubtitleFileInfo(int userid, String video_name, String thumbnail, String subtitle_file, String youtube_url, String start_sub_code, String target_sub_code) {
+    public SubtitleFileInfo(){
+
+    }
+
+    public SubtitleFileInfo(int userid, String video_name, String thumbnail, String subtitle_file, String youtube_url, String start_sub_code, String target_sub_code, int duration) {
         this.userid = userid;
         this.video_name = video_name;
         this.thumbnail = thumbnail;
@@ -19,9 +24,10 @@ public class SubtitleFileInfo {
         this.youtube_url = youtube_url;
         this.start_sub_code = start_sub_code;
         this.target_sub_code = target_sub_code;
+        this.duration = duration;
     }
 
-    public SubtitleFileInfo(int subid, int userid, String video_name, String thumbnail, String subtitle_file, String youtube_url, String start_sub_code, String target_sub_code) {
+    public SubtitleFileInfo(int subid, int userid, String video_name, String thumbnail, String subtitle_file, String youtube_url, String start_sub_code, String target_sub_code, int duration) {
         this.subid = subid;
         this.userid = userid;
         this.video_name = video_name;
@@ -30,6 +36,17 @@ public class SubtitleFileInfo {
         this.youtube_url = youtube_url;
         this.start_sub_code = start_sub_code;
         this.target_sub_code = target_sub_code;
+        this.duration = duration;
+    }
+
+
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getTarget_sub_code() {

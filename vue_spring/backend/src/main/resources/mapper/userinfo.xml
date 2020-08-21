@@ -31,4 +31,15 @@
 		DELETE from ssafydb.userinfo
 		WHERE email =#{email}
 	</delete>
+
+	<update id="reduce_remain" parameterType="java.util.Map">
+		update ssafydb.userinfo
+		set remaintime = remaintime - #{reduce_time}
+		where userid = #{userid}
+	</update>
+
+	<select id="get_remain" parameterType="Integer" resultType="Integer">
+		SELECT remaintime FROM ssafydb.userinfo
+		WHERE userid = #{userid}
+	</select>
 </mapper>
