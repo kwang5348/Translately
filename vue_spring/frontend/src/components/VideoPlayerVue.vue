@@ -2,8 +2,8 @@
   <div class="player">
     <video id="video" controls class="col-12" width="500px" preload="metadata" crossorigin="anonymous">
       <source :src="objectUrl" type="video/mp4">
-      <track label="korean" kind="subtitles" srclang="ko" :src="downloadUrl" default>
-      <track label="english" kind="subtitles" srclang="en" :src="downloadUrl">
+      <track label="default" kind="subtitles" srclang="ko" :src="downloadUrl" default>
+      <track label="final_sub" kind="subtitles" srclang="en" :src="downloadUrl1">
     </video>
     <b-button style="border-color: transparent; background-color: #564892;"><a class="text-white" :href="downloadUrl"> 자막 다운로드 </a></b-button>
   </div>
@@ -15,7 +15,8 @@ export default {
   name: 'video-player-vue',
   props: {
     video: {},
-    downloadUrl: {}
+    downloadUrl: {},
+    downloadUrl1: {}
   },
   data() {
     return {

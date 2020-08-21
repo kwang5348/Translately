@@ -33,6 +33,7 @@
           :translateBusy="translateBusy"
           :translateProgress="translateProgress"
           :downloadUrl="downloadUrl"
+          :downloadUrl1="downloadUrl1"
           :remainTime="remainTime"
         />
       </div>
@@ -66,6 +67,9 @@ export default {
       type: Number
     },
     downloadUrl: {
+      type: String
+    },
+    downloadUrl1: {
       type: String
     },
   },

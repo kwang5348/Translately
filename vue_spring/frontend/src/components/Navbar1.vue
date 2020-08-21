@@ -6,8 +6,7 @@
     </a>
     <ul class="navbar-nav mx-auto" style="margin: 0px; color: black;">
       <li class="nav-item active ml-2" style="color: black; font-size: 19px;">
-        <a class="nav-link" v-if="isLogin" href="/contents/tutorial">서비스 튜토리얼<span class="sr-only">(current)</span></a>
-        <a class="nav-link" v-else href="/accounts/login">서비스 튜토리얼<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/contents/tutorial">서비스 튜토리얼<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item ml-2" style="color: black; font-size: 19px;">
         <a class="nav-link" v-if="isLogin" href="/contents/translate">자막 변환<span class="sr-only"></span></a>

@@ -10,6 +10,7 @@
       :translateBusy="translateBusy"
       :translateProgress="translateProgress"
       :downloadUrl="downloadUrl"
+      :downloadUrl1="downloadUrl1"
       @submit-login-data="login" 
       @submit-upload-option="uploadOption"
       @submit-signup-data="signup"
@@ -42,6 +43,7 @@ export default {
       translateBusy: true,
       translateProgress: 0,
       downloadUrl: "",
+      downloadUrl1: "",
       subTranslateData: {
         "buildId": 0,
         "finalBuild": 0,
@@ -89,6 +91,7 @@ export default {
             "fileInfo": undefined,
             "vttResult": null
           }
+          this.downloadUrl1 = this.downloadUrl
           this.getRemaintime()
           this.translateBusy = false
           return

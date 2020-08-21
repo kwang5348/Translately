@@ -206,7 +206,6 @@ export default {
             axios.post(`${SERVER_URL}/api/account/login`, login_data)
             .then(response => {
               this.setCookie(response.data.object.token)
-              this.$emit('modify-user-info')
               alert("개인정보 수정완료되었습니다.")
               this.$router.push('/contents/mypage')
             })
