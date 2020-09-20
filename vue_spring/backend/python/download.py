@@ -3,24 +3,19 @@ import sys
 import subprocess
 import urllib.request
 import json
-import time
 
 from pytube import YouTube
-
-start = time.time()
-
 print("download Link : " + sys.argv[1])
 
 yt = YouTube(sys.argv[1]) 
-
 path = '/home/ubuntu/resources/'
 yt.streams \
     .filter(progressive=True, file_extension='mp4') \
     .order_by('resolution') \
+    .desc() \
     .first() \
     .download(path + 'mp4/')
     
-
 fileName = yt.streams.first().default_filename
 
 
@@ -34,4 +29,3 @@ print(resultFile)
 urllib.request.urlretrieve(yt.thumbnail_url, resultFile)
 
 print("jpg : " + yt.thumbnail_url)
-print("time : ", time.time() - start)
