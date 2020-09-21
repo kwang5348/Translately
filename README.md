@@ -12,7 +12,7 @@
 
 ## 🛣️ Content
 
-유튜브 링크나 로컬 영상을 업로드 할때 번역본 제공
+유튜브 링크나 로컬 영상을 업로드 할때 번역본 제공  
 같은 유튜브 링크에 대해 DB에서 번역본을 제공
 
 ### 🕶️ Team Info
@@ -31,6 +31,17 @@
 - Docker
 - Nginx
 
+### 🌏 Website
+
+- 현재 배포중인 결과물
+
+    [http://3.35.94.238/](http://3.35.94.238/)
+- 테스트 계정 (아래 연락처로 연락 부탁드립니다.)
+  mail : kwang5348@gmail.com
+  phone : 010-4821-7948
+  kakao : kwang5348
+
 ### 📄 Project Video
 
-[URL] (https://www.notion.so/UCC-11d3de24a3164cbd8dba9b94ad1f4adc)
+[최종 결과물 UCC 크게 보기](https://www.notion.so/UCC-11d3de24a3164cbd8dba9b94ad1f4adc)
+
