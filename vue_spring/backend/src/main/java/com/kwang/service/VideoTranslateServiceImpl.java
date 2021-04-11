@@ -81,7 +81,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		long time = System.currentTimeMillis();
 
-		final String command = "python3.7 check.py " + fileLink;
+		final String command = "python3 check.py " + fileLink;
 		System.out.println("command : " + command);
 		Process proc = null;
 		try {
@@ -302,7 +302,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 
 		long time = System.currentTimeMillis();
 
-		final String command = "python3.7 download.py " + fileLink + " " + epicLink;
+		final String command = "python3 download.py " + fileLink + " " + epicLink;
 		System.out.println("command : " + command);
 		Process proc = null;
 		try {
@@ -352,7 +352,7 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 
 		long time = System.currentTimeMillis();
 
-		final String command = "python3.7 youtubeName.py " + youtubeLink + " " + subid;
+		final String command = "python3 youtubeName.py " + youtubeLink + " " + subid;
 		System.out.println("command : " + command);
 		Process proc = null;
 		try {
