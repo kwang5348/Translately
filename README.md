@@ -7,7 +7,7 @@
 ## ⭐ Category
 
 - Web Sevice
-- Aws / AI
+- Aws
 
 
 ## 🛣️ Content
